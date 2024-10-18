@@ -3,9 +3,11 @@ import { NavItem } from '@components/navbar/styled';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ page }: { page?: string }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const color = page === 'HOME' ? '#fff' : '#000';
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -16,32 +18,32 @@ const Navbar = () => {
   };
 
   return (
-    <Box display="flex" justifyContent="center">
-      <Box display="flex" alignItems="center" justifyContent="space-between" width="90%">
-        <Box display="flex" alignItems="center">
-          <Typography variant="h4" fontWeight="700">
-            OLM
-          </Typography>
+    <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Box display="flex" alignItems="center">
+        <Link to="/">
+          <img src="/logo.svg" width={150} />
+        </Link>
 
-          <Box display="flex" gap={3} marginLeft={3}>
-            {routes.map((route) => (
-              <NavItem key={route.path} to={route.path}>
-                {route.pathName}
-              </NavItem>
-            ))}
-          </Box>
+        <Box display="flex" gap={3} marginLeft={3}>
+          {routes.map((route) => (
+            <NavItem key={route.path} to={route.path}>
+              <Typography color={color}>{route.pathName}</Typography>
+            </NavItem>
+          ))}
         </Box>
-
-        <IconButton edge="end" onClick={handleMenuOpen} color="inherit">
-          <AccountCircleIcon />
-          <Typography marginLeft={1}>Tài khoản</Typography>
-        </IconButton>
-
-        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-          <MenuItem onClick={handleMenuClose}>Đăng nhập</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Đăng ký</MenuItem>
-        </Menu>
       </Box>
+
+      <IconButton edge="end" onClick={handleMenuOpen} color="inherit">
+        <AccountCircleIcon color="primary" />
+        <Typography marginLeft={1} color={color}>
+          Tài khoản
+        </Typography>
+      </IconButton>
+
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
+        <MenuItem onClick={handleMenuClose}>Đăng nhập</MenuItem>
+        <MenuItem onClick={handleMenuClose}>Đăng ký</MenuItem>
+      </Menu>
     </Box>
   );
 };
