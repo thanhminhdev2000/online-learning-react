@@ -1,5 +1,5 @@
 import { routes } from '@components/navbar/constant';
-import { NavItem } from '@components/navbar/styled';
+import { MenuLink, NavItem } from '@components/navbar/styled';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import React, { useState } from 'react';
@@ -24,7 +24,7 @@ const Navbar = ({ page }: { page?: string }) => {
           <img src="/logo.svg" width={150} />
         </Link>
 
-        <Box display="flex" gap={3} marginLeft={3}>
+        <Box display="flex" marginLeft={3}>
           {routes.map((route) => (
             <NavItem key={route.path} to={route.path}>
               <Typography color={color}>{route.pathName}</Typography>
@@ -33,16 +33,25 @@ const Navbar = ({ page }: { page?: string }) => {
         </Box>
       </Box>
 
-      <IconButton edge="end" onClick={handleMenuOpen} color="inherit">
-        <AccountCircleIcon color="primary" />
-        <Typography marginLeft={1} color={color}>
-          Tài khoản
-        </Typography>
-      </IconButton>
+      <Box display="flex" alignItems="center" gap={1} onClick={handleMenuOpen} sx={{ cursor: 'pointer' }}>
+        <IconButton edge="end">
+          <AccountCircleIcon color="primary" />
+        </IconButton>
+        <Typography color={color}>Tài khoản</Typography>
+      </Box>
 
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-        <MenuItem onClick={handleMenuClose}>Đăng nhập</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Đăng ký</MenuItem>
+        <MenuItem onClick={handleMenuClose}>
+          <MenuLink to="login">
+            <Typography>Đăng nhập</Typography>
+          </MenuLink>
+        </MenuItem>
+
+        <MenuItem onClick={handleMenuClose}>
+          <MenuLink to="signup">
+            <Typography>Đăng ký</Typography>
+          </MenuLink>
+        </MenuItem>
       </Menu>
     </Box>
   );

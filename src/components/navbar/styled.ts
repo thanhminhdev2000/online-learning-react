@@ -1,5 +1,5 @@
+import { styled } from '@mui/material';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 
 export const Logo = styled(Link)(() => ({
   cursor: 'pointer',
@@ -8,8 +8,16 @@ export const Logo = styled(Link)(() => ({
 export const NavItem = styled(Link)(() => ({
   cursor: 'pointer',
   textDecoration: 'none',
+  padding: '12px 24px',
 
   '&:hover': {
-    textDecoration: 'underline',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
   },
+}));
+
+export const MenuLink = styled(Link)(() => ({
+  cursor: 'pointer',
+  textDecoration: 'none',
+  padding: '4px 8px',
+  color: '#000',
 }));

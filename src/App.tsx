@@ -7,6 +7,7 @@ import DonatePage from '@pages/donate';
 import HomePage from '@pages/home';
 import LoginPage from '@pages/login';
 import QuestionPage from '@pages/question';
+import ResetPassword from '@pages/resetPassword';
 import SignUpPage from '@pages/signup';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import LearnPage from './pages/learn';
@@ -17,10 +18,11 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
 
           <Route element={<Layout />}>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/learn" element={<LearnPage />} />
             <Route path="/question" element={<QuestionPage />} />
