@@ -1,7 +1,12 @@
-import { Box } from '@mui/material';
+import Navbar from '@components/navbar';
+import { Background } from '@pages/home/styled';
 
 const HomePage = () => {
-  return <Box>HomePage</Box>;
+  return (
+    <Background>
+      <Navbar />
+    </Background>
+  );
 };
 
 export default HomePage;
