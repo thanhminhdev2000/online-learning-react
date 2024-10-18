@@ -47,9 +47,13 @@ const SignUpPage = () => {
 
         <Box marginTop={4}>
           <Button fullWidth variant="contained" type="submit">
-            Đăng nhập
+            Đăng ký
           </Button>
         </Box>
+
+        <Typography marginTop={1} color="#707070">
+          Khi đăng ký, bạn đã đồng ý với Điều khoản sử dụng và Chính sách bảo mật của chúng tôi.
+        </Typography>
 
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" marginTop={2} gap={1}>

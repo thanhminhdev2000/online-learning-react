@@ -22,8 +22,6 @@ const LoginPage = () => {
     console.log(data);
   });
 
-  console.log(errors);
-
   return (
     <Stack alignItems="center" justifyContent="center" height="80vh">
       <AuthContainer onSubmit={onSubmit}>
