@@ -58,7 +58,7 @@ const LoginPage = () => {
           </Box>
 
           <Typography>
-            <LinkItem to="/reset-password" color="primary">
+            <LinkItem to="/forgot-password" color="primary">
               Quên mật khẩu?
             </LinkItem>
           </Typography>

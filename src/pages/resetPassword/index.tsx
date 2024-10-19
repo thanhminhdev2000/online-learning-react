@@ -3,12 +3,9 @@ import { AuthContainer, LinkItem } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { resetPasswordSchema } from '@pages/resetPassword/type';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const ResetPasswordPage = () => {
-  const [nextStep, setNextStep] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -16,55 +13,49 @@ const ResetPasswordPage = () => {
   } = useForm({
     resolver: zodResolver(resetPasswordSchema),
     values: {
-      email: '',
+      password: '',
+      retypePassword: '',
     },
   });
 
   const onSubmit = handleSubmit((data) => {
-    setNextStep(true);
     console.log(data);
   });
 
   return (
     <>
-      {nextStep ? (
-        <Stack alignItems="center" justifyContent="center" height="80vh">
-          <AuthContainer>Vui lòng kiểm tra email để đặt lại mật khẩu.</AuthContainer>
-        </Stack>
-      ) : (
-        <Stack alignItems="center" justifyContent="center" height="80vh">
-          <AuthContainer onSubmit={onSubmit}>
-            <Typography variant="h4" textAlign="center">
-              Quên mật khẩu
-            </Typography>
+      <Stack alignItems="center" justifyContent="center" height="80vh">
+        <AuthContainer onSubmit={onSubmit}>
+          <Typography variant="h4" textAlign="center">
+            Đặt lại mật khẩu
+          </Typography>
 
-            <Stack gap={3} marginTop={3}>
-              <CInput label="Email" errorMsg={errors.email?.message} registerProps={register('email')} />
-            </Stack>
+          <Stack gap={3} marginTop={3}>
+            <CInput label="Mật khẩu" errorMsg={errors.password?.message} registerProps={register('password')} />
+            <CInput
+              label="Nhập lại mật khẩu"
+              errorMsg={errors.retypePassword?.message}
+              registerProps={register('retypePassword')}
+            />
+          </Stack>
 
-            <Box marginTop={4}>
-              <Button fullWidth variant="contained" type="submit">
-                Xác nhận
-              </Button>
-            </Box>
+          <Box marginTop={4}>
+            <Button fullWidth variant="contained" type="submit">
+              Xác nhận
+            </Button>
+          </Box>
 
-            <Box display="flex" alignItems="center" justifyContent="space-between">
-              <Box display="flex" marginTop={2} gap={1}>
-                <Typography>Bạn đã có tài khoản?</Typography>
-                <LinkItem to="/login" color="primary">
-                  Đăng nhập!
-                </LinkItem>
-              </Box>
+          <Box display="flex" alignItems="center" justifyContent="space-between" marginTop={1}>
+            <LinkItem to="/signup" color="primary">
+              Đăng ký tài khoản mới!
+            </LinkItem>
 
-              <Typography>
-                <LinkItem to="/signup" color="primary">
-                  Đăng ký tài khoản mới?
-                </LinkItem>
-              </Typography>
-            </Box>
-          </AuthContainer>
-        </Stack>
-      )}
+            <LinkItem to="/forgot-password" color="primary">
+              Quên mật khẩu?
+            </LinkItem>
+          </Box>
+        </AuthContainer>
+      </Stack>
     </>
   );
 };

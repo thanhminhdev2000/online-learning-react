@@ -4,6 +4,7 @@ import AboutPage from '@pages/about';
 import ContactPage from '@pages/contact';
 import DocumentationPage from '@pages/documentation';
 import DonatePage from '@pages/donate';
+import ForgotPasswordPage from '@pages/forgotPassword';
 import HomePage from '@pages/home';
 import LoginPage from '@pages/login';
 import QuestionPage from '@pages/question';
@@ -22,7 +23,9 @@ const App = () => {
           <Route element={<Layout />}>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
+
             <Route path="/about" element={<AboutPage />} />
             <Route path="/learn" element={<LearnPage />} />
             <Route path="/question" element={<QuestionPage />} />
