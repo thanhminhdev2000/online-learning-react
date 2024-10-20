@@ -1,10 +1,10 @@
 import CInput from '@components/cInput';
 import { AuthContainer, LinkItem } from '@components/styled';
-import { user } from '@config/index';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { loginSchema } from '@pages/login/type';
 import { useForm } from 'react-hook-form';
+import { useGetUsers } from '../../apis/hooks/user.hook';
 
 const LoginPage = () => {
   const {
@@ -19,9 +19,10 @@ const LoginPage = () => {
     },
   });
 
-  const onSubmit = handleSubmit(async (data) => {
-    await user.login(data);
-  });
+  const data = useGetUsers();
+  console.log(data);
+
+  const onSubmit = handleSubmit(() => {});
 
   return (
     <Stack alignItems="center" justifyContent="center" height="80vh">

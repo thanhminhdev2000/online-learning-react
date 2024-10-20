@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "swagger": "rimraf ./src/api && curl -o swagger.json http://localhost:8080/swagger/doc.json && npx swagger-typescript-api --path ./swagger.json --output ./src/api --modular && node generate-api.js"
+    "swagger": "rimraf ./src/apis/generated && node generate-api.js"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",

@@ -1,5 +1,4 @@
 import Layout from '@components/layout';
-import { Box } from '@mui/material';
 import AboutPage from '@pages/about';
 import ContactPage from '@pages/contact';
 import DocumentationPage from '@pages/documentation';
@@ -10,14 +9,17 @@ import LoginPage from '@pages/login';
 import QuestionPage from '@pages/question';
 import ResetPasswordPage from '@pages/resetPassword';
 import SignUpPage from '@pages/signup';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LearnPage from './pages/learn';
 
+const queryClient = new QueryClient();
+
 const App = () => {
   return (
-    <Box>
+    <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -39,7 +41,7 @@ const App = () => {
       </Router>
 
       <ToastContainer />
-    </Box>
+    </QueryClientProvider>
   );
 };
 
