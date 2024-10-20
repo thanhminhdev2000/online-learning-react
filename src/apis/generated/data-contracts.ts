@@ -9,54 +9,57 @@
  * ---------------------------------------------------------------
  */
 
-export interface AccessTokenReponseDto {
+export interface AccessTokenResponseDto {
   accessToken?: string;
 }
 
 export interface ErrorDto {
-  error?: string;
+  error: string;
 }
 
 export interface ForgotPasswordRequestDto {
-  email?: string;
+  email: string;
 }
 
 export interface LoginRequestDto {
-  identifier?: string;
-  password?: string;
+  identifier: string;
+  password: string;
 }
 
 export interface LoginResponseDto {
-  accessToken?: string;
-  message?: string;
-  user?: UserDetailDto;
+  accessToken: string;
+  message: string;
+  user: UserDetailDto;
 }
 
 export interface MessageDto {
-  message?: string;
+  message: string;
 }
 
 export interface PasswordUpdateRequestDto {
-  currentPassword?: string;
-  newPassword?: string;
+  currentPassword: string;
+  /** @minLength 6 */
+  newPassword: string;
 }
 
 export interface ResetPasswordRequestDto {
-  password?: string;
+  /** @minLength 6 */
+  password: string;
 }
 
 export interface SignUpRequestDto {
-  email?: string;
-  fullName?: string;
-  password?: string;
-  username?: string;
+  email: string;
+  fullName: string;
+  /** @minLength 6 */
+  password: string;
+  username: string;
 }
 
 export interface UserDetailDto {
-  email?: string;
-  fullName?: string;
-  id?: number;
-  username?: string;
+  email: string;
+  fullName: string;
+  id: number;
+  username: string;
 }
 
 export type UserListDataDto = UserDetailDto[];
@@ -73,7 +76,7 @@ export type LoginErrorDto = ErrorDto;
 
 export type LogoutDataDto = MessageDto;
 
-export type RefreshDataDto = AccessTokenReponseDto;
+export type RefreshDataDto = AccessTokenResponseDto;
 
 export type RefreshErrorDto = ErrorDto;
 

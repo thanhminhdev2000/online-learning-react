@@ -1,3 +1,4 @@
+import { useCreateUser } from '@apis/hooks/user.hook';
 import CInput from '@components/cInput';
 import { AuthContainer, LinkItem } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -5,8 +6,12 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 import { signUpInit } from '@pages/signup/constant';
 import { signUpSchema } from '@pages/signup/type';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -15,9 +20,18 @@ const SignUpPage = () => {
     resolver: zodResolver(signUpSchema),
     values: signUpInit,
   });
+  const { mutate } = useCreateUser();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    mutate(data, {
+      onSuccess(data) {
+        toast.success(data.message);
+        navigate('/login');
+      },
+      onError(data) {
+        toast.error(data.error);
+      },
+    });
   });
 
   return (

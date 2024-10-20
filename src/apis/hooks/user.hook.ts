@@ -1,7 +1,16 @@
-import { UserListDataDto, UserListErrorDto } from '@apis/generated/data-contracts';
+import {
+  LoginDataDto,
+  LoginErrorDto,
+  LoginRequestDto,
+  SignupDataDto,
+  SignupErrorDto,
+  SignUpRequestDto,
+  UserListDataDto,
+  UserListErrorDto,
+} from '@apis/generated/data-contracts';
+import { Users } from '@apis/generated/Users';
 import httpClient from '@config/httpClient';
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { Users } from 'apis/generated/Users';
+import { useMutation, UseMutationResult, useQuery, UseQueryResult } from '@tanstack/react-query';
 
 export const users = new Users(httpClient);
 
@@ -24,6 +33,22 @@ export const useGetUser = (userId: number): UseQueryResult<UserListDataDto, User
     queryKey: [queryKeys.getUser, userId],
     queryFn: () => {
       return users.userDetail(userId);
+    },
+  });
+};
+
+export const useCreateUser = (): UseMutationResult<SignupDataDto, SignupErrorDto, SignUpRequestDto, unknown> => {
+  return useMutation({
+    mutationFn: (payload: SignUpRequestDto) => {
+      return users.signup(payload);
+    },
+  });
+};
+
+export const useLogin = (): UseMutationResult<LoginDataDto, LoginErrorDto, LoginRequestDto, unknown> => {
+  return useMutation({
+    mutationFn: (payload: LoginRequestDto) => {
+      return users.login(payload);
     },
   });
 };

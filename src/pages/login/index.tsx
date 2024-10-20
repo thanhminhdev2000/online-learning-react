@@ -1,15 +1,19 @@
+import { useLogin } from '@apis/hooks/user.hook';
 import CInput from '@components/cInput';
 import { AuthContainer, LinkItem } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { loginSchema } from '@pages/login/type';
 import { useForm } from 'react-hook-form';
-import { useGetUsers } from '../../apis/hooks/user.hook';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(loginSchema),
@@ -19,10 +23,19 @@ const LoginPage = () => {
     },
   });
 
-  const data = useGetUsers();
-  console.log(data);
+  const { mutate } = useLogin();
 
-  const onSubmit = handleSubmit(() => {});
+  const onSubmit = handleSubmit((data) => {
+    mutate(data, {
+      onSuccess(data) {
+        localStorage.setItem('accessToken', data.accessToken);
+        navigate('/');
+      },
+      onError(data) {
+        setError('password', { message: data.error });
+      },
+    });
+  });
 
   return (
     <Stack alignItems="center" justifyContent="center" height="80vh">
