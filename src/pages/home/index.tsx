@@ -1,8 +1,11 @@
 import Navbar from '@components/navbar';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { Background } from '@pages/home/styled';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
     <Background alignItems="center">
       <Box width="90%">
@@ -27,7 +30,9 @@ const HomePage = () => {
         </Typography>
 
         <Box width={200} marginTop={2}>
-          <Button variant="contained">Học ngay</Button>
+          <Button variant="contained" onClick={() => navigate('/learn')}>
+            Học ngay
+          </Button>
         </Box>
       </Stack>
     </Background>

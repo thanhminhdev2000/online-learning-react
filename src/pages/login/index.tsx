@@ -1,5 +1,6 @@
 import CInput from '@components/cInput';
 import { AuthContainer, LinkItem } from '@components/styled';
+import { user } from '@config/index';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { loginSchema } from '@pages/login/type';
@@ -18,8 +19,8 @@ const LoginPage = () => {
     },
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
+  const onSubmit = handleSubmit(async (data) => {
+    await user.login(data);
   });
 
   return (

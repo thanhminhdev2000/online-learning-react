@@ -11,6 +11,8 @@ import QuestionPage from '@pages/question';
 import ResetPasswordPage from '@pages/resetPassword';
 import SignUpPage from '@pages/signup';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LearnPage from './pages/learn';
 
 const App = () => {
@@ -35,6 +37,8 @@ const App = () => {
           </Route>
         </Routes>
       </Router>
+
+      <ToastContainer />
     </Box>
   );
 };
