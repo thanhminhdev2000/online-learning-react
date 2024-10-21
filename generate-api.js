@@ -43,12 +43,15 @@ generateApi({
   moduleNameFirstTag: true,
   hooks: {
     onFormatTypeName(typeName) {
-      return typeName.replaceAll('Models', '');
+      return typeName.replace('Models', '');
     },
-    onFormatRouteName(_, templateRouteName) {
-      templateRouteName = templateRouteName.replaceAll('Create', '');
+    onFormatRouteName(routeInfo, templateRouteName) {
+      if (routeInfo.route.includes('/auth')) {
+        return templateRouteName.replace('Create', '').replace('Update', '');
+      }
+
       if (templateRouteName?.includes('users')) {
-        const converted = templateRouteName.replaceAll('users', 'user');
+        const converted = templateRouteName.replace('users', 'user');
         return converted;
       }
       return templateRouteName;
