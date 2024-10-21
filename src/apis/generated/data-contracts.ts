@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* tslint:disable */
 /*
  * ---------------------------------------------------------------
@@ -60,6 +59,9 @@ export interface UserDetailDto {
   fullName: string;
   id: number;
   username: string;
+  gender: string;
+  avatar: string;
+  dateOrBirth: string;
 }
 
 export type ForgotPasswordDataDto = MessageDto;

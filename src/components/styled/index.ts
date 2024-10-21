@@ -1,14 +1,4 @@
-import { Divider, Stack, styled } from '@mui/material';
-import { Link } from 'react-router-dom';
-
-export const LinkItem = styled(Link)(() => ({
-  textDecoration: 'none',
-  color: '#2e69ff',
-
-  '&:hover': {
-    textDecoration: 'underline',
-  },
-}));
+import { Divider, Stack, styled, Typography } from '@mui/material';
 
 export const AuthContainer = styled('form')(() => ({
   padding: '2rem',
@@ -28,4 +18,19 @@ export const HorizontalDivider = styled(Divider)(() => ({
 export const ItemCenter = styled(Stack)(() => ({
   justifyContent: 'center',
   alignItems: 'center',
+}));
+
+export const TypographyHover = styled(Typography)(() => ({
+  padding: '8px 4px',
+  borderRadius: 8,
+
+  '&:hover': {
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    cursor: 'pointer',
+  },
+}));
+
+export const TypographyLink = styled(Typography)(() => ({
+  cursor: 'pointer',
+  color: '#2e69ff',
 }));

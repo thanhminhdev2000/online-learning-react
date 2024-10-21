@@ -13,7 +13,8 @@
       "@utils/*": ["utils/*"],
       "@config/*": ["config/*"],
       "@hooks/*": ["hooks/*"],
-      "@apis/*": ["apis/*"]
+      "@apis/*": ["apis/*"],
+      "@common/*": ["common/*"]
     }
   },
   "include": ["src"]

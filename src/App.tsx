@@ -1,18 +1,18 @@
 import Layout from '@components/layout';
 import AboutPage from '@pages/about';
-import UserProfile from '@pages/authentication/users/userProfile';
+import ForgotPasswordPage from '@pages/authentication/forgotPassword';
+import UserPage from '@pages/authentication/users';
 import ContactPage from '@pages/contact';
 import DocumentationPage from '@pages/documentation';
 import DonatePage from '@pages/donate';
-import ForgotPasswordPage from '@pages/forgotPassword';
 import HomePage from '@pages/home';
 import QuestionPage from '@pages/question';
-import ResetPasswordPage from '@pages/resetPassword';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoginPage from './pages/authentication/login';
+import ResetPasswordPage from './pages/authentication/resetPassword';
 import SignUpPage from './pages/authentication/signup';
 import LearnPage from './pages/learn';
 
@@ -38,7 +38,7 @@ const App = () => {
             <Route path="/donate" element={<DonatePage />} />
             <Route path="/contact" element={<ContactPage />} />
 
-            <Route path="/users/:id" element={<UserProfile />} />
+            <Route path="/users/:userId" element={<UserPage />} />
           </Route>
         </Routes>
       </Router>

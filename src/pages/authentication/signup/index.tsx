@@ -1,6 +1,6 @@
 import { useCreateUser } from '@apis/hooks/user.hook';
 import CInput from '@components/cInput';
-import { AuthContainer, ItemCenter, LinkItem } from '@components/styled';
+import { AuthContainer, ItemCenter, TypographyLink } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { signUpInit } from '@pages/authentication/signup/constant';
@@ -47,13 +47,13 @@ const SignUpPage = () => {
           <CInput label="Họ và tên" errorMsg={errors.fullName?.message} registerProps={register('fullName')} />
           <CInput
             label="Mật khẩu"
-            type="password"
+            textFiledType="password"
             errorMsg={errors.password?.message}
             registerProps={register('password')}
           />
           <CInput
             label="Nhập lại mật khẩu"
-            type="password"
+            textFiledType="password"
             errorMsg={errors.retypePassword?.message}
             registerProps={register('retypePassword')}
           />
@@ -65,24 +65,18 @@ const SignUpPage = () => {
           </Button>
         </Box>
 
-        <Typography marginTop={1} color="#707070">
+        <Typography marginTop={1} color="textSecondary">
           Khi đăng ký, bạn đã đồng ý với Điều khoản sử dụng và Chính sách bảo mật của chúng tôi.
         </Typography>
 
-        <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Stack alignItems="center" justifyContent="space-between">
           <Box display="flex" marginTop={2} gap={1}>
             <Typography>Bạn đã có tài khoản?</Typography>
-            <LinkItem to="/login" color="primary">
-              Đăng nhập!
-            </LinkItem>
+            <TypographyLink onClick={() => navigate('/login')}>Đăng nhập!</TypographyLink>
           </Box>
 
-          <Typography>
-            <LinkItem to="/forgot-password" color="primary">
-              Quên mật khẩu?
-            </LinkItem>
-          </Typography>
-        </Box>
+          <TypographyLink onClick={() => navigate('/forgot-password')}>Quên mật khẩu?</TypographyLink>
+        </Stack>
       </AuthContainer>
     </ItemCenter>
   );

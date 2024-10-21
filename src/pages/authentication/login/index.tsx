@@ -1,11 +1,21 @@
 import { useLogin } from '@apis/hooks/authentication.hook';
 import CInput from '@components/cInput';
-import { AuthContainer, ItemCenter, LinkItem } from '@components/styled';
+import { AuthContainer, ItemCenter, TypographyLink } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { loginSchema } from '@pages/authentication/login/type';
+import { errorMsg } from '@utils/index';
+
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { z } from 'zod';
+
+const loginSchema = z.object({
+  identifier: z
+    .string()
+    .min(1, errorMsg('Email hoặc Username'))
+    .min(6, errorMsg('Email hoặc Username', 'tối thiếu có 6 kí tự')),
+  password: z.string().min(1, errorMsg('Mật khẩu')).min(6, errorMsg('Mật khẩu', 'tối thiếu có 6 kí tự')),
+});
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -53,7 +63,7 @@ const LoginPage = () => {
           />
           <CInput
             label="Mật khẩu"
-            type="password"
+            textFiledType="password"
             errorMsg={errors.password?.message}
             registerProps={register('password')}
           />
@@ -68,16 +78,10 @@ const LoginPage = () => {
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" marginTop={2} gap={1}>
             <Typography>Bạn chưa có tài khoản?</Typography>
-            <LinkItem to="/signup" color="primary">
-              Đăng ký!
-            </LinkItem>
+            <TypographyLink onClick={() => navigate('/signup')}>Đăng ký!</TypographyLink>
           </Box>
 
-          <Typography>
-            <LinkItem to="/forgot-password" color="primary">
-              Quên mật khẩu?
-            </LinkItem>
-          </Typography>
+          <TypographyLink onClick={() => navigate('/forgot-password')}>Quên mật khẩu?</TypographyLink>
         </Box>
       </AuthContainer>
     </ItemCenter>

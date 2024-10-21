@@ -1,12 +1,19 @@
 import CInput from '@components/cInput';
-import { AuthContainer, ItemCenter, LinkItem } from '@components/styled';
+import { AuthContainer, ItemCenter, TypographyLink } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { forgotPasswordSchema } from '@pages/forgotPassword/type';
+import { errorMsg } from '@utils/index';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { z } from 'zod';
+
+const forgotPasswordSchema = z.object({
+  email: z.string().min(1, errorMsg('Email')),
+});
 
 const ForgotPasswordPage = () => {
+  const navigate = useNavigate();
   const [nextStep, setNextStep] = useState(false);
 
   const {
@@ -38,7 +45,7 @@ const ForgotPasswordPage = () => {
               Quên mật khẩu
             </Typography>
 
-            <Stack marginTop={3}>
+            <Stack flexDirection="column" marginTop={3}>
               <CInput label="Email" errorMsg={errors.email?.message} registerProps={register('email')} />
             </Stack>
 
@@ -48,19 +55,13 @@ const ForgotPasswordPage = () => {
               </Button>
             </Box>
 
-            <Box display="flex" alignItems="center" justifyContent="space-between">
-              <Box display="flex" marginTop={2} gap={1}>
+            <Box display="flex" alignItems="center" justifyContent="space-between" marginTop={2}>
+              <Stack gap={1}>
                 <Typography>Bạn đã có tài khoản?</Typography>
-                <LinkItem to="/login" color="primary">
-                  Đăng nhập!
-                </LinkItem>
-              </Box>
+                <TypographyLink onClick={() => navigate('/login')}>Đăng nhập!</TypographyLink>
+              </Stack>
 
-              <Typography>
-                <LinkItem to="/signup" color="primary">
-                  Đăng ký tài khoản mới?
-                </LinkItem>
-              </Typography>
+              <TypographyLink onClick={() => navigate('/signup')}>Đăng ký tài khoản mới!</TypographyLink>
             </Box>
           </AuthContainer>
         </ItemCenter>
