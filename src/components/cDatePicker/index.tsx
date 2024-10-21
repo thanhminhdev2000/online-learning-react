@@ -1,44 +1,47 @@
 import ErrorMessage from '@components/error';
-import { Box, FormLabel, Stack } from '@mui/material';
+import { CFormLabel, FormWrapper, InputWrapper } from '@components/styled';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Dayjs } from 'dayjs';
-import { useState } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import dayjs, { Dayjs } from 'dayjs';
+import { useFormContext, UseFormRegisterReturn } from 'react-hook-form';
 
 interface CDatePickerProps {
   label: string;
   errorMsg?: string;
   registerProps: UseFormRegisterReturn;
   size?: 'small' | 'medium';
+  disabled?: boolean;
 }
 
-const CDatePicker = ({ label, errorMsg, registerProps, size = 'small' }: CDatePickerProps) => {
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+const CDatePicker = ({ label, errorMsg, registerProps, size = 'small', disabled }: CDatePickerProps) => {
+  const { watch } = useFormContext();
+  const selectedValue = watch(registerProps.name);
+  const parsedValue = selectedValue ? dayjs(selectedValue) : null;
 
   const handleDateChange = (date: Dayjs | null) => {
-    setSelectedDate(date);
     if (registerProps.onChange) {
       registerProps.onChange({
         target: {
           name: registerProps.name,
-          value: date?.toISOString() || '',
+          value: date ? date.toISOString() : '',
         },
       });
     }
   };
 
   return (
-    <Stack flexDirection="column" width="100%">
-      <FormLabel sx={{ color: '#222c37' }}>{label}</FormLabel>
-      <Box marginTop={0.5} width="100%">
+    <FormWrapper>
+      <CFormLabel>{label}</CFormLabel>
+      <InputWrapper>
         <DatePicker
-          value={selectedDate}
+          value={parsedValue}
           onChange={handleDateChange}
           slotProps={{ textField: { size, fullWidth: true } }}
+          format="DD/MM/YYYY"
+          disabled={disabled}
         />
-      </Box>
-      <ErrorMessage message={errorMsg} />
-    </Stack>
+      </InputWrapper>
+      {errorMsg && <ErrorMessage message={errorMsg} />}
+    </FormWrapper>
   );
 };
 

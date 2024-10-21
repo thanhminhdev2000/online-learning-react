@@ -1,5 +1,6 @@
 import ErrorMessage from '@components/error';
-import { Box, FormLabel, Stack, TextField } from '@mui/material';
+import { CFormLabel, FormWrapper, InputWrapper } from '@components/styled';
+import { TextField } from '@mui/material';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface CInputProps {
@@ -9,13 +10,14 @@ interface CInputProps {
   type?: 'text' | 'password';
   size?: 'small' | 'medium';
   textArea?: boolean;
+  disabled?: boolean;
 }
 
-const CInput = ({ label, errorMsg, registerProps, type = 'text', size = 'small', textArea }: CInputProps) => {
+const CInput = ({ label, errorMsg, registerProps, type = 'text', size = 'small', textArea, disabled }: CInputProps) => {
   return (
-    <Stack flexDirection="column" width="100%">
-      <FormLabel sx={{ color: '#222c37' }}>{label}</FormLabel>
-      <Box marginTop={0.5}>
+    <FormWrapper>
+      <CFormLabel>{label}</CFormLabel>
+      <InputWrapper>
         <TextField
           fullWidth
           type={type}
@@ -24,11 +26,12 @@ const CInput = ({ label, errorMsg, registerProps, type = 'text', size = 'small',
           placeholder={label}
           multiline={textArea}
           rows={4}
+          disabled={disabled}
           {...registerProps}
         />
-      </Box>
+      </InputWrapper>
       <ErrorMessage message={errorMsg} />
-    </Stack>
+    </FormWrapper>
   );
 };
 

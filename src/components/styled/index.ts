@@ -1,4 +1,4 @@
-import { Divider, Stack, styled, Typography } from '@mui/material';
+import { Box, Divider, FormLabel, Stack, styled, Typography } from '@mui/material';
 
 export const AuthContainer = styled('form')(() => ({
   padding: '2rem',
@@ -33,4 +33,18 @@ export const TypographyHover = styled(Typography)(() => ({
 export const TypographyLink = styled(Typography)(() => ({
   cursor: 'pointer',
   color: '#2e69ff',
+}));
+
+export const CFormLabel = styled(FormLabel)(() => ({
+  color: '#222c37',
+}));
+
+export const InputWrapper = styled(Box)(() => ({
+  marginTop: 2,
+  width: '100%',
+}));
+
+export const FormWrapper = styled(Stack)(() => ({
+  flexDirection: 'column',
+  width: '100%',
 }));

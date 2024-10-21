@@ -14,7 +14,8 @@
       "@config/*": ["config/*"],
       "@hooks/*": ["hooks/*"],
       "@apis/*": ["apis/*"],
-      "@common/*": ["common/*"]
+      "@common/*": ["common/*"],
+      "@store/*": ["store/*"]
     }
   },
   "include": ["src"]

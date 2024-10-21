@@ -59,6 +59,11 @@ export interface ResetPasswordRequestDto {
   password: string;
 }
 
+export interface UpdateUserResponseDto {
+  message: string;
+  user: UserDetailDto;
+}
+
 export interface UserDetailDto {
   avatar?: string;
   dateOfBirth?: string;
@@ -104,7 +109,7 @@ export type UserDetailDataDto = UserDetailDto;
 
 export type UserDetailErrorDto = ErrorDto;
 
-export type UserUpdateDataDto = MessageDto;
+export type UserUpdateDataDto = UpdateUserResponseDto;
 
 export type UserUpdateErrorDto = ErrorDto;
 

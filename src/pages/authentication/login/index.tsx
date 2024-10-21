@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { errorMsg } from '@utils/index';
 
+import useAuthStore from '@store/authStore';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
@@ -19,7 +20,7 @@ const loginSchema = z.object({
 
 const LoginPage = () => {
   const navigate = useNavigate();
-
+  const { login } = useAuthStore();
   const {
     register,
     handleSubmit,
@@ -38,8 +39,7 @@ const LoginPage = () => {
   const onSubmit = handleSubmit((data) => {
     mutate(data, {
       onSuccess(data) {
-        localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('accessToken', data.accessToken);
+        login(data.user, data.accessToken);
         navigate('/');
       },
       onError(data) {

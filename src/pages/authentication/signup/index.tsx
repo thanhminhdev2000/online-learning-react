@@ -10,21 +10,22 @@ import { signUpInit } from '@pages/authentication/signup/constant';
 import { signUpSchema } from '@pages/authentication/signup/type';
 import dayjs from 'dayjs';
 
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
 
+  const formInstance = useForm({
+    resolver: zodResolver(signUpSchema),
+    values: signUpInit,
+  });
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(signUpSchema),
-    values: signUpInit,
-  });
+  } = formInstance;
   const { mutate } = useCreateUser();
 
   const onSubmit = handleSubmit((data) => {
@@ -46,40 +47,41 @@ const SignUpPage = () => {
         <Typography variant="h5" fontWeight="bold" textAlign="center">
           ĐĂNG KÝ
         </Typography>
-
-        <Stack flexDirection="column" gap={2} marginTop={2}>
-          <CInput label="Email" errorMsg={errors.email?.message} registerProps={register('email')} />
-          <CInput label="Username" errorMsg={errors.username?.message} registerProps={register('username')} />
-          <CInput label="Họ và tên" errorMsg={errors.fullName?.message} registerProps={register('fullName')} />
-          <CInput
-            label="Mật khẩu"
-            type="password"
-            errorMsg={errors.password?.message}
-            registerProps={register('password')}
-          />
-          <CInput
-            label="Nhập lại mật khẩu"
-            type="password"
-            errorMsg={errors.retypePassword?.message}
-            registerProps={register('retypePassword')}
-          />
-
-          <Stack gap={2}>
-            <CSelect
-              label="Giới tính"
-              errorMsg={errors.gender?.message}
-              registerProps={register('gender')}
-              selectOptions={genderOptions}
-              placeholder="Chọn giới tính"
+        <FormProvider {...formInstance}>
+          <Stack flexDirection="column" gap={2} marginTop={2}>
+            <CInput label="Email" errorMsg={errors.email?.message} registerProps={register('email')} />
+            <CInput label="Username" errorMsg={errors.username?.message} registerProps={register('username')} />
+            <CInput label="Họ và tên" errorMsg={errors.fullName?.message} registerProps={register('fullName')} />
+            <CInput
+              label="Mật khẩu"
+              type="password"
+              errorMsg={errors.password?.message}
+              registerProps={register('password')}
+            />
+            <CInput
+              label="Nhập lại mật khẩu"
+              type="password"
+              errorMsg={errors.retypePassword?.message}
+              registerProps={register('retypePassword')}
             />
 
-            <CDatePicker
-              label="Ngày sinh"
-              errorMsg={errors.dateOfBirth?.message}
-              registerProps={register('dateOfBirth')}
-            />
+            <Stack gap={2}>
+              <CSelect
+                label="Giới tính"
+                errorMsg={errors.gender?.message}
+                registerProps={register('gender')}
+                selectOptions={genderOptions}
+                placeholder="Chọn giới tính"
+              />
+
+              <CDatePicker
+                label="Ngày sinh"
+                errorMsg={errors.dateOfBirth?.message}
+                registerProps={register('dateOfBirth')}
+              />
+            </Stack>
           </Stack>
-        </Stack>
+        </FormProvider>
 
         <Box marginTop={4}>
           <Button fullWidth variant="contained" type="submit">

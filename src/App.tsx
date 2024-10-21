@@ -9,7 +9,9 @@ import DocumentationPage from '@pages/documentation';
 import DonatePage from '@pages/donate';
 import HomePage from '@pages/home';
 import QuestionPage from '@pages/question';
+import useAuthStore from '@store/authStore';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,6 +23,13 @@ import LearnPage from './pages/learn';
 const queryClient = new QueryClient();
 
 const App = () => {
+  const { login } = useAuthStore();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user') as string);
+    login(user);
+  }, [login]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>

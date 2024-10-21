@@ -1,7 +1,8 @@
 import { IOptions } from '@common/type';
 import ErrorMessage from '@components/error';
-import { Box, FormLabel, MenuItem, Select, Stack } from '@mui/material';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { CFormLabel, FormWrapper, InputWrapper } from '@components/styled';
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { UseFormRegisterReturn, useFormContext } from 'react-hook-form';
 
 interface CSelectProps {
   label: string;
@@ -10,14 +11,44 @@ interface CSelectProps {
   size?: 'small' | 'medium';
   selectOptions: IOptions[];
   placeholder?: string;
+  disabled?: boolean;
 }
 
-const CSelect = ({ label, errorMsg, registerProps, size = 'small', selectOptions = [], placeholder }: CSelectProps) => {
+const CSelect = ({
+  label,
+  errorMsg,
+  registerProps,
+  size = 'small',
+  selectOptions = [],
+  placeholder,
+  disabled,
+}: CSelectProps) => {
+  const { watch } = useFormContext();
+  const selectedValue = watch(registerProps.name);
+
+  const handleChange = (event: SelectChangeEvent<string>) => {
+    if (registerProps.onChange) {
+      registerProps.onChange({
+        target: {
+          name: registerProps.name,
+          value: event.target.value || '',
+        },
+      });
+    }
+  };
+
   return (
-    <Stack flexDirection="column" width="100%">
-      <FormLabel sx={{ color: '#222c37' }}>{label}</FormLabel>
-      <Box marginTop={0.5}>
-        <Select size={size} {...registerProps} sx={{ width: '100%' }} defaultValue="" displayEmpty>
+    <FormWrapper>
+      <CFormLabel>{label}</CFormLabel>
+      <InputWrapper>
+        <Select
+          size={size}
+          value={selectedValue || ''}
+          onChange={handleChange}
+          sx={{ width: '100%' }}
+          displayEmpty
+          disabled={disabled}
+        >
           <MenuItem value="" disabled>
             {placeholder}
           </MenuItem>
@@ -27,9 +58,9 @@ const CSelect = ({ label, errorMsg, registerProps, size = 'small', selectOptions
             </MenuItem>
           ))}
         </Select>
-      </Box>
+      </InputWrapper>
       <ErrorMessage message={errorMsg} />
-    </Stack>
+    </FormWrapper>
   );
 };
 

@@ -2,8 +2,11 @@ import {
   CreateUserRequestDto,
   UserCreateDataDto,
   UserCreateErrorDto,
+  UserDetailDto,
   UserListDataDto,
   UserListErrorDto,
+  UserUpdateDataDto,
+  UserUpdateErrorDto,
 } from '@apis/generated/data-contracts';
 import { User } from '@apis/generated/User';
 import httpClient from '@config/httpClient';
@@ -43,6 +46,18 @@ export const useCreateUser = (): UseMutationResult<
   return useMutation({
     mutationFn: (payload: CreateUserRequestDto) => {
       return userApi.userCreate(payload);
+    },
+  });
+};
+
+export const useUpdateUser = ({
+  userId,
+}: {
+  userId: number;
+}): UseMutationResult<UserUpdateDataDto, UserUpdateErrorDto, UserDetailDto, unknown> => {
+  return useMutation({
+    mutationFn: (payload: UserDetailDto) => {
+      return userApi.userUpdate(userId, payload);
     },
   });
 };
