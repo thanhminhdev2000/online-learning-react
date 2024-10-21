@@ -4,4 +4,6 @@ export const signUpInit = {
   fullName: '',
   password: '',
   retypePassword: '',
+  gender: '',
+  dateOfBirth: '',
 };

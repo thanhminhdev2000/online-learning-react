@@ -1,5 +1,3 @@
-import { IOptions } from 'common';
-
 export enum UserMenu {
   PROFILE = 'PROFILE',
   AVATAR = 'AVATAR',
@@ -18,16 +16,5 @@ export const menuSettings = [
   {
     path: UserMenu.PASSWORD,
     pathName: 'Mật khẩu',
-  },
-];
-
-export const genderOptions: IOptions[] = [
-  {
-    key: 'Nam',
-    value: 'male',
-  },
-  {
-    key: 'Nữ',
-    value: 'female',
   },
 ];

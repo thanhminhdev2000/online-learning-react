@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* tslint:disable */
 /*
  * ---------------------------------------------------------------
@@ -13,8 +14,11 @@ export interface AccessTokenResponseDto {
 }
 
 export interface CreateUserRequestDto {
+  avatar?: string;
+  dateOfBirth?: string;
   email: string;
   fullName: string;
+  gender: string;
   /** @minLength 6 */
   password: string;
   username: string;
@@ -44,6 +48,7 @@ export interface MessageDto {
 }
 
 export interface PasswordUpdateRequestDto {
+  /** @minLength 6 */
   currentPassword: string;
   /** @minLength 6 */
   newPassword: string;
@@ -55,13 +60,13 @@ export interface ResetPasswordRequestDto {
 }
 
 export interface UserDetailDto {
+  avatar?: string;
+  dateOfBirth?: string;
   email: string;
   fullName: string;
+  gender: string;
   id: number;
   username: string;
-  gender: string;
-  avatar: string;
-  dateOrBirth: string;
 }
 
 export type ForgotPasswordDataDto = MessageDto;

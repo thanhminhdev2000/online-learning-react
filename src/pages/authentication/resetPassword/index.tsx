@@ -40,8 +40,8 @@ const ResetPasswordPage = () => {
     <>
       <ItemCenter height="80vh">
         <AuthContainer onSubmit={onSubmit}>
-          <Typography variant="h4" textAlign="center">
-            Đặt lại mật khẩu
+          <Typography variant="h5" fontWeight="bold" textAlign="center">
+            ĐẶT LẠI MẬT KHẨU
           </Typography>
 
           <Stack gap={3} marginTop={3}>

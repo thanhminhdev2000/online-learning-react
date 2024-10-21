@@ -51,8 +51,8 @@ const LoginPage = () => {
   return (
     <ItemCenter height="80vh">
       <AuthContainer onSubmit={onSubmit}>
-        <Typography variant="h4" textAlign="center">
-          Đăng nhập
+        <Typography variant="h5" fontWeight="bold" textAlign="center">
+          ĐĂNG NHẬP
         </Typography>
 
         <Stack flexDirection="column" gap={3} marginTop={3}>
@@ -63,7 +63,7 @@ const LoginPage = () => {
           />
           <CInput
             label="Mật khẩu"
-            textFiledType="password"
+            type="password"
             errorMsg={errors.password?.message}
             registerProps={register('password')}
           />

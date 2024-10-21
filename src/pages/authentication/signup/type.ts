@@ -8,6 +8,8 @@ export const signUpSchema = z
     fullName: z.string().min(1, errorMsg('Họ và tên')),
     password: z.string().min(1, errorMsg('Mật khẩu')).min(6, errorMsg('Mật khẩu ,', 'tối thiếu có 6 kí tự')),
     retypePassword: z.string().min(1, errorMsg('Mật khẩu')).min(6, errorMsg('Mật khẩu ,', 'tối thiếu có 6 kí tự')),
+    gender: z.string().min(1, errorMsg('Giới tính')),
+    dateOfBirth: z.string().min(1, errorMsg('Ngày sinh')),
   })
   .refine((data) => data.password === data.retypePassword, {
     message: 'Mật khẩu không khớp',

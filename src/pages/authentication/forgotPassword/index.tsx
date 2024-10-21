@@ -41,8 +41,8 @@ const ForgotPasswordPage = () => {
       ) : (
         <ItemCenter height="80vh">
           <AuthContainer onSubmit={onSubmit}>
-            <Typography variant="h4" textAlign="center">
-              Quên mật khẩu
+            <Typography variant="h5" fontWeight="bold" textAlign="center">
+              QUÊN MẬT KHẨU
             </Typography>
 
             <Stack flexDirection="column" marginTop={3}>

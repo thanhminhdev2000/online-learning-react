@@ -1,8 +1,10 @@
 import { UserDetailDto } from '@apis/generated/data-contracts';
+import { genderOptions } from '@common/constant';
 import CInput from '@components/cInput';
+import CSelect from '@components/cSelect';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
-import { genderOptions } from '@pages/authentication/users/constant';
+
 import { userProfileSchema } from '@pages/authentication/users/type';
 import { useForm } from 'react-hook-form';
 
@@ -15,6 +17,9 @@ const UserProfile = () => {
       email: user.email,
       username: user.username,
       fullName: user.fullName,
+      gender: user.gender,
+      dateOfBirth: user.dateOfBirth,
+      avatar: user.avatar,
     },
   });
 
@@ -26,7 +31,12 @@ const UserProfile = () => {
       </Typography>
 
       <CInput label="Tên hiển thị" registerProps={register('email')} />
-      <CInput label="Giới tính" type="select" selectOptions={genderOptions} registerProps={register('email')} />
+      <CSelect
+        label="Giới tính"
+        selectOptions={genderOptions}
+        registerProps={register('gender')}
+        placeholder="Chọn giới tính"
+      />
 
       <TextField label="Nghề nghiệp" fullWidth multiline rows={2} placeholder="..." />
       <TextField label="Kỹ năng chuyên môn" fullWidth multiline rows={2} placeholder="..." />

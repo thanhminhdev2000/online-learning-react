@@ -1,4 +1,6 @@
 import Layout from '@components/layout';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider/LocalizationProvider';
 import AboutPage from '@pages/about';
 import ForgotPasswordPage from '@pages/authentication/forgotPassword';
 import UserPage from '@pages/authentication/users';
@@ -21,29 +23,31 @@ const queryClient = new QueryClient();
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
 
-          <Route element={<Layout />}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route element={<Layout />}>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
 
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/learn" element={<LearnPage />} />
-            <Route path="/question" element={<QuestionPage />} />
-            <Route path="/documentation" element={<DocumentationPage />} />
-            <Route path="/donate" element={<DonatePage />} />
-            <Route path="/contact" element={<ContactPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/learn" element={<LearnPage />} />
+              <Route path="/question" element={<QuestionPage />} />
+              <Route path="/documentation" element={<DocumentationPage />} />
+              <Route path="/donate" element={<DonatePage />} />
+              <Route path="/contact" element={<ContactPage />} />
 
-            <Route path="/users/:userId" element={<UserPage />} />
-          </Route>
-        </Routes>
-      </Router>
+              <Route path="/users/:userId" element={<UserPage />} />
+            </Route>
+          </Routes>
+        </Router>
 
-      <ToastContainer />
+        <ToastContainer />
+      </LocalizationProvider>
     </QueryClientProvider>
   );
 };
