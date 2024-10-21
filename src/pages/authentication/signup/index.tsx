@@ -1,10 +1,10 @@
 import { useCreateUser } from '@apis/hooks/user.hook';
 import CInput from '@components/cInput';
-import { AuthContainer, LinkItem } from '@components/styled';
+import { AuthContainer, ItemCenter, LinkItem } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { signUpInit } from '@pages/signup/constant';
-import { signUpSchema } from '@pages/signup/type';
+import { signUpInit } from '@pages/authentication/signup/constant';
+import { signUpSchema } from '@pages/authentication/signup/type';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -35,13 +35,13 @@ const SignUpPage = () => {
   });
 
   return (
-    <Stack alignItems="center" justifyContent="center" height="80vh">
+    <ItemCenter height="80vh">
       <AuthContainer onSubmit={onSubmit}>
         <Typography variant="h4" textAlign="center">
           Đăng ký
         </Typography>
 
-        <Stack gap={3} marginTop={3}>
+        <Stack flexDirection="column" gap={3} marginTop={3}>
           <CInput label="Email" errorMsg={errors.email?.message} registerProps={register('email')} />
           <CInput label="Username" errorMsg={errors.username?.message} registerProps={register('username')} />
           <CInput label="Họ và tên" errorMsg={errors.fullName?.message} registerProps={register('fullName')} />
@@ -84,7 +84,7 @@ const SignUpPage = () => {
           </Typography>
         </Box>
       </AuthContainer>
-    </Stack>
+    </ItemCenter>
   );
 };
 

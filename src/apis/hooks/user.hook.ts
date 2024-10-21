@@ -1,18 +1,15 @@
 import {
-  LoginDataDto,
-  LoginErrorDto,
-  LoginRequestDto,
-  SignupDataDto,
-  SignupErrorDto,
-  SignUpRequestDto,
+  CreateUserRequestDto,
+  UserCreateDataDto,
+  UserCreateErrorDto,
   UserListDataDto,
   UserListErrorDto,
 } from '@apis/generated/data-contracts';
-import { Users } from '@apis/generated/Users';
+import { User } from '@apis/generated/User';
 import httpClient from '@config/httpClient';
 import { useMutation, UseMutationResult, useQuery, UseQueryResult } from '@tanstack/react-query';
 
-export const users = new Users(httpClient);
+export const userApi = new User(httpClient);
 
 const queryKeys = {
   getUsers: 'getUsers',
@@ -23,7 +20,7 @@ export const useGetUsers = (): UseQueryResult<UserListDataDto, UserListErrorDto>
   return useQuery({
     queryKey: [queryKeys.getUsers],
     queryFn: () => {
-      return users.userList();
+      return userApi.userList();
     },
   });
 };
@@ -32,23 +29,20 @@ export const useGetUser = (userId: number): UseQueryResult<UserListDataDto, User
   return useQuery({
     queryKey: [queryKeys.getUser, userId],
     queryFn: () => {
-      return users.userDetail(userId);
+      return userApi.userDetail(userId);
     },
   });
 };
 
-export const useCreateUser = (): UseMutationResult<SignupDataDto, SignupErrorDto, SignUpRequestDto, unknown> => {
+export const useCreateUser = (): UseMutationResult<
+  UserCreateDataDto,
+  UserCreateErrorDto,
+  CreateUserRequestDto,
+  unknown
+> => {
   return useMutation({
-    mutationFn: (payload: SignUpRequestDto) => {
-      return users.signup(payload);
-    },
-  });
-};
-
-export const useLogin = (): UseMutationResult<LoginDataDto, LoginErrorDto, LoginRequestDto, unknown> => {
-  return useMutation({
-    mutationFn: (payload: LoginRequestDto) => {
-      return users.login(payload);
+    mutationFn: (payload: CreateUserRequestDto) => {
+      return userApi.userCreate(payload);
     },
   });
 };

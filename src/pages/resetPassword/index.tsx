@@ -1,5 +1,5 @@
 import CInput from '@components/cInput';
-import { AuthContainer, LinkItem } from '@components/styled';
+import { AuthContainer, ItemCenter, LinkItem } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { resetPasswordSchema } from '@pages/resetPassword/type';
@@ -24,7 +24,7 @@ const ResetPasswordPage = () => {
 
   return (
     <>
-      <Stack alignItems="center" justifyContent="center" height="80vh">
+      <ItemCenter height="80vh">
         <AuthContainer onSubmit={onSubmit}>
           <Typography variant="h4" textAlign="center">
             Đặt lại mật khẩu
@@ -55,7 +55,7 @@ const ResetPasswordPage = () => {
             </LinkItem>
           </Box>
         </AuthContainer>
-      </Stack>
+      </ItemCenter>
     </>
   );
 };

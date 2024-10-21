@@ -1,5 +1,5 @@
 import CInput from '@components/cInput';
-import { AuthContainer, LinkItem } from '@components/styled';
+import { AuthContainer, ItemCenter, LinkItem } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { forgotPasswordSchema } from '@pages/forgotPassword/type';
@@ -28,17 +28,17 @@ const ForgotPasswordPage = () => {
   return (
     <>
       {nextStep ? (
-        <Stack alignItems="center" justifyContent="center" height="80vh">
+        <ItemCenter height="80vh">
           <AuthContainer>Vui lòng kiểm tra email để đặt lại mật khẩu.</AuthContainer>
-        </Stack>
+        </ItemCenter>
       ) : (
-        <Stack alignItems="center" justifyContent="center" height="80vh">
+        <ItemCenter height="80vh">
           <AuthContainer onSubmit={onSubmit}>
             <Typography variant="h4" textAlign="center">
               Quên mật khẩu
             </Typography>
 
-            <Stack gap={3} marginTop={3}>
+            <Stack marginTop={3}>
               <CInput label="Email" errorMsg={errors.email?.message} registerProps={register('email')} />
             </Stack>
 
@@ -63,7 +63,7 @@ const ForgotPasswordPage = () => {
               </Typography>
             </Box>
           </AuthContainer>
-        </Stack>
+        </ItemCenter>
       )}
     </>
   );

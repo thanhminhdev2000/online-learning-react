@@ -1,18 +1,19 @@
 import Layout from '@components/layout';
 import AboutPage from '@pages/about';
+import UserProfile from '@pages/authentication/users/userProfile';
 import ContactPage from '@pages/contact';
 import DocumentationPage from '@pages/documentation';
 import DonatePage from '@pages/donate';
 import ForgotPasswordPage from '@pages/forgotPassword';
 import HomePage from '@pages/home';
-import LoginPage from '@pages/login';
 import QuestionPage from '@pages/question';
 import ResetPasswordPage from '@pages/resetPassword';
-import SignUpPage from '@pages/signup';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LoginPage from './pages/authentication/login';
+import SignUpPage from './pages/authentication/signup';
 import LearnPage from './pages/learn';
 
 const queryClient = new QueryClient();
@@ -36,6 +37,8 @@ const App = () => {
             <Route path="/documentation" element={<DocumentationPage />} />
             <Route path="/donate" element={<DonatePage />} />
             <Route path="/contact" element={<ContactPage />} />
+
+            <Route path="/users/:id" element={<UserProfile />} />
           </Route>
         </Routes>
       </Router>

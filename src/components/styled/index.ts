@@ -1,4 +1,4 @@
-import { styled } from '@mui/material';
+import { Divider, Stack, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export const LinkItem = styled(Link)(() => ({
@@ -18,4 +18,14 @@ export const AuthContainer = styled('form')(() => ({
   maxWidth: '600px',
   minWidth: '400px',
   width: '100%',
+}));
+
+export const HorizontalDivider = styled(Divider)(() => ({
+  color: '#fff',
+  margin: '5px 10px',
+}));
+
+export const ItemCenter = styled(Stack)(() => ({
+  justifyContent: 'center',
+  alignItems: 'center',
 }));

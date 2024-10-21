@@ -1,9 +1,9 @@
-import { useLogin } from '@apis/hooks/user.hook';
+import { useLogin } from '@apis/hooks/authentication.hook';
 import CInput from '@components/cInput';
-import { AuthContainer, LinkItem } from '@components/styled';
+import { AuthContainer, ItemCenter, LinkItem } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { loginSchema } from '@pages/login/type';
+import { loginSchema } from '@pages/authentication/login/type';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,6 +28,7 @@ const LoginPage = () => {
   const onSubmit = handleSubmit((data) => {
     mutate(data, {
       onSuccess(data) {
+        localStorage.setItem('user', JSON.stringify(data.user));
         localStorage.setItem('accessToken', data.accessToken);
         navigate('/');
       },
@@ -38,13 +39,13 @@ const LoginPage = () => {
   });
 
   return (
-    <Stack alignItems="center" justifyContent="center" height="80vh">
+    <ItemCenter height="80vh">
       <AuthContainer onSubmit={onSubmit}>
         <Typography variant="h4" textAlign="center">
           Đăng nhập
         </Typography>
 
-        <Stack gap={3} marginTop={3}>
+        <Stack flexDirection="column" gap={3} marginTop={3}>
           <CInput
             label="Email hoặc Username"
             errorMsg={errors.identifier?.message}
@@ -79,7 +80,7 @@ const LoginPage = () => {
           </Typography>
         </Box>
       </AuthContainer>
-    </Stack>
+    </ItemCenter>
   );
 };
 
