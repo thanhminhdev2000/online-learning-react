@@ -1,13 +1,13 @@
 import { useLogout } from '@apis/hooks/authentication.hook';
 import { routes } from '@components/navbar/constant';
 import { IconCursor, NavItem } from '@components/navbar/styled';
-import { HorizontalDivider } from '@components/styled';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import useAuthStore from '@store/authStore';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { HorizontalDivider } from '../../common/styled';
 
 const Navbar = ({ page }: { page?: string }) => {
   const navigate = useNavigate();

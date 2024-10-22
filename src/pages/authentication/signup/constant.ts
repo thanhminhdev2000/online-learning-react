@@ -3,7 +3,8 @@ export const signUpInit = {
   username: '',
   fullName: '',
   password: '',
-  retypePassword: '',
+  confirmPassword: '',
   gender: '',
+  avatar: '',
   dateOfBirth: '',
 };

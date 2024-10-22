@@ -48,3 +48,7 @@ export const FormWrapper = styled(Stack)(() => ({
   flexDirection: 'column',
   width: '100%',
 }));
+
+export const FlexEnd = styled(Stack)(() => ({
+  justifyContent: 'flex-end',
+}));

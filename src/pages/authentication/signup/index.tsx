@@ -3,12 +3,12 @@ import { DATE_FORMAT, genderOptions } from '@common/constant';
 import CDatePicker from '@components/cDatePicker';
 import CInput from '@components/cInput';
 import CSelect from '@components/cSelect';
-import { AuthContainer, ItemCenter, TypographyLink } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { signUpInit } from '@pages/authentication/signup/constant';
 import { signUpSchema } from '@pages/authentication/signup/type';
 import dayjs from 'dayjs';
+import { AuthContainer, ItemCenter, TypographyLink } from '../../../common/styled';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -61,8 +61,8 @@ const SignUpPage = () => {
             <CInput
               label="Nhập lại mật khẩu"
               type="password"
-              errorMsg={errors.retypePassword?.message}
-              registerProps={register('retypePassword')}
+              errorMsg={errors.confirmPassword?.message}
+              registerProps={register('confirmPassword')}
             />
 
             <Stack gap={2}>

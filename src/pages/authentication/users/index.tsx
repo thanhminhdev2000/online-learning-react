@@ -1,11 +1,11 @@
-import { TypographyHover } from '@components/styled';
 import { Stack, Typography } from '@mui/material';
 import UserAvatar from '@pages/authentication/users/components/UserAvatar';
 import UserPassword from '@pages/authentication/users/components/UserPassword';
 import UserProfile from '@pages/authentication/users/components/UserProfile';
 import { menuSettings, UserMenu } from '@pages/authentication/users/constant';
 import { useState } from 'react';
-import { BoxContainer } from './components/styled';
+import { TypographyHover } from '../../../common/styled';
+import { BoxContainer } from './styled';
 
 const UserPage = () => {
   const [menu, setMenu] = useState<UserMenu>(UserMenu.PROFILE);
@@ -23,7 +23,12 @@ const UserPage = () => {
         </BoxContainer>
 
         <BoxContainer width="75%">
-          <Typography variant="h6">CHỈNH SỬA HỒ SƠ CỦA BẠN</Typography>
+          <Typography variant="h6">
+            CHỈNH SỬA&nbsp;
+            {menu === UserMenu.PROFILE && 'HỒ SƠ'}
+            {menu === UserMenu.AVATAR && 'ẢNH ĐẠI DIỆN'}
+            {menu === UserMenu.PASSWORD && 'MẬT KHẨU'} CỦA BẠN
+          </Typography>
 
           {menu === UserMenu.PROFILE && <UserProfile />}
           {menu === UserMenu.AVATAR && <UserAvatar />}

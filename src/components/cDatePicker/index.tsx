@@ -1,8 +1,8 @@
 import ErrorMessage from '@components/error';
-import { CFormLabel, FormWrapper, InputWrapper } from '@components/styled';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 import { useFormContext, UseFormRegisterReturn } from 'react-hook-form';
+import { CFormLabel, FormWrapper, InputWrapper } from '../../common/styled';
 
 interface CDatePickerProps {
   label: string;

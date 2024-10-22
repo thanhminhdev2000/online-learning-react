@@ -14,8 +14,8 @@ export interface AccessTokenResponseDto {
 }
 
 export interface CreateUserRequestDto {
-  avatar?: string;
-  dateOfBirth?: string;
+  avatar: string;
+  dateOfBirth: string;
   email: string;
   fullName: string;
   gender: string;
@@ -65,8 +65,8 @@ export interface UpdateUserResponseDto {
 }
 
 export interface UserDetailDto {
-  avatar?: string;
-  dateOfBirth?: string;
+  avatar: string;
+  dateOfBirth: string;
   email: string;
   fullName: string;
   gender: string;
@@ -116,6 +116,15 @@ export type UserUpdateErrorDto = ErrorDto;
 export type UserDeleteDataDto = MessageDto;
 
 export type UserDeleteErrorDto = ErrorDto;
+
+export interface AvatarUpdatePayloadDto {
+  /** User Avatar */
+  avatar: File;
+}
+
+export type AvatarUpdateDataDto = UpdateUserResponseDto;
+
+export type AvatarUpdateErrorDto = ErrorDto;
 
 export type PasswordUpdateDataDto = MessageDto;
 

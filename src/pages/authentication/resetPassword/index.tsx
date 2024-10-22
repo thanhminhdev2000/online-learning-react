@@ -1,20 +1,20 @@
 import CInput from '@components/cInput';
-import { AuthContainer, ItemCenter, TypographyLink } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { errorMsg } from '@utils/index';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
+import { AuthContainer, ItemCenter, TypographyLink } from '../../../common/styled';
 
 const resetPasswordSchema = z
   .object({
     password: z.string().min(1, errorMsg('Mật khẩu')),
-    retypePassword: z.string().min(1, errorMsg('Mật khẩu')),
+    confirmPassword: z.string().min(1, errorMsg('Mật khẩu')),
   })
-  .refine((data) => data.password === data.retypePassword, {
+  .refine((data) => data.password === data.confirmPassword, {
     message: 'Mật khẩu không khớp',
-    path: ['retypePassword'],
+    path: ['confirmPassword'],
   });
 
 const ResetPasswordPage = () => {
@@ -28,7 +28,7 @@ const ResetPasswordPage = () => {
     resolver: zodResolver(resetPasswordSchema),
     values: {
       password: '',
-      retypePassword: '',
+      confirmPassword: '',
     },
   });
 
@@ -48,8 +48,8 @@ const ResetPasswordPage = () => {
             <CInput label="Mật khẩu" errorMsg={errors.password?.message} registerProps={register('password')} />
             <CInput
               label="Nhập lại mật khẩu"
-              errorMsg={errors.retypePassword?.message}
-              registerProps={register('retypePassword')}
+              errorMsg={errors.confirmPassword?.message}
+              registerProps={register('confirmPassword')}
             />
           </Stack>
 

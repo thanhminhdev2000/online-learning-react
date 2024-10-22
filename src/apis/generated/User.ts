@@ -10,6 +10,9 @@
  */
 
 import {
+  AvatarUpdateDataDto,
+  AvatarUpdateErrorDto,
+  AvatarUpdatePayloadDto,
   CreateUserRequestDto,
   PasswordUpdateDataDto,
   PasswordUpdateErrorDto,
@@ -80,7 +83,7 @@ export class User<SecurityDataType = unknown> {
    * @tags User
    * @name UserDetail
    * @summary Get user by ID
-   * @request GET:/users/{user_id}
+   * @request GET:/users/{userId}
    * @secure
    * @response `200` `UserDetailDataDto` OK
    * @response `404` `ErrorDto` Not Found
@@ -100,7 +103,7 @@ export class User<SecurityDataType = unknown> {
    * @tags User
    * @name UserUpdate
    * @summary Update user information
-   * @request PUT:/users/{user_id}
+   * @request PUT:/users/{userId}
    * @secure
    * @response `200` `UserUpdateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
@@ -122,7 +125,7 @@ export class User<SecurityDataType = unknown> {
    * @tags User
    * @name UserDelete
    * @summary Delete user
-   * @request DELETE:/users/{user_id}
+   * @request DELETE:/users/{userId}
    * @secure
    * @response `200` `UserDeleteDataDto` OK
    * @response `404` `ErrorDto` Not Found
@@ -136,12 +139,34 @@ export class User<SecurityDataType = unknown> {
       ...params,
     });
   /**
+   * @description Update the avatar for a specific user
+   *
+   * @tags User
+   * @name AvatarUpdate
+   * @summary Update user avatar
+   * @request PUT:/users/{userId}/avatar
+   * @secure
+   * @response `200` `AvatarUpdateDataDto` OK
+   * @response `400` `ErrorDto` Bad Request
+   * @response `500` `ErrorDto` Internal Server Error
+   */
+  avatarUpdate = (userId: number, data: AvatarUpdatePayloadDto, params: RequestParams = {}) =>
+    this.http.request<AvatarUpdateDataDto, AvatarUpdateErrorDto>({
+      path: `/users/${userId}/avatar`,
+      method: 'PUT',
+      body: data,
+      secure: true,
+      type: ContentType.FormData,
+      format: 'json',
+      ...params,
+    });
+  /**
    * @description Change the user's password
    *
    * @tags User
    * @name PasswordUpdate
    * @summary Change user password
-   * @request PUT:/users/{user_id}/password
+   * @request PUT:/users/{userId}/password
    * @secure
    * @response `200` `PasswordUpdateDataDto` OK
    * @response `400` `ErrorDto` Bad Request

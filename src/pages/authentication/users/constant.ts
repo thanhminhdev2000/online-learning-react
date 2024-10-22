@@ -18,3 +18,9 @@ export const menuSettings = [
     pathName: 'Mật khẩu',
   },
 ];
+
+export const updatePasswordInit = {
+  currentPassword: '',
+  newPassword: '',
+  confirmNewPassword: '',
+};

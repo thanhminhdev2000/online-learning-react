@@ -1,21 +1,19 @@
 import { useLogin } from '@apis/hooks/authentication.hook';
 import CInput from '@components/cInput';
-import { AuthContainer, ItemCenter, TypographyLink } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { errorMsg } from '@utils/index';
+import { AuthContainer, ItemCenter, TypographyLink } from '../../../common/styled';
 
+import { MIN_LENGTH_6 } from '@common/message';
 import useAuthStore from '@store/authStore';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 const loginSchema = z.object({
-  identifier: z
-    .string()
-    .min(1, errorMsg('Email hoặc Username'))
-    .min(6, errorMsg('Email hoặc Username', 'tối thiếu có 6 kí tự')),
-  password: z.string().min(1, errorMsg('Mật khẩu')).min(6, errorMsg('Mật khẩu', 'tối thiếu có 6 kí tự')),
+  identifier: z.string().min(1, errorMsg('Email hoặc Username')).min(6, errorMsg('Email hoặc Username', MIN_LENGTH_6)),
+  password: z.string().min(1, errorMsg('Mật khẩu')).min(6, errorMsg('Mật khẩu', MIN_LENGTH_6)),
 });
 
 const LoginPage = () => {

@@ -1,5 +1,4 @@
 import CInput from '@components/cInput';
-import { AuthContainer, ItemCenter, TypographyLink } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { errorMsg } from '@utils/index';
@@ -7,6 +6,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
+import { AuthContainer, ItemCenter, TypographyLink } from '../../../common/styled';
 
 const forgotPasswordSchema = z.object({
   email: z.string().min(1, errorMsg('Email')),

@@ -1,7 +1,7 @@
 import ErrorMessage from '@components/error';
-import { CFormLabel, FormWrapper, InputWrapper } from '@components/styled';
 import { TextField } from '@mui/material';
 import { UseFormRegisterReturn } from 'react-hook-form';
+import { CFormLabel, FormWrapper, InputWrapper } from '../../common/styled';
 
 interface CInputProps {
   label: string;

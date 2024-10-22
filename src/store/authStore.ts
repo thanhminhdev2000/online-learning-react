@@ -1,15 +1,16 @@
 import { UserDetailDto } from '@apis/generated/data-contracts';
+import { userInit } from '@store/constant';
 import { create } from 'zustand';
 
 interface AuthState {
-  user: UserDetailDto | undefined;
-  login: (user?: UserDetailDto, accessToken?: string) => void;
+  user: UserDetailDto;
+  login: (user: UserDetailDto, accessToken?: string) => void;
   logout: () => void;
 }
 
 const useAuthStore = create<AuthState>((set) => ({
-  user: undefined,
-  login: (user?: UserDetailDto, accessToken?: string) => {
+  user: userInit,
+  login: (user: UserDetailDto, accessToken?: string) => {
     set({ user });
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
@@ -20,7 +21,7 @@ const useAuthStore = create<AuthState>((set) => ({
   },
 
   logout: () => {
-    set({ user: undefined });
+    set({ user: userInit });
     localStorage.removeItem('user');
     localStorage.removeItem('accessToken');
   },

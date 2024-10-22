@@ -1,5 +1,11 @@
 import {
+  AvatarUpdateDataDto,
+  AvatarUpdateErrorDto,
+  AvatarUpdatePayloadDto,
   CreateUserRequestDto,
+  PasswordUpdateDataDto,
+  PasswordUpdateErrorDto,
+  PasswordUpdateRequestDto,
   UserCreateDataDto,
   UserCreateErrorDto,
   UserDetailDto,
@@ -58,6 +64,30 @@ export const useUpdateUser = ({
   return useMutation({
     mutationFn: (payload: UserDetailDto) => {
       return userApi.userUpdate(userId, payload);
+    },
+  });
+};
+
+export const useUpdateUserAvatar = ({
+  userId,
+}: {
+  userId: number;
+}): UseMutationResult<AvatarUpdateDataDto, AvatarUpdateErrorDto, AvatarUpdatePayloadDto, unknown> => {
+  return useMutation({
+    mutationFn: (payload: AvatarUpdatePayloadDto) => {
+      return userApi.avatarUpdate(userId, payload);
+    },
+  });
+};
+
+export const useUpdateUserPassword = ({
+  userId,
+}: {
+  userId: number;
+}): UseMutationResult<PasswordUpdateDataDto, PasswordUpdateErrorDto, PasswordUpdateRequestDto, unknown> => {
+  return useMutation({
+    mutationFn: (payload: PasswordUpdateRequestDto) => {
+      return userApi.passwordUpdate(userId, payload);
     },
   });
 };

@@ -1,11 +1,11 @@
 import { useUpdateUser } from '@apis/hooks/user.hook';
 import { genderOptions } from '@common/constant';
+import { FlexEnd, FormWrapper } from '@common/styled';
 import CDatePicker from '@components/cDatePicker';
 import CInput from '@components/cInput';
 import CSelect from '@components/cSelect';
-import { FormWrapper } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 
 import { userProfileSchema } from '@pages/authentication/users/type';
 import useAuthStore from '@store/authStore';
@@ -17,13 +17,13 @@ const UserProfile = () => {
   const formInstance = useForm({
     resolver: zodResolver(userProfileSchema),
     values: {
-      id: user?.id || 0,
-      email: user?.email || '',
-      username: user?.username || '',
-      fullName: user?.fullName || '',
-      gender: user?.gender || '',
-      dateOfBirth: user?.dateOfBirth || '',
-      avatar: user?.avatar || '',
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      fullName: user.fullName,
+      gender: user.gender,
+      dateOfBirth: user.dateOfBirth,
+      avatar: user.avatar,
     },
   });
 
@@ -36,7 +36,7 @@ const UserProfile = () => {
   const { mutate } = useUpdateUser({ userId: user?.id as number });
 
   const onSubmit = handleSubmit((data) => {
-    data.id = user?.id || 0;
+    data.id = user.id;
     mutate(data, {
       onSuccess(data) {
         toast.success(data.message);
@@ -51,10 +51,6 @@ const UserProfile = () => {
   return (
     <form onSubmit={onSubmit}>
       <FormWrapper gap={2}>
-        <Typography variant="subtitle1">Thông tin cơ bản</Typography>
-        <Typography variant="body2" color="textSecondary">
-          Giới thiệu để mọi người hiểu thêm về bạn. Một số thông tin sẽ được hiển thị công khai.
-        </Typography>
         <FormProvider {...formInstance}>
           <CInput label="Email" registerProps={register('email')} errorMsg={errors.email?.message} />
           <CInput label="Username" registerProps={register('username')} errorMsg={errors.username?.message} />
@@ -76,9 +72,11 @@ const UserProfile = () => {
             />
           </Stack>
         </FormProvider>
-        <Box display="flex" justifyContent="flex-end" marginTop={2}>
-          <Button type="submit">Lưu thay đổi</Button>
-        </Box>
+        <FlexEnd marginTop={2}>
+          <Button variant="contained" type="submit">
+            Lưu thay đổi
+          </Button>
+        </FlexEnd>
       </FormWrapper>
     </form>
   );
