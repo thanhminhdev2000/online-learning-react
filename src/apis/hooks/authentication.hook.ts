@@ -1,5 +1,17 @@
 import { Authentication } from '@apis/generated/Authentication';
-import { LoginDataDto, LoginErrorDto, LoginRequestDto, LogoutDataDto } from '@apis/generated/data-contracts';
+import {
+  ForgotPasswordDataDto,
+  ForgotPasswordErrorDto,
+  ForgotPasswordRequestDto,
+  LoginDataDto,
+  LoginErrorDto,
+  LoginRequestDto,
+  LogoutDataDto,
+  ResetPasswordDataDto,
+  ResetPasswordErrorDto,
+  ResetPasswordParamsDto,
+  ResetPasswordRequestDto,
+} from '@apis/generated/data-contracts';
 import httpClient from '@config/httpClient';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 
@@ -17,6 +29,29 @@ export const useLogout = (): UseMutationResult<LogoutDataDto, unknown, unknown, 
   return useMutation({
     mutationFn: () => {
       return authenticationApi.logout();
+    },
+  });
+};
+
+export const useForgotPassword = (): UseMutationResult<
+  ForgotPasswordDataDto,
+  ForgotPasswordErrorDto,
+  ForgotPasswordRequestDto,
+  unknown
+> => {
+  return useMutation({
+    mutationFn: (payload: ForgotPasswordRequestDto) => {
+      return authenticationApi.forgotPassword(payload);
+    },
+  });
+};
+
+export const useResetPassword = (
+  token: ResetPasswordParamsDto,
+): UseMutationResult<ResetPasswordDataDto, ResetPasswordErrorDto, ResetPasswordRequestDto, unknown> => {
+  return useMutation({
+    mutationFn: (payload: ResetPasswordRequestDto) => {
+      return authenticationApi.resetPassword(token, payload);
     },
   });
 };

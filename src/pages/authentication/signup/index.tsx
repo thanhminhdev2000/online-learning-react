@@ -5,11 +5,11 @@ import CInput from '@components/cInput';
 import CSelect from '@components/cSelect';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { signUpInit } from '@pages/authentication/signup/constant';
-import { signUpSchema } from '@pages/authentication/signup/type';
 import dayjs from 'dayjs';
-import { AuthContainer, ItemCenter, TypographyLink } from '../../../common/styled';
 
+import { AuthContainer, ItemCenter, TypographyLink } from '@common/styled';
+import { signUpInit } from '@pages/authentication/constant';
+import { signUpSchema } from '@pages/authentication/type';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';

@@ -2,10 +2,10 @@ import { Stack, Typography } from '@mui/material';
 import UserAvatar from '@pages/authentication/users/components/UserAvatar';
 import UserPassword from '@pages/authentication/users/components/UserPassword';
 import UserProfile from '@pages/authentication/users/components/UserProfile';
-import { menuSettings, UserMenu } from '@pages/authentication/users/constant';
 import { useState } from 'react';
 import { TypographyHover } from '../../../common/styled';
-import { BoxContainer } from './styled';
+import { menuSettings, UserMenu } from '../constant';
+import { BoxContainer } from '../styled';
 
 const UserPage = () => {
   const [menu, setMenu] = useState<UserMenu>(UserMenu.PROFILE);

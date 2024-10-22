@@ -1,39 +1,38 @@
+import { useResetPassword } from '@apis/hooks/authentication.hook';
+import { AuthContainer, ItemCenter, TypographyLink } from '@common/styled';
 import CInput from '@components/cInput';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { errorMsg } from '@utils/index';
+import { resetPasswordInit } from '@pages/authentication/constant';
+import { resetPasswordSchema } from '@pages/authentication/type';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { z } from 'zod';
-import { AuthContainer, ItemCenter, TypographyLink } from '../../../common/styled';
-
-const resetPasswordSchema = z
-  .object({
-    password: z.string().min(1, errorMsg('Mật khẩu')),
-    confirmPassword: z.string().min(1, errorMsg('Mật khẩu')),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Mật khẩu không khớp',
-    path: ['confirmPassword'],
-  });
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ResetPasswordPage = () => {
+  const { token = '' } = useParams();
   const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(resetPasswordSchema),
-    values: {
-      password: '',
-      confirmPassword: '',
-    },
+    values: resetPasswordInit,
   });
 
+  const { mutate } = useResetPassword({ token });
+
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    mutate(data, {
+      onSuccess(data) {
+        toast.success(data.message);
+        navigate('/login');
+      },
+      onError(data) {
+        toast.error(data.error);
+      },
+    });
   });
 
   return (
@@ -44,7 +43,7 @@ const ResetPasswordPage = () => {
             ĐẶT LẠI MẬT KHẨU
           </Typography>
 
-          <Stack gap={3} marginTop={3}>
+          <Stack flexDirection="column" gap={3} marginTop={3}>
             <CInput label="Mật khẩu" errorMsg={errors.password?.message} registerProps={register('password')} />
             <CInput
               label="Nhập lại mật khẩu"
@@ -59,7 +58,7 @@ const ResetPasswordPage = () => {
             </Button>
           </Box>
 
-          <Box display="flex" alignItems="center" justifyContent="space-between" marginTop={1}>
+          <Box display="flex" alignItems="center" justifyContent="space-between" marginTop={2}>
             <TypographyLink onClick={() => navigate('/signup')}>Đăng ký tài khoản mới!</TypographyLink>
 
             <TypographyLink onClick={() => navigate('/forgot-password')}>Quên mật khẩu?</TypographyLink>

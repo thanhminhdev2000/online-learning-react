@@ -4,7 +4,7 @@ import { Avatar, Box, Button, Stack, Typography } from '@mui/material';
 import useAuthStore from '@store/authStore';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { PaperContainer } from '../styled';
+import { PaperContainer } from '../../styled';
 
 const UserAvatar = () => {
   const { user, login } = useAuthStore();

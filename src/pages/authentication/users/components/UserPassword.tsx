@@ -3,11 +3,11 @@ import { FlexEnd } from '@common/styled';
 import CInput from '@components/cInput';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Stack } from '@mui/material';
-import { updatePasswordInit } from '@pages/authentication/users/constant';
-import { userPasswordSchema } from '@pages/authentication/users/type';
+import { userPasswordSchema } from '@pages/authentication/type';
 import useAuthStore from '@store/authStore';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { updatePasswordInit } from '../../constant';
 
 const UserPassword = () => {
   const { user } = useAuthStore();

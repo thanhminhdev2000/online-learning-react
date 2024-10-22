@@ -1,16 +1,13 @@
+import { useForgotPassword } from '@apis/hooks/authentication.hook';
+import { AuthContainer, ItemCenter, TypographyLink } from '@common/styled';
 import CInput from '@components/cInput';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { errorMsg } from '@utils/index';
+import { forgotPasswordSchema } from '@pages/authentication/type';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { z } from 'zod';
-import { AuthContainer, ItemCenter, TypographyLink } from '../../../common/styled';
-
-const forgotPasswordSchema = z.object({
-  email: z.string().min(1, errorMsg('Email')),
-});
+import { toast } from 'react-toastify';
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate();
@@ -27,9 +24,17 @@ const ForgotPasswordPage = () => {
     },
   });
 
+  const { mutate } = useForgotPassword();
+
   const onSubmit = handleSubmit((data) => {
-    setNextStep(true);
-    console.log(data);
+    mutate(data, {
+      onSuccess() {
+        setNextStep(true);
+      },
+      onError(data) {
+        toast.error(data.error);
+      },
+    });
   });
 
   return (

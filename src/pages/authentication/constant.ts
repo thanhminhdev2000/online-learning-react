@@ -24,3 +24,23 @@ export const updatePasswordInit = {
   newPassword: '',
   confirmNewPassword: '',
 };
+
+export const loginInit = {
+  identifier: '',
+  password: '',
+};
+export const resetPasswordInit = {
+  password: '',
+  confirmPassword: '',
+};
+
+export const signUpInit = {
+  email: '',
+  username: '',
+  fullName: '',
+  password: '',
+  confirmPassword: '',
+  gender: '',
+  avatar: '',
+  dateOfBirth: '',
+};

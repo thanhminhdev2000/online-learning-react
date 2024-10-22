@@ -10,6 +10,7 @@ import DonatePage from '@pages/donate';
 import HomePage from '@pages/home';
 import QuestionPage from '@pages/question';
 import useAuthStore from '@store/authStore';
+import { userInit } from '@store/constant';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
@@ -27,7 +28,11 @@ const App = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user') as string);
-    login(user);
+    if (user?.id) {
+      login(user);
+    } else {
+      login(userInit);
+    }
   }, [login]);
 
   return (
@@ -41,7 +46,7 @@ const App = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-              <Route path="/reset-password" element={<ResetPasswordPage />} />
+              <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
               <Route path="/about" element={<AboutPage />} />
               <Route path="/learn" element={<LearnPage />} />
