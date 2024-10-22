@@ -12,7 +12,7 @@ const HomePage = () => {
         <Navbar page="HOME" />
       </Box>
 
-      <Stack width="80%" height="100%" justifyContent="center" color="white">
+      <Stack flexDirection="column" width="80%" height="100%" justifyContent="center" color="white">
         <Typography variant="h6" color="#f05622" fontWeight="bold">
           KHÓA HỌC
         </Typography>

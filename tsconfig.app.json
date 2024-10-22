@@ -13,7 +13,9 @@
       "@utils/*": ["utils/*"],
       "@config/*": ["config/*"],
       "@hooks/*": ["hooks/*"],
-      "@apis/*": ["apis/*"]
+      "@apis/*": ["apis/*"],
+      "@common/*": ["common/*"],
+      "@store/*": ["store/*"]
     }
   },
   "include": ["src"]

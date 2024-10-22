@@ -10,25 +10,15 @@
  */
 
 import {
-  ForgotPasswordDataDto,
-  ForgotPasswordErrorDto,
-  ForgotPasswordRequestDto,
-  LoginDataDto,
-  LoginErrorDto,
-  LoginRequestDto,
-  LogoutDataDto,
+  AvatarUpdateDataDto,
+  AvatarUpdateErrorDto,
+  AvatarUpdatePayloadDto,
+  CreateUserRequestDto,
   PasswordUpdateDataDto,
   PasswordUpdateErrorDto,
   PasswordUpdateRequestDto,
-  RefreshDataDto,
-  RefreshErrorDto,
-  ResetPasswordDataDto,
-  ResetPasswordErrorDto,
-  ResetPasswordParamsDto,
-  ResetPasswordRequestDto,
-  SignupDataDto,
-  SignupErrorDto,
-  SignUpRequestDto,
+  UserCreateDataDto,
+  UserCreateErrorDto,
   UserDeleteDataDto,
   UserDeleteErrorDto,
   UserDetailDataDto,
@@ -41,7 +31,7 @@ import {
 } from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
 
-export class Users<SecurityDataType = unknown> {
+export class User<SecurityDataType = unknown> {
   http: HttpClient<SecurityDataType>;
 
   constructor(http: HttpClient<SecurityDataType>) {
@@ -51,7 +41,7 @@ export class Users<SecurityDataType = unknown> {
   /**
    * @description Retrieve a list of all users
    *
-   * @tags users
+   * @tags User
    * @name UserList
    * @summary Get all users
    * @request GET:/users/
@@ -68,113 +58,19 @@ export class Users<SecurityDataType = unknown> {
       ...params,
     });
   /**
-   * @description Send a password reset link to the user's email
-   *
-   * @tags users
-   * @name ForgotPassword
-   * @summary Request password reset
-   * @request POST:/users/forgot-password
-   * @response `200` `ForgotPasswordDataDto` OK
-   * @response `400` `ErrorDto` Bad Request
-   * @response `404` `ErrorDto` Not Found
-   */
-  forgotPassword = (email: ForgotPasswordRequestDto, params: RequestParams = {}) =>
-    this.http.request<ForgotPasswordDataDto, ForgotPasswordErrorDto>({
-      path: `/users/forgot-password`,
-      method: 'POST',
-      body: email,
-      type: ContentType.Json,
-      format: 'json',
-      ...params,
-    });
-  /**
-   * @description Log in a user using email or username and password
-   *
-   * @tags users
-   * @name Login
-   * @summary Log in an existing user
-   * @request POST:/users/login
-   * @response `200` `LoginDataDto` OK
-   * @response `400` `ErrorDto` Bad Request
-   * @response `401` `ErrorDto` Unauthorized
-   */
-  login = (user: LoginRequestDto, params: RequestParams = {}) =>
-    this.http.request<LoginDataDto, LoginErrorDto>({
-      path: `/users/login`,
-      method: 'POST',
-      body: user,
-      type: ContentType.Json,
-      format: 'json',
-      ...params,
-    });
-  /**
-   * @description Log out the user by clearing the refresh token
-   *
-   * @tags users
-   * @name Logout
-   * @summary Log out the user
-   * @request POST:/users/logout
-   * @response `200` `LogoutDataDto` OK
-   */
-  logout = (params: RequestParams = {}) =>
-    this.http.request<LogoutDataDto, any>({
-      path: `/users/logout`,
-      method: 'POST',
-      format: 'json',
-      ...params,
-    });
-  /**
-   * @description Refresh the access token using the refresh token
-   *
-   * @tags users
-   * @name Refresh
-   * @summary Refresh access token
-   * @request POST:/users/refresh
-   * @response `200` `RefreshDataDto` OK
-   * @response `401` `ErrorDto` Unauthorized
-   */
-  refresh = (params: RequestParams = {}) =>
-    this.http.request<RefreshDataDto, RefreshErrorDto>({
-      path: `/users/refresh`,
-      method: 'POST',
-      format: 'json',
-      ...params,
-    });
-  /**
-   * @description Reset the user's password using a valid token
-   *
-   * @tags users
-   * @name ResetPassword
-   * @summary Reset user password
-   * @request POST:/users/reset-password
-   * @response `200` `ResetPasswordDataDto` OK
-   * @response `400` `ErrorDto` Bad Request
-   * @response `401` `ErrorDto` Unauthorized
-   */
-  resetPassword = (query: ResetPasswordParamsDto, password: ResetPasswordRequestDto, params: RequestParams = {}) =>
-    this.http.request<ResetPasswordDataDto, ResetPasswordErrorDto>({
-      path: `/users/reset-password`,
-      method: 'POST',
-      query: query,
-      body: password,
-      type: ContentType.Json,
-      format: 'json',
-      ...params,
-    });
-  /**
    * @description Register a new user with email, username, and password
    *
-   * @tags users
-   * @name Signup
+   * @tags User
+   * @name UserCreate
    * @summary Register a new user
-   * @request POST:/users/signup
-   * @response `200` `SignupDataDto` OK
+   * @request POST:/users/
+   * @response `200` `UserCreateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
    * @response `409` `ErrorDto` Conflict
    */
-  signup = (user: SignUpRequestDto, params: RequestParams = {}) =>
-    this.http.request<SignupDataDto, SignupErrorDto>({
-      path: `/users/signup`,
+  userCreate = (user: CreateUserRequestDto, params: RequestParams = {}) =>
+    this.http.request<UserCreateDataDto, UserCreateErrorDto>({
+      path: `/users/`,
       method: 'POST',
       body: user,
       type: ContentType.Json,
@@ -184,10 +80,10 @@ export class Users<SecurityDataType = unknown> {
   /**
    * @description Retrieve user information by user ID
    *
-   * @tags users
+   * @tags User
    * @name UserDetail
    * @summary Get user by ID
-   * @request GET:/users/{user_id}
+   * @request GET:/users/{userId}
    * @secure
    * @response `200` `UserDetailDataDto` OK
    * @response `404` `ErrorDto` Not Found
@@ -204,10 +100,10 @@ export class Users<SecurityDataType = unknown> {
   /**
    * @description Update user information by user ID
    *
-   * @tags users
+   * @tags User
    * @name UserUpdate
    * @summary Update user information
-   * @request PUT:/users/{user_id}
+   * @request PUT:/users/{userId}
    * @secure
    * @response `200` `UserUpdateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
@@ -226,10 +122,10 @@ export class Users<SecurityDataType = unknown> {
   /**
    * @description Delete a user by user ID
    *
-   * @tags users
+   * @tags User
    * @name UserDelete
    * @summary Delete user
-   * @request DELETE:/users/{user_id}
+   * @request DELETE:/users/{userId}
    * @secure
    * @response `200` `UserDeleteDataDto` OK
    * @response `404` `ErrorDto` Not Found
@@ -243,12 +139,34 @@ export class Users<SecurityDataType = unknown> {
       ...params,
     });
   /**
+   * @description Update the avatar for a specific user
+   *
+   * @tags User
+   * @name AvatarUpdate
+   * @summary Update user avatar
+   * @request PUT:/users/{userId}/avatar
+   * @secure
+   * @response `200` `AvatarUpdateDataDto` OK
+   * @response `400` `ErrorDto` Bad Request
+   * @response `500` `ErrorDto` Internal Server Error
+   */
+  avatarUpdate = (userId: number, data: AvatarUpdatePayloadDto, params: RequestParams = {}) =>
+    this.http.request<AvatarUpdateDataDto, AvatarUpdateErrorDto>({
+      path: `/users/${userId}/avatar`,
+      method: 'PUT',
+      body: data,
+      secure: true,
+      type: ContentType.FormData,
+      format: 'json',
+      ...params,
+    });
+  /**
    * @description Change the user's password
    *
-   * @tags users
+   * @tags User
    * @name PasswordUpdate
    * @summary Change user password
-   * @request PUT:/users/{user_id}/password
+   * @request PUT:/users/{userId}/password
    * @secure
    * @response `200` `PasswordUpdateDataDto` OK
    * @response `400` `ErrorDto` Bad Request

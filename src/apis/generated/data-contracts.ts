@@ -13,6 +13,17 @@ export interface AccessTokenResponseDto {
   accessToken?: string;
 }
 
+export interface CreateUserRequestDto {
+  avatar: string;
+  dateOfBirth: string;
+  email: string;
+  fullName: string;
+  gender: string;
+  /** @minLength 6 */
+  password: string;
+  username: string;
+}
+
 export interface ErrorDto {
   error: string;
 }
@@ -37,6 +48,7 @@ export interface MessageDto {
 }
 
 export interface PasswordUpdateRequestDto {
+  /** @minLength 6 */
   currentPassword: string;
   /** @minLength 6 */
   newPassword: string;
@@ -47,24 +59,20 @@ export interface ResetPasswordRequestDto {
   password: string;
 }
 
-export interface SignUpRequestDto {
-  email: string;
-  fullName: string;
-  /** @minLength 6 */
-  password: string;
-  username: string;
+export interface UpdateUserResponseDto {
+  message: string;
+  user: UserDetailDto;
 }
 
 export interface UserDetailDto {
+  avatar: string;
+  dateOfBirth: string;
   email: string;
   fullName: string;
+  gender: string;
   id: number;
   username: string;
 }
-
-export type UserListDataDto = UserDetailDto[];
-
-export type UserListErrorDto = ErrorDto;
 
 export type ForgotPasswordDataDto = MessageDto;
 
@@ -76,9 +84,9 @@ export type LoginErrorDto = ErrorDto;
 
 export type LogoutDataDto = MessageDto;
 
-export type RefreshDataDto = AccessTokenResponseDto;
+export type RefreshTokenDataDto = AccessTokenResponseDto;
 
-export type RefreshErrorDto = ErrorDto;
+export type RefreshTokenErrorDto = ErrorDto;
 
 export interface ResetPasswordParamsDto {
   /** Reset token */
@@ -89,21 +97,34 @@ export type ResetPasswordDataDto = MessageDto;
 
 export type ResetPasswordErrorDto = ErrorDto;
 
-export type SignupDataDto = MessageDto;
+export type UserListDataDto = UserDetailDto[];
 
-export type SignupErrorDto = ErrorDto;
+export type UserListErrorDto = ErrorDto;
+
+export type UserCreateDataDto = MessageDto;
+
+export type UserCreateErrorDto = ErrorDto;
 
 export type UserDetailDataDto = UserDetailDto;
 
 export type UserDetailErrorDto = ErrorDto;
 
-export type UserUpdateDataDto = MessageDto;
+export type UserUpdateDataDto = UpdateUserResponseDto;
 
 export type UserUpdateErrorDto = ErrorDto;
 
 export type UserDeleteDataDto = MessageDto;
 
 export type UserDeleteErrorDto = ErrorDto;
+
+export interface AvatarUpdatePayloadDto {
+  /** User Avatar */
+  avatar: File;
+}
+
+export type AvatarUpdateDataDto = UpdateUserResponseDto;
+
+export type AvatarUpdateErrorDto = ErrorDto;
 
 export type PasswordUpdateDataDto = MessageDto;
 

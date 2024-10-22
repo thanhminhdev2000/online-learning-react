@@ -1,12 +1,16 @@
+import { useForgotPassword } from '@apis/hooks/authentication.hook';
+import { AuthContainer, ItemCenter, TypographyLink } from '@common/styled';
 import CInput from '@components/cInput';
-import { AuthContainer, LinkItem } from '@components/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { forgotPasswordSchema } from '@pages/forgotPassword/type';
+import { forgotPasswordSchema } from '@pages/authentication/type';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ForgotPasswordPage = () => {
+  const navigate = useNavigate();
   const [nextStep, setNextStep] = useState(false);
 
   const {
@@ -20,25 +24,33 @@ const ForgotPasswordPage = () => {
     },
   });
 
+  const { mutate } = useForgotPassword();
+
   const onSubmit = handleSubmit((data) => {
-    setNextStep(true);
-    console.log(data);
+    mutate(data, {
+      onSuccess() {
+        setNextStep(true);
+      },
+      onError(data) {
+        toast.error(data.error);
+      },
+    });
   });
 
   return (
     <>
       {nextStep ? (
-        <Stack alignItems="center" justifyContent="center" height="80vh">
+        <ItemCenter height="80vh">
           <AuthContainer>Vui lòng kiểm tra email để đặt lại mật khẩu.</AuthContainer>
-        </Stack>
+        </ItemCenter>
       ) : (
-        <Stack alignItems="center" justifyContent="center" height="80vh">
+        <ItemCenter height="80vh">
           <AuthContainer onSubmit={onSubmit}>
-            <Typography variant="h4" textAlign="center">
-              Quên mật khẩu
+            <Typography variant="h5" fontWeight="bold" textAlign="center">
+              QUÊN MẬT KHẨU
             </Typography>
 
-            <Stack gap={3} marginTop={3}>
+            <Stack flexDirection="column" marginTop={3}>
               <CInput label="Email" errorMsg={errors.email?.message} registerProps={register('email')} />
             </Stack>
 
@@ -48,22 +60,16 @@ const ForgotPasswordPage = () => {
               </Button>
             </Box>
 
-            <Box display="flex" alignItems="center" justifyContent="space-between">
-              <Box display="flex" marginTop={2} gap={1}>
+            <Box display="flex" alignItems="center" justifyContent="space-between" marginTop={2}>
+              <Stack gap={1}>
                 <Typography>Bạn đã có tài khoản?</Typography>
-                <LinkItem to="/login" color="primary">
-                  Đăng nhập!
-                </LinkItem>
-              </Box>
+                <TypographyLink onClick={() => navigate('/login')}>Đăng nhập!</TypographyLink>
+              </Stack>
 
-              <Typography>
-                <LinkItem to="/signup" color="primary">
-                  Đăng ký tài khoản mới?
-                </LinkItem>
-              </Typography>
+              <TypographyLink onClick={() => navigate('/signup')}>Đăng ký tài khoản mới!</TypographyLink>
             </Box>
           </AuthContainer>
-        </Stack>
+        </ItemCenter>
       )}
     </>
   );

@@ -1,46 +1,67 @@
 import Layout from '@components/layout';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider/LocalizationProvider';
 import AboutPage from '@pages/about';
+import ForgotPasswordPage from '@pages/authentication/forgotPassword';
+import UserPage from '@pages/authentication/users';
 import ContactPage from '@pages/contact';
 import DocumentationPage from '@pages/documentation';
 import DonatePage from '@pages/donate';
-import ForgotPasswordPage from '@pages/forgotPassword';
 import HomePage from '@pages/home';
-import LoginPage from '@pages/login';
 import QuestionPage from '@pages/question';
-import ResetPasswordPage from '@pages/resetPassword';
-import SignUpPage from '@pages/signup';
+import useAuthStore from '@store/authStore';
+import { userInit } from '@store/constant';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LoginPage from './pages/authentication/login';
+import ResetPasswordPage from './pages/authentication/resetPassword';
+import SignUpPage from './pages/authentication/signup';
 import LearnPage from './pages/learn';
 
 const queryClient = new QueryClient();
 
 const App = () => {
+  const { login } = useAuthStore();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user') as string);
+    if (user?.id) {
+      login(user);
+    } else {
+      login(userInit);
+    }
+  }, [login]);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
 
-          <Route element={<Layout />}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route element={<Layout />}>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/learn" element={<LearnPage />} />
-            <Route path="/question" element={<QuestionPage />} />
-            <Route path="/documentation" element={<DocumentationPage />} />
-            <Route path="/donate" element={<DonatePage />} />
-            <Route path="/contact" element={<ContactPage />} />
-          </Route>
-        </Routes>
-      </Router>
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/learn" element={<LearnPage />} />
+              <Route path="/question" element={<QuestionPage />} />
+              <Route path="/documentation" element={<DocumentationPage />} />
+              <Route path="/donate" element={<DonatePage />} />
+              <Route path="/contact" element={<ContactPage />} />
 
-      <ToastContainer />
+              <Route path="/users/:userId" element={<UserPage />} />
+            </Route>
+          </Routes>
+        </Router>
+
+        <ToastContainer />
+      </LocalizationProvider>
     </QueryClientProvider>
   );
 };

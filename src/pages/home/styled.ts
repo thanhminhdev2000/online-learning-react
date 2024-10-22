@@ -6,4 +6,5 @@ export const Background = styled(Stack)(() => ({
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center',
   height: '100vh',
+  flexDirection: 'column',
 }));

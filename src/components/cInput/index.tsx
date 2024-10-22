@@ -1,24 +1,37 @@
 import ErrorMessage from '@components/error';
-import { Box, FormLabel, Stack, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { UseFormRegisterReturn } from 'react-hook-form';
+import { CFormLabel, FormWrapper, InputWrapper } from '../../common/styled';
 
 interface CInputProps {
   label: string;
-  type?: 'text' | 'password';
-  size?: 'small' | 'medium';
   errorMsg?: string;
   registerProps: UseFormRegisterReturn;
+  type?: 'text' | 'password';
+  size?: 'small' | 'medium';
+  textArea?: boolean;
+  disabled?: boolean;
 }
 
-const CInput = ({ label, type = 'text', size = 'small', errorMsg, registerProps }: CInputProps) => {
+const CInput = ({ label, errorMsg, registerProps, type = 'text', size = 'small', textArea, disabled }: CInputProps) => {
   return (
-    <Stack>
-      <FormLabel sx={{ color: '#222c37' }}>{label}</FormLabel>
-      <Box display="flex" alignItems="center" gap={2} marginTop={1}>
-        <TextField fullWidth type={type} variant="outlined" size={size} placeholder={label} {...registerProps} />
-      </Box>
+    <FormWrapper>
+      <CFormLabel>{label}</CFormLabel>
+      <InputWrapper>
+        <TextField
+          fullWidth
+          type={type}
+          variant="outlined"
+          size={size}
+          placeholder={label}
+          multiline={textArea}
+          rows={4}
+          disabled={disabled}
+          {...registerProps}
+        />
+      </InputWrapper>
       <ErrorMessage message={errorMsg} />
-    </Stack>
+    </FormWrapper>
   );
 };
 

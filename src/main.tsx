@@ -13,6 +13,13 @@ const theme = createTheme({
   typography: {
     fontFamily: 'Roboto, Arial, sans-serif',
   },
+  components: {
+    MuiStack: {
+      defaultProps: {
+        direction: 'row',
+      },
+    },
+  },
 });
 
 createRoot(document.getElementById('root')!).render(
