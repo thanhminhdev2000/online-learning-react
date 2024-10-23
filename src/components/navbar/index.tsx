@@ -2,19 +2,19 @@ import { UserRoleDto } from '@apis/generated/data-contracts';
 import { useLogout } from '@apis/hooks/authentication.hook';
 import { HorizontalDivider, ItemCenter } from '@common/styled';
 import { routes } from '@components/navbar/constant';
-import { IconCursor, NavItem } from '@components/navbar/styled';
+import { IconCursor, NavbarWrapper, NavItem } from '@components/navbar/styled';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { Avatar, Box, Button, Menu, MenuItem, Typography } from '@mui/material';
+import { Avatar, Box, Button, Menu, MenuItem, Stack, Typography } from '@mui/material';
 import useAuthStore from '@store/authStore';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = ({ page }: { page?: string }) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const [notifyMenu, setNotifyMenu] = useState<null | HTMLElement>(null);
   const [accountMenu, setAccountMenu] = useState<null | HTMLElement>(null);
-  const color = page === 'HOME' ? '#fff' : '#000';
+  const color = '#000';
 
   const notifications = [
     { id: 1, message: 'Notify1', link: 'notify1' },
@@ -51,91 +51,93 @@ const Navbar = ({ page }: { page?: string }) => {
   };
 
   return (
-    <Box display="flex" alignItems="center" justifyContent="space-between">
-      <Box display="flex" alignItems="center">
-        <Link to="/">
-          <img src="/logo.svg" width={150} />
-        </Link>
+    <NavbarWrapper>
+      <Box display="flex" justifyContent="space-between" width="90%">
+        <Box display="flex" alignItems="center">
+          <Link to="/">
+            <img src="/logo.svg" width={150} />
+          </Link>
 
-        <Box display="flex" marginLeft={3}>
-          {routes.map((route) => (
-            <NavItem key={route.path} to={route.path} sx={{ color }}>
-              {route.pathName}
-            </NavItem>
-          ))}
-        </Box>
-      </Box>
-      {user.id ? (
-        <Box display="flex">
-          <Box>
-            <IconCursor onClick={openNotifytMenu}>
-              <NotificationsNoneIcon sx={{ color }} />
-            </IconCursor>
-            <Menu
-              anchorEl={notifyMenu}
-              open={Boolean(notifyMenu)}
-              onClose={closeNotifyMenu}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-            >
-              {notifications.length > 0 ? (
-                notifications.map((notification) => (
-                  <MenuItem
-                    key={notification.id}
-                    onClick={() => closeNotifyMenu(notification.link)}
-                    sx={{ width: 300, marginY: 2 }}
-                  >
-                    {notification.message}
-                  </MenuItem>
-                ))
-              ) : (
-                <MenuItem disabled>
-                  <Typography>Không có thông báo.</Typography>
-                </MenuItem>
-              )}
-              <MenuItem onClick={() => closeNotifyMenu('notifications')}>Xem tất cả</MenuItem>
-            </Menu>
+          <Box display="flex" marginLeft={3}>
+            {routes.map((route) => (
+              <NavItem key={route.path} to={route.path} sx={{ color }}>
+                {route.pathName}
+              </NavItem>
+            ))}
           </Box>
-
-          <ItemCenter>
-            <Avatar src={user.avatar} onClick={openAccountMenu} sx={{ width: 24, height: 24 }} />
-            <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>
-              <MenuItem onClick={() => closeAccountMenu(`users/${user.id}`)}>Hồ sơ</MenuItem>
-              {user.role === UserRoleDto.RoleAdmin && (
-                <MenuItem onClick={() => closeAccountMenu('users')}>Quản trị</MenuItem>
-              )}
-              <HorizontalDivider />
-              <MenuItem
-                onClick={() => {
-                  closeAccountMenu();
-                  handleLogout();
+        </Box>
+        {user.id ? (
+          <Box display="flex">
+            <Stack alignItems="center">
+              <IconCursor onClick={openNotifytMenu}>
+                <NotificationsNoneIcon sx={{ color }} />
+              </IconCursor>
+              <Menu
+                anchorEl={notifyMenu}
+                open={Boolean(notifyMenu)}
+                onClose={closeNotifyMenu}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
                 }}
               >
-                Đăng xuất
-              </MenuItem>
+                {notifications.length > 0 ? (
+                  notifications.map((notification) => (
+                    <MenuItem
+                      key={notification.id}
+                      onClick={() => closeNotifyMenu(notification.link)}
+                      sx={{ width: 300, marginY: 2 }}
+                    >
+                      {notification.message}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <MenuItem disabled>
+                    <Typography>Không có thông báo.</Typography>
+                  </MenuItem>
+                )}
+                <MenuItem onClick={() => closeNotifyMenu('notifications')}>Xem tất cả</MenuItem>
+              </Menu>
+            </Stack>
+
+            <ItemCenter>
+              <Avatar src={user.avatar} onClick={openAccountMenu} sx={{ width: 24, height: 24 }} />
+              <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>
+                <MenuItem onClick={() => closeAccountMenu(`users/${user.id}`)}>Hồ sơ</MenuItem>
+                {user.role === UserRoleDto.RoleAdmin && (
+                  <MenuItem onClick={() => closeAccountMenu('users')}>Quản trị</MenuItem>
+                )}
+                <HorizontalDivider />
+                <MenuItem
+                  onClick={() => {
+                    closeAccountMenu();
+                    handleLogout();
+                  }}
+                >
+                  Đăng xuất
+                </MenuItem>
+              </Menu>
+            </ItemCenter>
+          </Box>
+        ) : (
+          <Box>
+            <Button
+              size="large"
+              startIcon={<Avatar sx={{ width: 24, height: 24 }} />}
+              sx={{ color }}
+              onClick={openAccountMenu}
+            >
+              Tài khoản
+            </Button>
+            <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>
+              <MenuItem onClick={() => closeAccountMenu('login')}>Đăng nhập</MenuItem>
+              <HorizontalDivider />
+              <MenuItem onClick={() => closeAccountMenu('signup')}>Đăng ký</MenuItem>
             </Menu>
-          </ItemCenter>
-        </Box>
-      ) : (
-        <Box>
-          <Button
-            size="large"
-            startIcon={<Avatar sx={{ width: 24, height: 24 }} />}
-            sx={{ color }}
-            onClick={openAccountMenu}
-          >
-            Tài khoản
-          </Button>
-          <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>
-            <MenuItem onClick={() => closeAccountMenu('login')}>Đăng nhập</MenuItem>
-            <HorizontalDivider />
-            <MenuItem onClick={() => closeAccountMenu('signup')}>Đăng ký</MenuItem>
-          </Menu>
-        </Box>
-      )}
-    </Box>
+          </Box>
+        )}
+      </Box>
+    </NavbarWrapper>
   );
 };
 

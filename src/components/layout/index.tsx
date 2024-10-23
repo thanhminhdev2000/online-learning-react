@@ -1,14 +1,18 @@
 import { Background } from '@components/layout/styled';
 import Navbar from '@components/navbar';
-import { Box } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 
 const Layout = () => {
   return (
     <Background alignItems="center">
-      <Box width="90%">
+      <Box width="100%">
         <Navbar />
-        <Outlet />
+        <Stack flexDirection="column" alignItems="center">
+          <Box width="90%">
+            <Outlet />
+          </Box>
+        </Stack>
       </Box>
     </Background>
   );

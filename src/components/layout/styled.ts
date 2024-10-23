@@ -4,6 +4,7 @@ export const Background = styled(Stack)(() => ({
   flexDirection: 'column',
   backgroundColor: '#f0f0f0',
   minHeight: '100vh',
+  width: '100%',
 }));
 
 export const ModalWrapper = styled(Paper)(() => ({
