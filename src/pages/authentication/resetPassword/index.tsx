@@ -44,9 +44,15 @@ const ResetPasswordPage = () => {
           </Typography>
 
           <Stack flexDirection="column" gap={3} marginTop={3}>
-            <CInput label="Mật khẩu" errorMsg={errors.password?.message} registerProps={register('password')} />
+            <CInput
+              label="Mật khẩu"
+              type="password"
+              errorMsg={errors.password?.message}
+              registerProps={register('password')}
+            />
             <CInput
               label="Nhập lại mật khẩu"
+              type="password"
               errorMsg={errors.confirmPassword?.message}
               registerProps={register('confirmPassword')}
             />

@@ -1,4 +1,6 @@
+import { UserRoleDto } from '@apis/generated/data-contracts';
 import { useLogout } from '@apis/hooks/authentication.hook';
+import { HorizontalDivider } from '@common/styled';
 import { routes } from '@components/navbar/constant';
 import { IconCursor, NavItem } from '@components/navbar/styled';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -7,7 +9,6 @@ import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import useAuthStore from '@store/authStore';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { HorizontalDivider } from '../../common/styled';
 
 const Navbar = ({ page }: { page?: string }) => {
   const navigate = useNavigate();
@@ -105,6 +106,9 @@ const Navbar = ({ page }: { page?: string }) => {
             </IconCursor>
             <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>
               <MenuItem onClick={() => closeAccountMenu(`users/${user.id}`)}>Hồ sơ</MenuItem>
+              {user.role === UserRoleDto.RoleAdmin && (
+                <MenuItem onClick={() => closeAccountMenu('users')}>Quản trị</MenuItem>
+              )}
               <HorizontalDivider />
               <MenuItem
                 onClick={() => {

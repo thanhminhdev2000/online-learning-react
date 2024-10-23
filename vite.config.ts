@@ -8,6 +8,9 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    'process.env': process.env,
+  },
   resolve: {
     alias: {
       '@pages': path.resolve(__dirname, './src/pages'),

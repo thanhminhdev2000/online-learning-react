@@ -1,39 +1,41 @@
+import { UserDetailDto } from '@apis/generated/data-contracts';
 import Layout from '@components/layout';
+import ProtectedRoute from '@components/layout/ProtectedRoute';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider/LocalizationProvider';
 import AboutPage from '@pages/about';
 import ForgotPasswordPage from '@pages/authentication/forgotPassword';
-import UserPage from '@pages/authentication/users';
+import LoginPage from '@pages/authentication/login';
+import ResetPasswordPage from '@pages/authentication/resetPassword';
+import SignUpPage from '@pages/authentication/signup';
 import ContactPage from '@pages/contact';
 import DocumentationPage from '@pages/documentation';
 import DonatePage from '@pages/donate';
 import HomePage from '@pages/home';
+import LearnPage from '@pages/learn';
 import QuestionPage from '@pages/question';
+import UserDetailPage from '@pages/users/UserDetailPage';
+import UserManagePage from '@pages/users/UserManagePage';
 import useAuthStore from '@store/authStore';
 import { userInit } from '@store/constant';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import LoginPage from './pages/authentication/login';
-import ResetPasswordPage from './pages/authentication/resetPassword';
-import SignUpPage from './pages/authentication/signup';
-import LearnPage from './pages/learn';
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const { login } = useAuthStore();
+  const { login, checkTokenExpiration } = useAuthStore();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user') as string);
     if (user?.id) {
       login(user);
     } else {
-      login(userInit);
+      login(userInit as UserDetailDto);
     }
-  }, [login]);
+    checkTokenExpiration();
+  }, [login, checkTokenExpiration]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -55,12 +57,19 @@ const App = () => {
               <Route path="/donate" element={<DonatePage />} />
               <Route path="/contact" element={<ContactPage />} />
 
-              <Route path="/users/:userId" element={<UserPage />} />
+              <Route path="/users/:userId" element={<UserDetailPage />} />
+
+              <Route
+                path="/users"
+                element={
+                  <ProtectedRoute>
+                    <UserManagePage />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
           </Routes>
         </Router>
-
-        <ToastContainer />
       </LocalizationProvider>
     </QueryClientProvider>
   );

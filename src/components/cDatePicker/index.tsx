@@ -3,6 +3,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 import { useFormContext, UseFormRegisterReturn } from 'react-hook-form';
 import { CFormLabel, FormWrapper, InputWrapper } from '../../common/styled';
+import { DATE_FORMAT } from '@common/constant';
 
 interface CDatePickerProps {
   label: string;
@@ -22,7 +23,7 @@ const CDatePicker = ({ label, errorMsg, registerProps, size = 'small', disabled 
       registerProps.onChange({
         target: {
           name: registerProps.name,
-          value: date ? date.toISOString() : '',
+          value: date ? dayjs(date).format(DATE_FORMAT) : '',
         },
       });
     }

@@ -1,17 +1,16 @@
 import { useUpdateUserAvatar } from '@apis/hooks/user.hook';
 import { FlexEnd } from '@common/styled';
 import { Avatar, Box, Button, Stack, Typography } from '@mui/material';
+import { PaperContainer } from '@pages/authentication/styled';
 import useAuthStore from '@store/authStore';
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import { PaperContainer } from '../../styled';
 
 const UserAvatar = () => {
   const { user, login } = useAuthStore();
-  const [avatar, setAvatar] = useState<string | null>(user?.avatar as string);
+  const [avatar, setAvatar] = useState<string>(user.avatar);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const { mutate } = useUpdateUserAvatar({ userId: user?.id as number });
+  const { mutate } = useUpdateUserAvatar({ userId: user.id });
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -48,11 +47,7 @@ const UserAvatar = () => {
         { avatar: selectedFile },
         {
           onSuccess(data) {
-            toast.success(data.message);
             login(data.user);
-          },
-          onError(data) {
-            toast.error(data.error);
           },
         },
       );

@@ -50,7 +50,7 @@ const CSelect = ({
           disabled={disabled}
         >
           <MenuItem value="" disabled>
-            {placeholder}
+            {placeholder || label}
           </MenuItem>
           {selectOptions.map((item) => (
             <MenuItem key={item.value} value={item.value}>

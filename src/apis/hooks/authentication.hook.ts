@@ -14,6 +14,7 @@ import {
 } from '@apis/generated/data-contracts';
 import httpClient from '@config/httpClient';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 export const authenticationApi = new Authentication(httpClient);
 
@@ -43,6 +44,9 @@ export const useForgotPassword = (): UseMutationResult<
     mutationFn: (payload: ForgotPasswordRequestDto) => {
       return authenticationApi.forgotPassword(payload);
     },
+    onError(data) {
+      toast.error(data.error);
+    },
   });
 };
 
@@ -52,6 +56,12 @@ export const useResetPassword = (
   return useMutation({
     mutationFn: (payload: ResetPasswordRequestDto) => {
       return authenticationApi.resetPassword(token, payload);
+    },
+    onSuccess(data) {
+      toast.success(data.message);
+    },
+    onError(data) {
+      toast.error(data.error);
     },
   });
 };

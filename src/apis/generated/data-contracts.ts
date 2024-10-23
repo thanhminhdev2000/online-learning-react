@@ -10,7 +10,8 @@
  */
 
 export interface AccessTokenResponseDto {
-  accessToken?: string;
+  accessToken: string;
+  expiresIn: number;
 }
 
 export interface CreateUserRequestDto {
@@ -18,9 +19,10 @@ export interface CreateUserRequestDto {
   dateOfBirth: string;
   email: string;
   fullName: string;
-  gender: string;
+  gender: UserGenderDto;
   /** @minLength 6 */
   password: string;
+  role?: UserRoleDto;
   username: string;
 }
 
@@ -39,12 +41,19 @@ export interface LoginRequestDto {
 
 export interface LoginResponseDto {
   accessToken: string;
+  expiresIn: number;
   message: string;
   user: UserDetailDto;
 }
 
 export interface MessageDto {
   message: string;
+}
+
+export interface PagingInfoDto {
+  limit: number;
+  page: number;
+  totalCount: number;
 }
 
 export interface PasswordUpdateRequestDto {
@@ -69,9 +78,25 @@ export interface UserDetailDto {
   dateOfBirth: string;
   email: string;
   fullName: string;
-  gender: string;
+  gender: UserGenderDto;
   id: number;
+  role: UserRoleDto;
   username: string;
+}
+
+export enum UserGenderDto {
+  GenderFemale = 'female',
+  GenderMale = 'male',
+}
+
+export interface UserResponseDto {
+  data: UserDetailDto[];
+  paging: PagingInfoDto;
+}
+
+export enum UserRoleDto {
+  RoleUser = 'user',
+  RoleAdmin = 'admin',
 }
 
 export type ForgotPasswordDataDto = MessageDto;
@@ -97,13 +122,34 @@ export type ResetPasswordDataDto = MessageDto;
 
 export type ResetPasswordErrorDto = ErrorDto;
 
-export type UserListDataDto = UserDetailDto[];
+export interface UserListParamsDto {
+  /** Filter by email */
+  email?: string;
+  /** Filter by username */
+  username?: string;
+  /** Filter by full name */
+  fullName?: string;
+  /** Filter by date of birth */
+  dateOfBirth?: string;
+  /** Filter by role */
+  role?: string;
+  /** Page number for pagination */
+  page?: number;
+  /** Limit number of items per page (max 100) */
+  limit?: number;
+}
+
+export type UserListDataDto = UserResponseDto;
 
 export type UserListErrorDto = ErrorDto;
 
 export type UserCreateDataDto = MessageDto;
 
 export type UserCreateErrorDto = ErrorDto;
+
+export type AdminCreateDataDto = MessageDto;
+
+export type AdminCreateErrorDto = ErrorDto;
 
 export type UserDetailDataDto = UserDetailDto;
 

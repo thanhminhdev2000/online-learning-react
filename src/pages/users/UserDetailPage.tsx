@@ -1,13 +1,13 @@
+import { TypographyHover } from '@common/styled';
 import { Stack, Typography } from '@mui/material';
-import UserAvatar from '@pages/authentication/users/components/UserAvatar';
-import UserPassword from '@pages/authentication/users/components/UserPassword';
-import UserProfile from '@pages/authentication/users/components/UserProfile';
+import { UserMenu, menuSettings } from '@pages/authentication/constant';
+import { BoxContainer } from '@pages/authentication/styled';
+import UserAvatar from '@pages/users/components/UserAvatar';
+import UserPassword from '@pages/users/components/UserPassword';
+import UserProfile from '@pages/users/components/UserProfile';
 import { useState } from 'react';
-import { TypographyHover } from '../../../common/styled';
-import { menuSettings, UserMenu } from '../constant';
-import { BoxContainer } from '../styled';
 
-const UserPage = () => {
+const UserDetailPage = () => {
   const [menu, setMenu] = useState<UserMenu>(UserMenu.PROFILE);
 
   return (
@@ -39,4 +39,4 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+export default UserDetailPage;

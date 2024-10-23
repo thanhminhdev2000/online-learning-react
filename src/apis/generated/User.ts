@@ -10,6 +10,8 @@
  */
 
 import {
+  AdminCreateDataDto,
+  AdminCreateErrorDto,
   AvatarUpdateDataDto,
   AvatarUpdateErrorDto,
   AvatarUpdatePayloadDto,
@@ -26,6 +28,7 @@ import {
   UserDetailErrorDto,
   UserListDataDto,
   UserListErrorDto,
+  UserListParamsDto,
   UserUpdateDataDto,
   UserUpdateErrorDto,
 } from './data-contracts';
@@ -39,7 +42,7 @@ export class User<SecurityDataType = unknown> {
   }
 
   /**
-   * @description Retrieve a list of all users
+   * @description Retrieve a list of all users, with optional filters for email, username, full name, date of birth, role, and pagination.
    *
    * @tags User
    * @name UserList
@@ -49,10 +52,11 @@ export class User<SecurityDataType = unknown> {
    * @response `200` `UserListDataDto` OK
    * @response `500` `ErrorDto` Internal Server Error
    */
-  userList = (params: RequestParams = {}) =>
+  userList = (query: UserListParamsDto, params: RequestParams = {}) =>
     this.http.request<UserListDataDto, UserListErrorDto>({
       path: `/users/`,
       method: 'GET',
+      query: query,
       secure: true,
       format: 'json',
       ...params,
@@ -71,6 +75,26 @@ export class User<SecurityDataType = unknown> {
   userCreate = (user: CreateUserRequestDto, params: RequestParams = {}) =>
     this.http.request<UserCreateDataDto, UserCreateErrorDto>({
       path: `/users/`,
+      method: 'POST',
+      body: user,
+      type: ContentType.Json,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * @description Register a new user with email, username, and password
+   *
+   * @tags User
+   * @name AdminCreate
+   * @summary Register a new user
+   * @request POST:/users/admin
+   * @response `200` `AdminCreateDataDto` OK
+   * @response `400` `ErrorDto` Bad Request
+   * @response `409` `ErrorDto` Conflict
+   */
+  adminCreate = (user: CreateUserRequestDto, params: RequestParams = {}) =>
+    this.http.request<AdminCreateDataDto, AdminCreateErrorDto>({
+      path: `/users/admin`,
       method: 'POST',
       body: user,
       type: ContentType.Json,

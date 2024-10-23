@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login } = useAuthStore();
+  const { login, setToken } = useAuthStore();
   const {
     register,
     handleSubmit,
@@ -28,7 +28,8 @@ const LoginPage = () => {
   const onSubmit = handleSubmit((data) => {
     mutate(data, {
       onSuccess(data) {
-        login(data.user, data.accessToken);
+        login(data.user);
+        setToken(data.accessToken, data.expiresIn);
         navigate('/');
       },
       onError(data) {

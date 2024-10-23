@@ -7,10 +7,8 @@ import CSelect from '@components/cSelect';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Stack } from '@mui/material';
 import { userProfileSchema } from '@pages/authentication/type';
-
 import useAuthStore from '@store/authStore';
 import { FormProvider, useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 
 const UserProfile = () => {
   const { user, login } = useAuthStore();
@@ -24,6 +22,7 @@ const UserProfile = () => {
       gender: user.gender,
       dateOfBirth: user.dateOfBirth,
       avatar: user.avatar,
+      role: user.role,
     },
   });
 
@@ -39,11 +38,7 @@ const UserProfile = () => {
     data.id = user.id;
     mutate(data, {
       onSuccess(data) {
-        toast.success(data.message);
         login(data.user);
-      },
-      onError(data) {
-        toast.error(data.error);
       },
     });
   });
@@ -62,13 +57,11 @@ const UserProfile = () => {
               registerProps={register('gender')}
               errorMsg={errors.gender?.message}
               placeholder="Chọn giới tính"
-              disabled
             />
             <CDatePicker
               label="Ngày sinh"
               errorMsg={errors.dateOfBirth?.message}
               registerProps={register('dateOfBirth')}
-              disabled
             />
           </Stack>
         </FormProvider>

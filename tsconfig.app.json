@@ -8,8 +8,8 @@
     "strict": true,
     "baseUrl": "./src",
     "paths": {
-      "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
+      "@components/*": ["components/*"],
       "@utils/*": ["utils/*"],
       "@config/*": ["config/*"],
       "@hooks/*": ["hooks/*"],

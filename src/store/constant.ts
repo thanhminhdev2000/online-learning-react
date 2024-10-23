@@ -1,6 +1,4 @@
-import { UserDetailDto } from '@apis/generated/data-contracts';
-
-export const userInit: UserDetailDto = {
+export const userInit = {
   id: 0,
   email: '',
   username: '',
@@ -8,4 +6,5 @@ export const userInit: UserDetailDto = {
   gender: '',
   avatar: '',
   dateOfBirth: '',
+  role: '',
 };

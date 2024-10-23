@@ -3,11 +3,10 @@ import { FlexEnd } from '@common/styled';
 import CInput from '@components/cInput';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Stack } from '@mui/material';
+import { updatePasswordInit } from '@pages/authentication/constant';
 import { userPasswordSchema } from '@pages/authentication/type';
 import useAuthStore from '@store/authStore';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import { updatePasswordInit } from '../../constant';
 
 const UserPassword = () => {
   const { user } = useAuthStore();
@@ -24,14 +23,7 @@ const UserPassword = () => {
   const { mutate } = useUpdateUserPassword({ userId: user.id });
 
   const onSubmit = handleSubmit((data) => {
-    mutate(data, {
-      onSuccess(data) {
-        toast.success(data.message);
-      },
-      onError(data) {
-        toast.error(data.error);
-      },
-    });
+    mutate(data);
   });
 
   return (
@@ -40,13 +32,20 @@ const UserPassword = () => {
         <Stack flexDirection="column" gap={2}>
           <CInput
             label="Mật khẩu hiện tại"
+            type="password"
             errorMsg={errors.currentPassword?.message}
             registerProps={register('currentPassword')}
           />
 
-          <CInput label="Mật khẩu mới" errorMsg={errors.newPassword?.message} registerProps={register('newPassword')} />
+          <CInput
+            label="Mật khẩu mới"
+            type="password"
+            errorMsg={errors.newPassword?.message}
+            registerProps={register('newPassword')}
+          />
           <CInput
             label="Nhập lại mật khẩu mới"
+            type="password"
             errorMsg={errors.confirmNewPassword?.message}
             registerProps={register('confirmNewPassword')}
           />

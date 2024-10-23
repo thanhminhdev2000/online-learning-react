@@ -5,7 +5,6 @@ generateApi({
   name: 'ApiClient.ts',
   url: 'http://localhost:8080/swagger/doc.json',
   output: path.resolve(process.cwd(), './src/apis/generated'),
-  templates: path.resolve(process.cwd(), './src/api-templates'),
   httpClientType: 'axios',
   generateClient: true,
   toJS: false,

@@ -7,12 +7,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 
+import { UserGenderDto } from '@apis/generated/data-contracts';
 import { AuthContainer, ItemCenter, TypographyLink } from '@common/styled';
 import { signUpInit } from '@pages/authentication/constant';
 import { signUpSchema } from '@pages/authentication/type';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -29,16 +29,18 @@ const SignUpPage = () => {
   const { mutate } = useCreateUser();
 
   const onSubmit = handleSubmit((data) => {
-    data.dateOfBirth = dayjs(data.dateOfBirth).format(DATE_FORMAT);
-    mutate(data, {
-      onSuccess(data) {
-        toast.success(data.message);
-        navigate('/login');
+    mutate(
+      {
+        ...data,
+        dateOfBirth: dayjs(data.dateOfBirth).format(DATE_FORMAT),
+        gender: data.gender === UserGenderDto.GenderMale ? UserGenderDto.GenderMale : UserGenderDto.GenderFemale,
       },
-      onError(data) {
-        toast.error(data.error);
+      {
+        onSuccess() {
+          navigate('/login');
+        },
       },
-    });
+    );
   });
 
   return (

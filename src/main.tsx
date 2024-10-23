@@ -6,6 +6,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
 import './index.css';
 
@@ -27,6 +29,7 @@ createRoot(document.getElementById('root')!).render(
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <App />
+      <ToastContainer autoClose={2000} pauseOnHover={false} hideProgressBar />
     </ThemeProvider>
   </StrictMode>,
 );
