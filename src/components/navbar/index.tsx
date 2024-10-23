@@ -1,11 +1,10 @@
 import { UserRoleDto } from '@apis/generated/data-contracts';
 import { useLogout } from '@apis/hooks/authentication.hook';
-import { HorizontalDivider } from '@common/styled';
+import { HorizontalDivider, ItemCenter } from '@common/styled';
 import { routes } from '@components/navbar/constant';
 import { IconCursor, NavItem } from '@components/navbar/styled';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
+import { Avatar, Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import useAuthStore from '@store/authStore';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -100,10 +99,8 @@ const Navbar = ({ page }: { page?: string }) => {
             </Menu>
           </Box>
 
-          <Box>
-            <IconCursor onClick={openAccountMenu}>
-              <AccountCircleIcon sx={{ color }} />
-            </IconCursor>
+          <ItemCenter>
+            <Avatar src={user.avatar} onClick={openAccountMenu} sx={{ width: 24, height: 24 }} />
             <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>
               <MenuItem onClick={() => closeAccountMenu(`users/${user.id}`)}>Hồ sơ</MenuItem>
               {user.role === UserRoleDto.RoleAdmin && (
@@ -119,11 +116,16 @@ const Navbar = ({ page }: { page?: string }) => {
                 Đăng xuất
               </MenuItem>
             </Menu>
-          </Box>
+          </ItemCenter>
         </Box>
       ) : (
         <Box>
-          <Button size="large" startIcon={<AccountCircleIcon />} sx={{ color }} onClick={openAccountMenu}>
+          <Button
+            size="large"
+            startIcon={<Avatar sx={{ width: 24, height: 24 }} />}
+            sx={{ color }}
+            onClick={openAccountMenu}
+          >
             Tài khoản
           </Button>
           <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>

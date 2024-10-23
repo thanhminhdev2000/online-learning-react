@@ -15,6 +15,7 @@ const SearchForm = ({ onSearch }: { onSearch: (data: UserListParamsDto) => void 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = formInstance;
 
@@ -49,7 +50,9 @@ const SearchForm = ({ onSearch }: { onSearch: (data: UserListParamsDto) => void 
             </Stack>
 
             <Stack width="25%" justifyContent="end" alignItems="end" gap={2}>
-              <Button size="large">Reset</Button>
+              <Button size="large" onClick={() => reset()}>
+                Reset
+              </Button>
               <Button size="large" variant="contained" type="submit">
                 Tìm kiếm
               </Button>

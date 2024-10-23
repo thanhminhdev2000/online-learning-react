@@ -11,7 +11,7 @@ httpClient.instance.interceptors.request.use(async (config) => {
   config.paramsSerializer = {
     indexes: null,
   };
-  console.log(config.params);
+
   if (config.params) {
     config.params = cleanObject(config.params);
   }
