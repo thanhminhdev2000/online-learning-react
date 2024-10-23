@@ -55,10 +55,10 @@ const UserManagePage = () => {
   };
 
   useEffect(() => {
-    if (page > totalPage) {
+    if (totalCount && page > totalPage) {
       setPage(totalPage);
     }
-  }, [page, totalPage]);
+  }, [totalCount, page, totalPage]);
 
   return (
     <Container maxWidth="lg">
@@ -117,7 +117,7 @@ const UserManagePage = () => {
                         handleDeleteUser(row.id);
                       }}
                     >
-                      Delete
+                      Xoá
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -138,9 +138,12 @@ const UserManagePage = () => {
             <MenuItem value={25}>25</MenuItem>
             <MenuItem value={50}>50</MenuItem>
           </Select>
+
           <Pagination
             page={page}
-            onChange={(e, num) => setPage(num)}
+            onChange={(_, newPage) => {
+              setPage(newPage);
+            }}
             count={totalPage}
             variant="outlined"
             shape="rounded"

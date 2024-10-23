@@ -35,7 +35,6 @@ export const useGetUsers = (query?: UserListParamsDto): UseQueryResult<UserListD
   return useQuery({
     queryKey: [queryKeys.getAll, query],
     queryFn: () => {
-      console.log(query);
       return userApi.userList(query as UserListParamsDto);
     },
   });

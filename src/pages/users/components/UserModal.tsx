@@ -79,7 +79,7 @@ const UserModal = ({ open, onClose, data, refetch }: UserProps) => {
         <Modal open={open} onClose={closeModal}>
           <ModalWrapper>
             <Stack justifyContent="space-between" alignItems="center">
-              <Typography variant="h6">{data.id ? 'Add User' : 'Edit User'}</Typography>
+              <Typography variant="h6">{data.id ? 'Chỉnh sửa thông tin' : 'Thêm người dùng'}</Typography>
               <Close onClick={closeModal} sx={{ cursor: 'pointer' }} />
             </Stack>
 
