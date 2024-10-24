@@ -11,18 +11,18 @@ const HomePage = () => {
       <Navbar />
       <Background alignItems="center">
         <Stack flexDirection="column" width="80%" height="100%" justifyContent="center" color="white" paddingTop={8}>
-          <Typography variant="h4" fontWeight="700" width={800}>
+          <Typography variant="h6" fontWeight="bold" maxWidth={600}>
             NỀN TẢNG HỌC TRỰC TUYẾN SỐ 1 DÀNH CHO HỌC SINH PHỔ THÔNG VIỆT NAM
             <br />
           </Typography>
 
-          <Typography width={500}>
+          <Typography maxWidth={500}>
             Từ cơ bản đến nâng cao
             <br />
             50.000+ học sinh đỗ thủ khoa, á khoa và đỗ vào các trường THCS, THPT, Đại học hàng đầu cả nước
           </Typography>
 
-          <Box width={200} marginTop={2}>
+          <Box marginTop={2}>
             <Button variant="contained" onClick={() => navigate('/learn')}>
               Học ngay
             </Button>

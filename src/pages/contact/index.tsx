@@ -33,8 +33,8 @@ const ContactPage = () => {
   return (
     <form onSubmit={onSubmit}>
       <FormProvider {...formInstance}>
-        <Stack height="70vh" alignItems="center" justifyContent="center">
-          <Stack gap={5}>
+        <Stack marginTop={5} justifyContent="center">
+          <Stack flexDirection={{ xs: 'column', sm: 'row' }} gap={3}>
             <BoxContainer>
               <Stack flexDirection="column">
                 <Typography variant="h6" gutterBottom>

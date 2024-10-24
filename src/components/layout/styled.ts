@@ -7,14 +7,15 @@ export const Background = styled(Stack)(() => ({
   width: '100%',
 }));
 
-export const ModalWrapper = styled(Paper)(() => ({
+export const ModalWrapper = styled(Paper)(({ theme }) => ({
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 600,
+  maxWidth: 600,
+  minWidth: 350,
   bgcolor: '#fff',
-  padding: 16,
+  padding: theme.spacing(4),
   border: 'none',
   outline: 'none',
 }));

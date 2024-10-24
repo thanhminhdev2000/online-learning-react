@@ -1,7 +1,7 @@
 import { Paper, styled } from '@mui/material';
 
 export const PaperContainer = styled(Paper)(() => ({
-  height: 150,
+  height: 100,
   width: '100%',
   display: 'flex',
   justifyContent: 'center',

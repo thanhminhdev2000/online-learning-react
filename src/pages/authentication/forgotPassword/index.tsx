@@ -46,7 +46,7 @@ const ForgotPasswordPage = () => {
       ) : (
         <ItemCenter height="80vh">
           <AuthContainer onSubmit={onSubmit}>
-            <Typography variant="h5" fontWeight="bold" textAlign="center">
+            <Typography variant="h6" fontWeight="bold" textAlign="center">
               QUÊN MẬT KHẨU
             </Typography>
 
@@ -60,13 +60,15 @@ const ForgotPasswordPage = () => {
               </Button>
             </Box>
 
-            <Box display="flex" alignItems="center" justifyContent="space-between" marginTop={2}>
-              <Stack gap={1}>
+            <Box marginTop={2}>
+              <ItemCenter gap={1}>
                 <Typography>Bạn đã có tài khoản?</Typography>
                 <TypographyLink onClick={() => navigate('/login')}>Đăng nhập!</TypographyLink>
-              </Stack>
+              </ItemCenter>
 
-              <TypographyLink onClick={() => navigate('/signup')}>Đăng ký tài khoản mới!</TypographyLink>
+              <ItemCenter>
+                <TypographyLink onClick={() => navigate('/signup')}>Đăng ký tài khoản mới!</TypographyLink>
+              </ItemCenter>
             </Box>
           </AuthContainer>
         </ItemCenter>

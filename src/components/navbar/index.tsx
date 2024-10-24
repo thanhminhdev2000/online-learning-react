@@ -1,12 +1,12 @@
 import { UserRoleDto } from '@apis/generated/data-contracts';
 import { useLogout } from '@apis/hooks/authentication.hook';
-import { HorizontalDivider, ItemCenter } from '@common/styled';
+import { AlignCenter, ItemCenter } from '@common/styled';
 import { routes } from '@components/navbar/constant';
-import { NavbarWrapper, NavItem } from '@components/navbar/styled';
-import { Avatar, Box, Button, Menu, MenuItem } from '@mui/material';
+import { NavbarWrapper, NavItem, StyledMenuItem } from '@components/navbar/styled';
+import { Avatar, Box, Button, Menu, Stack, Typography } from '@mui/material';
 import useAuthStore from '@store/authStore';
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -35,62 +35,56 @@ const Navbar = () => {
 
   return (
     <NavbarWrapper>
-      <Box display="flex" justifyContent="space-between" width="90%">
-        <Box display="flex" alignItems="center">
-          <Link to="/">
-            <img src="/logo.svg" width={150} />
-          </Link>
+      <Box display="flex" justifyContent="space-between" width={{ xs: '100%', sm: '90%' }}>
+        <Box display="flex" alignItems="center" height={48}>
+          <AlignCenter onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
+            <img src="/logo.svg" width={125} />
+          </AlignCenter>
 
-          <Box display="flex" marginLeft={3}>
+          <Stack>
             {routes.map((route) => (
-              <NavItem key={route.path} to={route.path} sx={{ color }}>
-                {route.pathName}
+              <NavItem key={route.path} to={route.path}>
+                <Typography display={{ xs: 'none' }}>{route.pathName}</Typography>
               </NavItem>
             ))}
-          </Box>
+          </Stack>
         </Box>
+
         {user.id ? (
           <ItemCenter>
-            <Button
-              size="large"
-              startIcon={<Avatar sx={{ width: 24, height: 24 }} />}
-              sx={{ color }}
-              onClick={openAccountMenu}
-            >
-              {user.username}
+            <Button startIcon={<Avatar />} sx={{ color }} onClick={openAccountMenu}>
+              <Typography variant="body2" display={{ xs: 'none', sm: 'block' }}>
+                {user.username}
+              </Typography>
             </Button>
             <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>
-              <MenuItem onClick={() => closeAccountMenu(`users/${user.id}`)}>Hồ sơ</MenuItem>
+              <StyledMenuItem onClick={() => closeAccountMenu(`users/${user.id}`)}>Hồ sơ</StyledMenuItem>
               {user.role === UserRoleDto.RoleAdmin && (
-                <MenuItem onClick={() => closeAccountMenu('users')}>Quản trị</MenuItem>
+                <StyledMenuItem onClick={() => closeAccountMenu('users')}>Quản trị</StyledMenuItem>
               )}
-              <HorizontalDivider />
-              <MenuItem
+              <StyledMenuItem
                 onClick={() => {
                   closeAccountMenu();
                   handleLogout();
                 }}
               >
                 Đăng xuất
-              </MenuItem>
+              </StyledMenuItem>
             </Menu>
           </ItemCenter>
         ) : (
-          <Box>
-            <Button
-              size="large"
-              startIcon={<Avatar sx={{ width: 24, height: 24 }} />}
-              sx={{ color }}
-              onClick={openAccountMenu}
-            >
-              Tài khoản
+          <ItemCenter>
+            <Button startIcon={<Avatar />} sx={{ color }} onClick={openAccountMenu}>
+              <Typography variant="body2" display={{ xs: 'none', sm: 'block' }}>
+                Tài khoản
+              </Typography>
             </Button>
+
             <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>
-              <MenuItem onClick={() => closeAccountMenu('login')}>Đăng nhập</MenuItem>
-              <HorizontalDivider />
-              <MenuItem onClick={() => closeAccountMenu('signup')}>Đăng ký</MenuItem>
+              <StyledMenuItem onClick={() => closeAccountMenu('login')}>Đăng nhập</StyledMenuItem>
+              <StyledMenuItem onClick={() => closeAccountMenu('signup')}>Đăng ký</StyledMenuItem>
             </Menu>
-          </Box>
+          </ItemCenter>
         )}
       </Box>
     </NavbarWrapper>

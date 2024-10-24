@@ -12,13 +12,44 @@ import App from './App';
 import './index.css';
 
 const theme = createTheme({
+  spacing: 4,
   typography: {
     fontFamily: 'Roboto, Arial, sans-serif',
+    body1: {
+      '@media (max-width:600px)': {
+        fontSize: '13px',
+      },
+    },
   },
   components: {
     MuiStack: {
       defaultProps: {
         direction: 'row',
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          '@media (max-width:600px)': {
+            fontSize: '13px',
+            padding: '4px 8px',
+          },
+        },
+      },
+    },
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          width: 24,
+          height: 24,
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          padding: '0 6px',
+        },
       },
     },
   },

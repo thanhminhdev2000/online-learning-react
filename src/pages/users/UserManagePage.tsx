@@ -31,7 +31,7 @@ const UserManagePage = () => {
   const [rowData, setRowData] = useState(userInit);
   const [openUserModal, setOpenUserModal] = useState(false);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(25);
   const [search, setSearch] = useState<UserListParamsDto>(userSearchInit);
   const { mutate } = useDeleteUser();
 
@@ -62,14 +62,14 @@ const UserManagePage = () => {
 
   return (
     <Container maxWidth="lg">
-      <Paper sx={{ minHeight: 'calc(100vh - 48px)', padding: 4 }}>
-        <Typography align="center" variant="h5" fontWeight="bold" textTransform="uppercase">
+      <Paper sx={{ minHeight: 'calc(100vh - 48px)', padding: 4, position: 'relative' }}>
+        <Typography variant="h6" fontWeight="bold" textTransform="uppercase">
           Quản lý người dùng
         </Typography>
 
-        <FlexEnd marginTop={4}>
-          <Button variant="contained" size="large" onClick={() => setOpenUserModal(true)}>
-            Thêm người dùng
+        <FlexEnd marginTop={4} sx={{ position: 'absolute', right: 16, top: 0 }}>
+          <Button variant="contained" size="small" onClick={() => setOpenUserModal(true)}>
+            Đăng ký
           </Button>
         </FlexEnd>
 
@@ -85,7 +85,7 @@ const UserManagePage = () => {
                 <TableCell>Giới tính</TableCell>
                 <TableCell>Ngày sinh</TableCell>
                 <TableCell>Vai trò</TableCell>
-                <TableCell></TableCell>
+                <TableCell sx={{ width: 50 }}></TableCell>
               </TableRow>
             </TableHead>
 

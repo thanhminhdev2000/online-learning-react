@@ -39,7 +39,7 @@ const ResetPasswordPage = () => {
     <>
       <ItemCenter height="80vh">
         <AuthContainer onSubmit={onSubmit}>
-          <Typography variant="h5" fontWeight="bold" textAlign="center">
+          <Typography variant="h6" fontWeight="bold" textAlign="center">
             ĐẶT LẠI MẬT KHẨU
           </Typography>
 
@@ -64,10 +64,14 @@ const ResetPasswordPage = () => {
             </Button>
           </Box>
 
-          <Box display="flex" alignItems="center" justifyContent="space-between" marginTop={2}>
-            <TypographyLink onClick={() => navigate('/signup')}>Đăng ký tài khoản mới!</TypographyLink>
+          <Box marginTop={2}>
+            <ItemCenter>
+              <TypographyLink onClick={() => navigate('/signup')}>Đăng ký tài khoản mới!</TypographyLink>
+            </ItemCenter>
 
-            <TypographyLink onClick={() => navigate('/forgot-password')}>Quên mật khẩu?</TypographyLink>
+            <ItemCenter>
+              <TypographyLink onClick={() => navigate('/forgot-password')}>Quên mật khẩu?</TypographyLink>
+            </ItemCenter>
           </Box>
         </AuthContainer>
       </ItemCenter>

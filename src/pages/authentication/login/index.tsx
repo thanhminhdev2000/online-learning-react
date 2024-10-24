@@ -41,7 +41,7 @@ const LoginPage = () => {
   return (
     <ItemCenter height="80vh">
       <AuthContainer onSubmit={onSubmit}>
-        <Typography variant="h5" fontWeight="bold" textAlign="center">
+        <Typography variant="h6" fontWeight="bold" textAlign="center">
           ĐĂNG NHẬP
         </Typography>
 
@@ -65,13 +65,15 @@ const LoginPage = () => {
           </Button>
         </Box>
 
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Box display="flex" marginTop={2} gap={1}>
+        <Box marginTop={2}>
+          <ItemCenter gap={1}>
             <Typography>Bạn chưa có tài khoản?</Typography>
             <TypographyLink onClick={() => navigate('/signup')}>Đăng ký!</TypographyLink>
-          </Box>
+          </ItemCenter>
 
-          <TypographyLink onClick={() => navigate('/forgot-password')}>Quên mật khẩu?</TypographyLink>
+          <ItemCenter>
+            <TypographyLink onClick={() => navigate('/forgot-password')}>Quên mật khẩu?</TypographyLink>
+          </ItemCenter>
         </Box>
       </AuthContainer>
     </ItemCenter>

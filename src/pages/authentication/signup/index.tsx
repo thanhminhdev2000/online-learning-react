@@ -46,7 +46,7 @@ const SignUpPage = () => {
   return (
     <ItemCenter height="90vh">
       <AuthContainer onSubmit={onSubmit}>
-        <Typography variant="h5" fontWeight="bold" textAlign="center">
+        <Typography variant="h6" fontWeight="bold" textAlign="center">
           ĐĂNG KÝ
         </Typography>
         <FormProvider {...formInstance}>
@@ -91,18 +91,20 @@ const SignUpPage = () => {
           </Button>
         </Box>
 
-        <Typography marginTop={1} color="textSecondary">
+        <Typography marginTop={2} color="textSecondary">
           Khi đăng ký, bạn đã đồng ý với Điều khoản sử dụng và Chính sách bảo mật của chúng tôi.
         </Typography>
 
-        <Stack alignItems="center" justifyContent="space-between">
-          <Box display="flex" marginTop={2} gap={1}>
+        <Box marginTop={2}>
+          <ItemCenter gap={1}>
             <Typography>Bạn đã có tài khoản?</Typography>
             <TypographyLink onClick={() => navigate('/login')}>Đăng nhập!</TypographyLink>
-          </Box>
+          </ItemCenter>
 
-          <TypographyLink onClick={() => navigate('/forgot-password')}>Quên mật khẩu?</TypographyLink>
-        </Stack>
+          <ItemCenter>
+            <TypographyLink onClick={() => navigate('/forgot-password')}>Quên mật khẩu?</TypographyLink>
+          </ItemCenter>
+        </Box>
       </AuthContainer>
     </ItemCenter>
   );

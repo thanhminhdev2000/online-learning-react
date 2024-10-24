@@ -57,7 +57,7 @@ const UserAvatar = () => {
   return (
     <Box marginTop={2}>
       <Stack width="100%" gap={2}>
-        <Avatar src={avatar as string} sx={{ width: 150, height: 150 }} />
+        <Avatar src={avatar} sx={{ width: { xs: 50, sm: 100 }, height: { xs: 50, sm: 100 } }} />
 
         <PaperContainer variant="outlined" onDrop={handleDrop} onDragOver={handleDragOver}>
           <Box>
@@ -65,8 +65,8 @@ const UserAvatar = () => {
             <Typography align="center" color="textSecondary" marginY={1}>
               -hoặc-
             </Typography>
-            <Button variant="outlined" component="label">
-              Chọn ảnh từ máy tính của bạn
+            <Button variant="outlined" component="label" sx={{ textTransform: 'none' }}>
+              Chọn ảnh từ máy tính
               <input hidden accept="image/*" type="file" onChange={handleFileChange} />
             </Button>
           </Box>

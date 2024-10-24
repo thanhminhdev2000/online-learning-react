@@ -27,14 +27,14 @@ const SearchForm = ({ onSearch }: { onSearch: (data: UserListParamsDto) => void 
     <form onSubmit={onSubmit}>
       <FormProvider {...formInstance}>
         <Box marginTop={2}>
-          <Stack gap={4}>
+          <Stack gap={2}>
             <CInput label="Email" errorMsg={errors.email?.message} registerProps={register('email')} />
             <CInput label="Username" errorMsg={errors.username?.message} registerProps={register('username')} />
             <CInput label="Họ và tên" errorMsg={errors.fullName?.message} registerProps={register('fullName')} />
           </Stack>
 
-          <Stack marginTop={2} gap={2}>
-            <Stack width="75%" gap={4} justifyContent="space-between">
+          <Stack marginTop={2}>
+            <Stack width="60%" gap={4} justifyContent="space-between">
               <CDatePicker
                 label="Ngày sinh"
                 errorMsg={errors.dateOfBirth?.message}
@@ -49,11 +49,11 @@ const SearchForm = ({ onSearch }: { onSearch: (data: UserListParamsDto) => void 
               />
             </Stack>
 
-            <Stack width="25%" justifyContent="end" alignItems="end" gap={2}>
-              <Button size="large" onClick={() => reset()}>
+            <Stack width="40%" justifyContent="end" alignItems="end">
+              <Button size="small" onClick={() => reset()}>
                 Reset
               </Button>
-              <Button size="large" variant="contained" type="submit">
+              <Button size="small" variant="contained" type="submit">
                 Tìm kiếm
               </Button>
             </Stack>

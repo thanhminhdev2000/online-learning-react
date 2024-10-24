@@ -1,23 +1,26 @@
-import { Box, Divider, FormLabel, Stack, styled, Typography } from '@mui/material';
+import { Box, FormLabel, Stack, styled, Typography } from '@mui/material';
 
-export const AuthContainer = styled('form')(() => ({
-  padding: '2rem',
+export const AuthContainer = styled('form')(({ theme }) => ({
+  padding: 16,
   borderRadius: '8px',
   boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
   backgroundColor: '#fff',
   maxWidth: '600px',
-  minWidth: '400px',
+  minWidth: '300px',
   width: '100%',
+
+  [theme.breakpoints.down('xs')]: {
+    padding: 8,
+  },
 }));
 
-export const HorizontalDivider = styled(Divider)(() => ({
-  color: '#fff',
-  margin: '5px 10px',
-}));
-
-export const ItemCenter = styled(Stack)(() => ({
-  justifyContent: 'center',
-  alignItems: 'center',
+export const BoxContainer = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  backgroundColor: '#fff',
+  gap: 16,
+  padding: 8,
+  borderRadius: 16,
 }));
 
 export const TypographyHover = styled(Typography)(() => ({
@@ -49,15 +52,23 @@ export const FormWrapper = styled(Stack)(() => ({
   width: '100%',
 }));
 
-export const FlexEnd = styled(Stack)(() => ({
-  justifyContent: 'flex-end',
+export const ItemCenter = styled(Stack)(() => ({
+  justifyContent: 'center',
+  alignItems: 'center',
 }));
 
-export const BoxContainer = styled(Box)(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  backgroundColor: '#fff',
-  gap: 16,
-  padding: 16,
-  borderRadius: 16,
+export const SpaceBetween = styled(Stack)(() => ({
+  justifyContent: 'space-between',
+}));
+
+export const JustifyCenter = styled(Stack)(() => ({
+  justifyContent: 'center',
+}));
+
+export const AlignCenter = styled(Stack)(() => ({
+  alignItems: 'center',
+}));
+
+export const FlexEnd = styled(Stack)(() => ({
+  justifyContent: 'flex-end',
 }));
