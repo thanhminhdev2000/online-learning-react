@@ -1,7 +1,7 @@
 import { UserDetailDto, UserGenderDto, UserListParamsDto, UserRoleDto } from '@apis/generated/data-contracts';
 import { useDeleteUser, useGetUsers } from '@apis/hooks/user.hook';
 import { DATE_FORMAT_VN } from '@common/constant';
-import { FlexEnd } from '@common/styled';
+import { SpaceBetween } from '@common/styled';
 import {
   Box,
   Button,
@@ -62,16 +62,16 @@ const UserManagePage = () => {
 
   return (
     <Container maxWidth="lg">
-      <Paper sx={{ minHeight: 'calc(100vh - 48px)', padding: 4, position: 'relative' }}>
-        <Typography variant="h6" fontWeight="bold" textTransform="uppercase">
-          Quản lý người dùng
-        </Typography>
+      <Paper sx={{ minHeight: 'calc(100vh - 48px)', padding: 4 }}>
+        <SpaceBetween>
+          <Typography variant="h6" fontWeight="bold" textTransform="uppercase">
+            Quản lý người dùng
+          </Typography>
 
-        <FlexEnd marginTop={4} sx={{ position: 'absolute', right: 16, top: 0 }}>
           <Button variant="contained" size="small" onClick={() => setOpenUserModal(true)}>
             Đăng ký
           </Button>
-        </FlexEnd>
+        </SpaceBetween>
 
         <SearchForm onSearch={handleSearch} />
 
