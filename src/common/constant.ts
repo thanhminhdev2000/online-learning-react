@@ -29,3 +29,5 @@ export const roleOptions: IOptions[] = [
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
 export const DATE_FORMAT_VN = 'DD/MM/YYYY';
+export const HEADER_HEIGHT = 40;
+export const LIMIT = 15;

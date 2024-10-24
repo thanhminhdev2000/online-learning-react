@@ -14,21 +14,22 @@ export const AuthContainer = styled('form')(({ theme }) => ({
   },
 }));
 
-export const BoxContainer = styled(Box)(() => ({
+export const BoxContainer = styled(Box)(({ theme: { spacing } }) => ({
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: '#fff',
-  gap: 16,
-  padding: 8,
-  borderRadius: 16,
+  gap: spacing(4),
+  padding: spacing(4),
+  borderRadius: spacing(4),
 }));
 
-export const TypographyHover = styled(Typography)(() => ({
-  padding: '8px 4px',
-  borderRadius: 8,
+export const TypographyHover = styled(Typography)(({ theme: { spacing } }) => ({
+  padding: spacing(1, 2),
+  borderRadius: spacing(2),
+  fontWeight: 'bold',
 
   '&:hover': {
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.04)',
     cursor: 'pointer',
   },
 }));

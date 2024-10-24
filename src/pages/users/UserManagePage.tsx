@@ -1,6 +1,6 @@
 import { UserDetailDto, UserGenderDto, UserListParamsDto, UserRoleDto } from '@apis/generated/data-contracts';
 import { useDeleteUser, useGetUsers } from '@apis/hooks/user.hook';
-import { DATE_FORMAT_VN } from '@common/constant';
+import { DATE_FORMAT_VN, HEADER_HEIGHT, LIMIT } from '@common/constant';
 import { SpaceBetween } from '@common/styled';
 import {
   Box,
@@ -31,7 +31,7 @@ const UserManagePage = () => {
   const [rowData, setRowData] = useState(userInit);
   const [openUserModal, setOpenUserModal] = useState(false);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(25);
+  const [limit, setLimit] = useState(LIMIT);
   const [search, setSearch] = useState<UserListParamsDto>(userSearchInit);
   const { mutate } = useDeleteUser();
 
@@ -62,7 +62,7 @@ const UserManagePage = () => {
 
   return (
     <Container maxWidth="lg">
-      <Paper sx={{ minHeight: 'calc(100vh - 48px)', padding: 4 }}>
+      <Paper sx={{ minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`, padding: 4 }}>
         <SpaceBetween>
           <Typography variant="h6" fontWeight="bold" textTransform="uppercase">
             Quản lý người dùng
@@ -134,9 +134,9 @@ const UserManagePage = () => {
 
         <Stack marginTop={2} justifyContent="end">
           <Select sx={{ height: 32 }} value={limit} onChange={(e) => setLimit(Number(e.target.value))}>
-            <MenuItem value={10}>10</MenuItem>
-            <MenuItem value={25}>25</MenuItem>
+            <MenuItem value={LIMIT}>{LIMIT}</MenuItem>
             <MenuItem value={50}>50</MenuItem>
+            <MenuItem value={100}>1004</MenuItem>
           </Select>
 
           <Pagination

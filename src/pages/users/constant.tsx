@@ -1,3 +1,4 @@
+import { LIMIT } from '@common/constant';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PasswordIcon from '@mui/icons-material/Password';
 import Person2Icon from '@mui/icons-material/Person2';
@@ -10,7 +11,7 @@ export const userSearchInit = {
   dateOfBirth: '',
   role: '*',
   page: 1,
-  limit: 10,
+  limit: LIMIT,
 };
 
 export const menuSettings = [

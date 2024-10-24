@@ -1,8 +1,9 @@
 import { UserRoleDto } from '@apis/generated/data-contracts';
 import { useLogout } from '@apis/hooks/authentication.hook';
-import { AlignCenter, ItemCenter } from '@common/styled';
+import { HEADER_HEIGHT } from '@common/constant';
+import { AlignCenter, ItemCenter, TypographyHover } from '@common/styled';
 import { routes } from '@components/navbar/constant';
-import { NavbarWrapper, NavItem, StyledMenuItem } from '@components/navbar/styled';
+import { NavbarWrapper, StyledMenuItem } from '@components/navbar/styled';
 import { Avatar, Box, Button, Menu, Stack, Typography } from '@mui/material';
 import useAuthStore from '@store/authStore';
 import React, { useState } from 'react';
@@ -36,16 +37,21 @@ const Navbar = () => {
   return (
     <NavbarWrapper>
       <Box display="flex" justifyContent="space-between" width={{ xs: '100%', sm: '90%' }}>
-        <Box display="flex" alignItems="center" height={48}>
+        <Box display="flex" alignItems="center" height={HEADER_HEIGHT}>
           <AlignCenter onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
             <img src="/logo.svg" width={125} />
           </AlignCenter>
 
           <Stack>
             {routes.map((route) => (
-              <NavItem key={route.path} to={route.path}>
-                <Typography display={{ xs: 'none' }}>{route.pathName}</Typography>
-              </NavItem>
+              <TypographyHover
+                key={route.path}
+                display={{ xs: 'none', sm: 'block' }}
+                sx={{ padding: 3 }}
+                onClick={() => navigate(route.path)}
+              >
+                {route.pathName}
+              </TypographyHover>
             ))}
           </Stack>
         </Box>

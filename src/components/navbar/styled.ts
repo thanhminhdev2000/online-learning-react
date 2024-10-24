@@ -7,13 +7,13 @@ export const Logo = styled(Link)(() => ({
 
 export const NavbarWrapper = styled(Stack)(() => ({
   justifyContent: 'center',
-  backgroundColor: '#f0f0f0',
+  backgroundColor: '#fff',
 }));
 
-export const NavItem = styled(Link)(() => ({
+export const NavItem = styled(Link)(({ theme }) => ({
   cursor: 'pointer',
   textDecoration: 'none',
-  padding: '4px 8px',
+  padding: theme.spacing(2, 4),
   borderRadius: 4,
   color: '#000',
 
@@ -22,10 +22,10 @@ export const NavItem = styled(Link)(() => ({
   },
 }));
 
-export const MenuLink = styled(Link)(() => ({
+export const MenuLink = styled(Link)(({ theme: { spacing } }) => ({
   cursor: 'pointer',
   textDecoration: 'none',
-  padding: '4px 8px',
+  padding: spacing(1, 2),
   color: '#000',
 }));
 

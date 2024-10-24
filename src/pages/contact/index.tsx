@@ -35,7 +35,7 @@ const ContactPage = () => {
       <FormProvider {...formInstance}>
         <Stack marginTop={5} justifyContent="center">
           <Stack flexDirection={{ xs: 'column', sm: 'row' }} gap={3}>
-            <BoxContainer>
+            <BoxContainer >
               <Stack flexDirection="column">
                 <Typography variant="h6" gutterBottom>
                   GỬI THÔNG TIN LIÊN HỆ - GÓP Ý
