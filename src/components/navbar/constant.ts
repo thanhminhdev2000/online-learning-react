@@ -5,24 +5,12 @@ interface Route {
 
 export const routes: Route[] = [
   {
-    path: '/about',
-    pathName: 'Giới thiệu',
+    path: '/documentation',
+    pathName: 'Tài liệu',
   },
   {
     path: '/learn',
     pathName: 'Khóa học',
-  },
-  {
-    path: '/question',
-    pathName: 'Hỏi đáp',
-  },
-  {
-    path: '/documentation',
-    pathName: 'Bài viết',
-  },
-  {
-    path: '/donate',
-    pathName: 'Tài trợ',
   },
   {
     path: '/contact',

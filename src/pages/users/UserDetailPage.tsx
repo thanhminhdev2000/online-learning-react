@@ -1,7 +1,6 @@
-import { TypographyHover } from '@common/styled';
+import { BoxContainer, TypographyHover } from '@common/styled';
 import { Stack, Typography } from '@mui/material';
 import { UserMenu, menuSettings } from '@pages/authentication/constant';
-import { BoxContainer } from '@pages/authentication/styled';
 import UserAvatar from '@pages/users/components/UserAvatar';
 import UserPassword from '@pages/users/components/UserPassword';
 import UserProfile from '@pages/users/components/UserProfile';

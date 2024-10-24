@@ -10,21 +10,16 @@ const HomePage = () => {
     <>
       <Navbar />
       <Background alignItems="center">
-        <Stack flexDirection="column" width="80%" height="100%" justifyContent="center" color="white" paddingTop={6}>
-          <Typography variant="h6" color="#f05622" fontWeight="bold">
-            KHÓA HỌC
+        <Stack flexDirection="column" width="80%" height="100%" justifyContent="center" color="white" paddingTop={8}>
+          <Typography variant="h4" fontWeight="700" width={800}>
+            NỀN TẢNG HỌC TRỰC TUYẾN SỐ 1 DÀNH CHO HỌC SINH PHỔ THÔNG VIỆT NAM
+            <br />
           </Typography>
 
-          <Typography variant="h3" fontWeight="700" gutterBottom>
-            Thư viện khóa học lập trình
+          <Typography width={500}>
+            Từ cơ bản đến nâng cao
             <br />
-            từ cơ bản đến nâng cao
-          </Typography>
-
-          <Typography variant="body1">
-            Python? C++? C# hay Java?
-            <br />
-            Bạn lựa chọn ngôn ngữ nào để bắt đầu chặng đường trở thành lập trình viên của mình?
+            50.000+ học sinh đỗ thủ khoa, á khoa và đỗ vào các trường THCS, THPT, Đại học hàng đầu cả nước
           </Typography>
 
           <Box width={200} marginTop={2}>

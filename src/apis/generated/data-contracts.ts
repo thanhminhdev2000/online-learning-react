@@ -14,6 +14,13 @@ export interface AccessTokenResponseDto {
   expiresIn: number;
 }
 
+export interface ContactDto {
+  content: string;
+  email: string;
+  fullName: string;
+  title: string;
+}
+
 export interface CreateUserRequestDto {
   avatar: string;
   dateOfBirth: string;
@@ -121,6 +128,10 @@ export interface ResetPasswordParamsDto {
 export type ResetPasswordDataDto = MessageDto;
 
 export type ResetPasswordErrorDto = ErrorDto;
+
+export type ContactCreateDataDto = MessageDto;
+
+export type ContactCreateErrorDto = ErrorDto;
 
 export interface UserListParamsDto {
   /** Filter by email */

@@ -2,9 +2,8 @@ import { UserRoleDto } from '@apis/generated/data-contracts';
 import { useLogout } from '@apis/hooks/authentication.hook';
 import { HorizontalDivider, ItemCenter } from '@common/styled';
 import { routes } from '@components/navbar/constant';
-import { IconCursor, NavbarWrapper, NavItem } from '@components/navbar/styled';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { Avatar, Box, Button, Menu, MenuItem, Stack, Typography } from '@mui/material';
+import { NavbarWrapper, NavItem } from '@components/navbar/styled';
+import { Avatar, Box, Button, Menu, MenuItem } from '@mui/material';
 import useAuthStore from '@store/authStore';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,15 +11,8 @@ import { Link, useNavigate } from 'react-router-dom';
 const Navbar = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
-  const [notifyMenu, setNotifyMenu] = useState<null | HTMLElement>(null);
   const [accountMenu, setAccountMenu] = useState<null | HTMLElement>(null);
   const color = '#000';
-
-  const notifications = [
-    { id: 1, message: 'Notify1', link: 'notify1' },
-    { id: 2, message: 'Notify2', link: 'notify2' },
-    { id: 3, message: 'Notify3', link: 'notify3' },
-  ];
 
   const { mutate } = useLogout();
 
@@ -28,15 +20,6 @@ const Navbar = () => {
     mutate({});
     logout();
     navigate('login');
-  };
-
-  const openNotifytMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setNotifyMenu(event.currentTarget);
-  };
-
-  const closeNotifyMenu = (link: string) => {
-    navigate(link);
-    setNotifyMenu(null);
   };
 
   const openAccountMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -67,58 +50,31 @@ const Navbar = () => {
           </Box>
         </Box>
         {user.id ? (
-          <Box display="flex">
-            <Stack alignItems="center">
-              <IconCursor onClick={openNotifytMenu}>
-                <NotificationsNoneIcon sx={{ color }} />
-              </IconCursor>
-              <Menu
-                anchorEl={notifyMenu}
-                open={Boolean(notifyMenu)}
-                onClose={closeNotifyMenu}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+          <ItemCenter>
+            <Button
+              size="large"
+              startIcon={<Avatar sx={{ width: 24, height: 24 }} />}
+              sx={{ color }}
+              onClick={openAccountMenu}
+            >
+              {user.username}
+            </Button>
+            <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>
+              <MenuItem onClick={() => closeAccountMenu(`users/${user.id}`)}>Hồ sơ</MenuItem>
+              {user.role === UserRoleDto.RoleAdmin && (
+                <MenuItem onClick={() => closeAccountMenu('users')}>Quản trị</MenuItem>
+              )}
+              <HorizontalDivider />
+              <MenuItem
+                onClick={() => {
+                  closeAccountMenu();
+                  handleLogout();
                 }}
               >
-                {notifications.length > 0 ? (
-                  notifications.map((notification) => (
-                    <MenuItem
-                      key={notification.id}
-                      onClick={() => closeNotifyMenu(notification.link)}
-                      sx={{ width: 300, marginY: 2 }}
-                    >
-                      {notification.message}
-                    </MenuItem>
-                  ))
-                ) : (
-                  <MenuItem disabled>
-                    <Typography>Không có thông báo.</Typography>
-                  </MenuItem>
-                )}
-                <MenuItem onClick={() => closeNotifyMenu('notifications')}>Xem tất cả</MenuItem>
-              </Menu>
-            </Stack>
-
-            <ItemCenter>
-              <Avatar src={user.avatar} onClick={openAccountMenu} sx={{ width: 24, height: 24 }} />
-              <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>
-                <MenuItem onClick={() => closeAccountMenu(`users/${user.id}`)}>Hồ sơ</MenuItem>
-                {user.role === UserRoleDto.RoleAdmin && (
-                  <MenuItem onClick={() => closeAccountMenu('users')}>Quản trị</MenuItem>
-                )}
-                <HorizontalDivider />
-                <MenuItem
-                  onClick={() => {
-                    closeAccountMenu();
-                    handleLogout();
-                  }}
-                >
-                  Đăng xuất
-                </MenuItem>
-              </Menu>
-            </ItemCenter>
-          </Box>
+                Đăng xuất
+              </MenuItem>
+            </Menu>
+          </ItemCenter>
         ) : (
           <Box>
             <Button

@@ -3,17 +3,14 @@ import Layout from '@components/layout';
 import ProtectedRoute from '@components/layout/ProtectedRoute';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider/LocalizationProvider';
-import AboutPage from '@pages/about';
 import ForgotPasswordPage from '@pages/authentication/forgotPassword';
 import LoginPage from '@pages/authentication/login';
 import ResetPasswordPage from '@pages/authentication/resetPassword';
 import SignUpPage from '@pages/authentication/signup';
 import ContactPage from '@pages/contact';
 import DocumentationPage from '@pages/documentation';
-import DonatePage from '@pages/donate';
 import HomePage from '@pages/home';
 import LearnPage from '@pages/learn';
-import QuestionPage from '@pages/question';
 import UserDetailPage from '@pages/users/UserDetailPage';
 import UserManagePage from '@pages/users/UserManagePage';
 import useAuthStore from '@store/authStore';
@@ -49,11 +46,8 @@ const App = () => {
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
               <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/learn" element={<LearnPage />} />
-              <Route path="/question" element={<QuestionPage />} />
               <Route path="/documentation" element={<DocumentationPage />} />
-              <Route path="/donate" element={<DonatePage />} />
+              <Route path="/learn" element={<LearnPage />} />
               <Route path="/contact" element={<ContactPage />} />
 
               <Route path="/users/:userId" element={<UserDetailPage />} />
