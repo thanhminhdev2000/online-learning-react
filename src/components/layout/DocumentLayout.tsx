@@ -21,7 +21,7 @@ import {
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-const DocumentationLayout = () => {
+const DocumentLayout = () => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [hoveredItem, setHoveredItem] = useState<ClassWithSubjectsDto | null>(null);
@@ -53,8 +53,8 @@ const DocumentationLayout = () => {
   const open = Boolean(anchorEl);
 
   const drawerContent = (
-    <List>
-      <ListItem sx={{ backgroundColor: '#2a70b8', color: '#fff' }}>DAN MỤC TÀI LIỆU HỌC TẬP</ListItem>
+    <List sx={{ padding: 0 }}>
+      <ListItem sx={{ backgroundColor: '#2a70b8', color: '#fff' }}>DAN MỤCH TÀI LIỆU HỌC TẬP</ListItem>
       {data.map((item, index) => (
         <ListItem
           sx={{
@@ -156,4 +156,4 @@ const DocumentationLayout = () => {
   );
 };
 
-export default DocumentationLayout;
+export default DocumentLayout;

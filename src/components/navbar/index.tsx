@@ -66,8 +66,12 @@ const Navbar = () => {
             <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>
               <StyledMenuItem onClick={() => closeAccountMenu(`users/${user.id}`)}>Hồ sơ</StyledMenuItem>
               {user.role === UserRoleDto.RoleAdmin && (
-                <StyledMenuItem onClick={() => closeAccountMenu('users')}>Quản trị</StyledMenuItem>
+                <>
+                  <StyledMenuItem onClick={() => closeAccountMenu('users')}>Quản trị</StyledMenuItem>
+                  <StyledMenuItem onClick={() => closeAccountMenu('document/upload')}>Đăng tài liệu</StyledMenuItem>
+                </>
               )}
+
               <StyledMenuItem
                 onClick={() => {
                   closeAccountMenu();

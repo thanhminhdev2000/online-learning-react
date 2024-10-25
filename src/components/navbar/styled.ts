@@ -35,5 +35,5 @@ export const IconCursor = styled(IconButton)(() => ({
 }));
 
 export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  padding: theme.spacing(1, 2),
+  padding: theme.spacing(2, 10, 2, 2),
 }));
