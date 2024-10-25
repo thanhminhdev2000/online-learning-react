@@ -1,5 +1,5 @@
 import { useContact } from '@apis/hooks/contact.hook';
-import { BoxContainer, TypographyLink } from '@common/styled';
+import { BoxContainer, ItemCenter, TypographyLink } from '@common/styled';
 import CInput from '@components/cInput';
 import SendIcon from '@mui/icons-material/Send';
 import { Box, Button, Stack, Typography } from '@mui/material';
@@ -33,9 +33,9 @@ const ContactPage = () => {
   return (
     <form onSubmit={onSubmit}>
       <FormProvider {...formInstance}>
-        <Stack marginTop={5} justifyContent="center">
-          <Stack flexDirection={{ xs: 'column', sm: 'row' }} gap={3}>
-            <BoxContainer >
+        <ItemCenter marginTop={5}>
+          <Stack flexDirection={{ xs: 'column', md: 'row' }} gap={3}>
+            <BoxContainer>
               <Stack flexDirection="column">
                 <Typography variant="h6" gutterBottom>
                   GỬI THÔNG TIN LIÊN HỆ - GÓP Ý
@@ -44,7 +44,7 @@ const ContactPage = () => {
                   Góp ý hoặc liên hệ cho tôi nếu bạn có nhu cầu về dịch vụ, quảng cáo hoặc những thắc mắc khác.
                 </Typography>
 
-                <Stack flexDirection="column" gap={2} marginTop={2}>
+                <Stack flexDirection="column" gap={2} marginTop={4}>
                   <CInput label="Họ tên" registerProps={register('fullName')} />
                   <CInput label="Email" registerProps={register('email')} />
                   <CInput label="Tiêu đề" registerProps={register('email')} />
@@ -81,7 +81,7 @@ const ContactPage = () => {
               </Box>
             </BoxContainer>
           </Stack>
-        </Stack>
+        </ItemCenter>
       </FormProvider>
     </form>
   );

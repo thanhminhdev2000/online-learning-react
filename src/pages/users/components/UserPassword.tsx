@@ -50,7 +50,7 @@ const UserPassword = () => {
             registerProps={register('confirmNewPassword')}
           />
 
-          <FlexEnd marginTop={2}>
+          <FlexEnd marginTop={4}>
             <Button variant="contained" type="submit">
               Đổi mật khẩu
             </Button>

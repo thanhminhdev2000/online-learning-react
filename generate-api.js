@@ -49,11 +49,7 @@ generateApi({
         return templateRouteName.replace('Create', '').replace('Update', '');
       }
 
-      if (templateRouteName?.includes('users')) {
-        const converted = templateRouteName.replace('users', 'user');
-        return converted;
-      }
-      return templateRouteName;
+      return templateRouteName.replace('users', 'user').replace('documents', 'document');
     },
   },
 });

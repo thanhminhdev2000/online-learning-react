@@ -26,14 +26,14 @@ const SearchForm = ({ onSearch }: { onSearch: (data: UserListParamsDto) => void 
   return (
     <form onSubmit={onSubmit}>
       <FormProvider {...formInstance}>
-        <Box marginTop={2}>
+        <Box marginTop={4}>
           <Stack gap={2}>
             <CInput label="Email" errorMsg={errors.email?.message} registerProps={register('email')} />
             <CInput label="Username" errorMsg={errors.username?.message} registerProps={register('username')} />
             <CInput label="Họ và tên" errorMsg={errors.fullName?.message} registerProps={register('fullName')} />
           </Stack>
 
-          <Stack marginTop={2}>
+          <Stack marginTop={4}>
             <Stack width="60%" gap={4} justifyContent="space-between">
               <CDatePicker
                 label="Ngày sinh"

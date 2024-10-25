@@ -50,7 +50,7 @@ const ForgotPasswordPage = () => {
               QUÊN MẬT KHẨU
             </Typography>
 
-            <Stack flexDirection="column" marginTop={3}>
+            <Stack flexDirection="column" marginTop={4}>
               <CInput label="Email" errorMsg={errors.email?.message} registerProps={register('email')} />
             </Stack>
 
@@ -60,7 +60,7 @@ const ForgotPasswordPage = () => {
               </Button>
             </Box>
 
-            <Box marginTop={2}>
+            <Box marginTop={4}>
               <ItemCenter gap={1}>
                 <Typography>Bạn đã có tài khoản?</Typography>
                 <TypographyLink onClick={() => navigate('/login')}>Đăng nhập!</TypographyLink>

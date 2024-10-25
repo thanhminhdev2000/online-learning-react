@@ -43,7 +43,7 @@ const ResetPasswordPage = () => {
             ĐẶT LẠI MẬT KHẨU
           </Typography>
 
-          <Stack flexDirection="column" gap={3} marginTop={3}>
+          <Stack flexDirection="column" gap={3} marginTop={4}>
             <CInput
               label="Mật khẩu"
               type="password"
@@ -64,7 +64,7 @@ const ResetPasswordPage = () => {
             </Button>
           </Box>
 
-          <Box marginTop={2}>
+          <Box marginTop={4}>
             <ItemCenter>
               <TypographyLink onClick={() => navigate('/signup')}>Đăng ký tài khoản mới!</TypographyLink>
             </ItemCenter>

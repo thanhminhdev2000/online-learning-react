@@ -1,4 +1,4 @@
-import { SidebarItem } from '@pages/documentation/type';
+import { SidebarItem } from '@pages/document/type';
 
 const subjects = [
   'Ngữ Văn',

@@ -7,7 +7,7 @@ export const theme = createTheme({
       sm: 650,
       md: 900,
       lg: 1200,
-      xl: 1536,
+      xl: 1650,
     },
   },
   spacing: 4,

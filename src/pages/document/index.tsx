@@ -1,5 +1,5 @@
-const DocumentationPage = () => {
+const DocumentPage = () => {
   return <>aaaaaaaa</>;
 };
 
-export default DocumentationPage;
+export default DocumentPage;

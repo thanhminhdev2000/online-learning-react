@@ -2,13 +2,11 @@ import { BACKGROUND_COLOR_HOVER } from '@common/constant';
 import { Box, FormLabel, Stack, styled, Typography } from '@mui/material';
 
 export const AuthContainer = styled('form')(({ theme }) => ({
-  padding: 16,
+  padding: theme.spacing(4),
   borderRadius: '8px',
   boxShadow: `0px 4px 12px ${BACKGROUND_COLOR_HOVER}`,
-  backgroundColor: '#fff',
-  maxWidth: '600px',
-  minWidth: '300px',
-  width: '100%',
+  backgroundColor: 'white',
+  minWidth: '600px',
 
   [theme.breakpoints.down('xs')]: {
     padding: 8,
@@ -18,7 +16,7 @@ export const AuthContainer = styled('form')(({ theme }) => ({
 export const BoxContainer = styled(Box)(({ theme: { spacing } }) => ({
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: '#fff',
+  backgroundColor: 'white',
   gap: spacing(4),
   padding: spacing(4),
   borderRadius: spacing(4),
@@ -27,7 +25,6 @@ export const BoxContainer = styled(Box)(({ theme: { spacing } }) => ({
 export const TypographyHover = styled(Typography)(({ theme: { spacing } }) => ({
   padding: spacing(1, 2),
   borderRadius: spacing(2),
-  fontWeight: 'bold',
 
   '&:hover': {
     backgroundColor: BACKGROUND_COLOR_HOVER,

@@ -20,7 +20,7 @@ const CConfirmModal = ({ open, onClose, children }: CModalProps) => {
           {children}
         </Stack>
 
-        <FlexEnd marginTop={3} gap={2}>
+        <FlexEnd marginTop={4} gap={2}>
           <Button onClick={onClose}>Huỷ bỏ</Button>
           <Button variant="contained" type="submit" onClick={onClose}>
             Xác nhận

@@ -5,7 +5,7 @@ interface Route {
 
 export const routes: Route[] = [
   {
-    path: '/documentation',
+    path: '/document',
     pathName: 'Tài liệu',
   },
   {

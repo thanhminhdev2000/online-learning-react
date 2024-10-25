@@ -22,7 +22,7 @@ const HomePage = () => {
             50.000+ học sinh đỗ thủ khoa, á khoa và đỗ vào các trường THCS, THPT, Đại học hàng đầu cả nước
           </Typography>
 
-          <Box marginTop={2}>
+          <Box marginTop={4}>
             <Button variant="contained" onClick={() => navigate('/learn')}>
               Học ngay
             </Button>

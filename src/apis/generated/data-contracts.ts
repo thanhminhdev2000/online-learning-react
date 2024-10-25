@@ -15,10 +15,10 @@ export interface AccessTokenResponseDto {
 }
 
 export interface ClassWithSubjectsDto {
-  classId?: number;
-  className?: string;
-  count?: number;
-  subjects?: SubjectIdDto[];
+  classId: number;
+  className: string;
+  count: number;
+  subjects: SubjectIdDto[];
 }
 
 export interface ContactDto {
@@ -83,9 +83,9 @@ export interface ResetPasswordRequestDto {
 }
 
 export interface SubjectIdDto {
-  count?: number;
-  subjectId?: number;
-  subjectName?: string;
+  count: number;
+  subjectId: number;
+  subjectName: string;
 }
 
 export interface UpdateUserResponseDto {
@@ -147,25 +147,39 @@ export type ContactCreateDataDto = MessageDto;
 
 export type ContactCreateErrorDto = ErrorDto;
 
-export type DocumentationsListDataDto = ClassWithSubjectsDto[];
+export type DocumentListDataDto = ClassWithSubjectsDto[];
 
-export type DocumentationsListErrorDto = ErrorDto;
+export type DocumentListErrorDto = ErrorDto;
+
+export interface UploadCreatePayloadDto {
+  /** Subject ID */
+  subjectId: number;
+  /** Document title */
+  title: string;
+  /**
+   * File to upload
+   * @format binary
+   */
+  file: File;
+}
+
+export type UploadCreateDataDto = ClassWithSubjectsDto[];
+
+export type UploadCreateErrorDto = ErrorDto;
 
 export interface UserListParamsDto {
-  /** Filter by email */
-  email?: string;
-  /** Filter by username */
-  username?: string;
-  /** Filter by full name */
-  fullName?: string;
-  /** Filter by date of birth */
   dateOfBirth?: string;
-  /** Filter by role */
-  role?: string;
-  /** Page number for pagination */
-  page?: number;
-  /** Limit number of items per page (max 100) */
+  email?: string;
+  fullName?: string;
+  /**
+   * @min 1
+   * @max 100
+   */
   limit?: number;
+  /** @min 1 */
+  page?: number;
+  role?: string;
+  username?: string;
 }
 
 export type UserListDataDto = UserResponseDto;

@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { AuthContainer, ItemCenter, TypographyLink } from '../../../common/styled';
 
+import { HEADER_HEIGHT } from '@common/constant';
 import { loginInit } from '@pages/authentication/constant';
 import { loginSchema } from '@pages/authentication/type';
 import useAuthStore from '@store/authStore';
@@ -39,13 +40,13 @@ const LoginPage = () => {
   });
 
   return (
-    <ItemCenter height="80vh">
+    <ItemCenter height={`calc(100vh - ${HEADER_HEIGHT}px)`}>
       <AuthContainer onSubmit={onSubmit}>
         <Typography variant="h6" fontWeight="bold" textAlign="center">
           ĐĂNG NHẬP
         </Typography>
 
-        <Stack flexDirection="column" gap={3} marginTop={3}>
+        <Stack flexDirection="column" gap={3} marginTop={4}>
           <CInput
             label="Email hoặc Username"
             errorMsg={errors.identifier?.message}
@@ -65,7 +66,7 @@ const LoginPage = () => {
           </Button>
         </Box>
 
-        <Box marginTop={2}>
+        <Box marginTop={4}>
           <ItemCenter gap={1}>
             <Typography>Bạn chưa có tài khoản?</Typography>
             <TypographyLink onClick={() => navigate('/signup')}>Đăng ký!</TypographyLink>

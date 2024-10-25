@@ -55,9 +55,9 @@ const UserAvatar = () => {
   };
 
   return (
-    <Box marginTop={2}>
+    <Box marginTop={4}>
       <Stack width="100%" gap={2}>
-        <Avatar src={avatar} sx={{ width: { xs: 50, sm: 100 }, height: { xs: 50, sm: 100 } }} />
+        <Avatar src={avatar} sx={{ width: { xs: 50, sm: 120 }, height: { xs: 50, sm: 120 } }} />
 
         <PaperContainer variant="outlined" onDrop={handleDrop} onDragOver={handleDragOver}>
           <Box>
@@ -73,7 +73,7 @@ const UserAvatar = () => {
         </PaperContainer>
       </Stack>
 
-      <FlexEnd marginTop={2}>
+      <FlexEnd marginTop={4}>
         <Button variant="contained" onClick={handleUploadClick}>
           Lưu thay đổi
         </Button>

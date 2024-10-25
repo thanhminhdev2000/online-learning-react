@@ -50,7 +50,7 @@ const SignUpPage = () => {
           ĐĂNG KÝ
         </Typography>
         <FormProvider {...formInstance}>
-          <Stack flexDirection="column" gap={2} marginTop={2}>
+          <Stack flexDirection="column" gap={2} marginTop={4}>
             <CInput label="Email" errorMsg={errors.email?.message} registerProps={register('email')} />
             <CInput label="Username" errorMsg={errors.username?.message} registerProps={register('username')} />
             <CInput label="Họ và tên" errorMsg={errors.fullName?.message} registerProps={register('fullName')} />
@@ -91,11 +91,11 @@ const SignUpPage = () => {
           </Button>
         </Box>
 
-        <Typography marginTop={2} color="textSecondary">
+        <Typography marginTop={4} color="textSecondary">
           Khi đăng ký, bạn đã đồng ý với Điều khoản sử dụng và Chính sách bảo mật của chúng tôi.
         </Typography>
 
-        <Box marginTop={2}>
+        <Box marginTop={4}>
           <ItemCenter gap={1}>
             <Typography>Bạn đã có tài khoản?</Typography>
             <TypographyLink onClick={() => navigate('/login')}>Đăng nhập!</TypographyLink>

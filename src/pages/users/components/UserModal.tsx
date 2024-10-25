@@ -121,7 +121,7 @@ const UserModal = ({ open, onClose, data, refetch }: UserProps) => {
               </Stack>
             </Stack>
 
-            <FlexEnd marginTop={3} gap={2}>
+            <FlexEnd marginTop={4} gap={2}>
               <Button onClick={closeModal}>Cancel</Button>
               <Button variant="contained" type="submit" onClick={handleSubmitForm}>
                 Save

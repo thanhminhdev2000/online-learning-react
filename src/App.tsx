@@ -2,14 +2,14 @@ import { UserDetailDto } from '@apis/generated/data-contracts';
 import DocumentLayout from '@components/layout/DocumentLayout';
 import MainLayout from '@components/layout/MainLayout';
 import ProtectedRoute from '@components/layout/ProtectedRoute';
-import { ContactPage } from '@mui/icons-material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider/LocalizationProvider';
 import ForgotPasswordPage from '@pages/authentication/forgotPassword';
 import LoginPage from '@pages/authentication/login';
 import ResetPasswordPage from '@pages/authentication/resetPassword';
 import SignUpPage from '@pages/authentication/signup';
-import DocumentationPage from '@pages/document';
+import ContactPage from '@pages/contact';
+import DocumentPage from '@pages/document';
 import DocumentDetailPage from '@pages/document/documentDetail';
 import DocumentUploadPage from '@pages/document/documentUpload';
 import HomePage from '@pages/home';
@@ -50,7 +50,7 @@ const App = () => {
               <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
               <Route element={<DocumentLayout />}>
-                <Route path="/document" element={<DocumentationPage />} />
+                <Route path="/document" element={<DocumentPage />} />
                 <Route path="/document/:subjectId" element={<DocumentDetailPage />} />
                 <Route path="/document/upload" element={<DocumentUploadPage />} />
               </Route>

@@ -1,6 +1,6 @@
 import { ClassWithSubjectsDto, SubjectIdDto } from '@apis/generated/data-contracts';
-import { useGetSubjects } from '@apis/hooks/documentation.hook';
-import { BACKGROUND_COLOR_HOVER, HEADER_HEIGHT, PADDING_SM, PADDING_XS, SIDEBAR_WIDTH } from '@common/constant';
+import { useGetSubjects } from '@apis/hooks/document.hook';
+import { BACKGROUND_COLOR_HOVER, COUNT_COLOR, HEADER_HEIGHT, MAIN_COLOR, SIDEBAR_WIDTH } from '@common/constant';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   Box,
@@ -27,7 +27,7 @@ const DocumentLayout = () => {
   const [hoveredItem, setHoveredItem] = useState<ClassWithSubjectsDto | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xl'));
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -44,7 +44,7 @@ const DocumentLayout = () => {
   };
 
   const handleItemClick = (subject: SubjectIdDto) => {
-    navigate(`/documentation/${subject.subjectId}`);
+    navigate(`/document/${subject.subjectId}`);
     handleMenuClose();
   };
 
@@ -54,7 +54,7 @@ const DocumentLayout = () => {
 
   const drawerContent = (
     <List sx={{ padding: 0 }}>
-      <ListItem sx={{ backgroundColor: '#2a70b8', color: '#fff' }}>DAN MỤCH TÀI LIỆU HỌC TẬP</ListItem>
+      <ListItem sx={{ backgroundColor: MAIN_COLOR, color: 'white' }}>DAN MỤCH TÀI LIỆU HỌC TẬP</ListItem>
       {data.map((item, index) => (
         <ListItem
           sx={{
@@ -67,7 +67,7 @@ const DocumentLayout = () => {
           onClick={(event) => handleMenuOpen(event, item)}
         >
           <ListItemText primary={item.className} />
-          <Typography variant="body2" sx={{ color: '#ff9800', marginLeft: 2 }}>
+          <Typography variant="body2" sx={{ color: COUNT_COLOR, marginLeft: 2 }}>
             {item.count}
           </Typography>
         </ListItem>
@@ -76,7 +76,7 @@ const DocumentLayout = () => {
   );
 
   return (
-    <>
+    <Stack flexDirection={isMobile ? 'column' : 'row'}>
       <Stack>
         {isMobile && (
           <Toolbar>
@@ -92,9 +92,8 @@ const DocumentLayout = () => {
         {!isMobile && (
           <Drawer
             variant="permanent"
-            sx={{
-              flexShrink: 0,
-              '& .MuiDrawer-paper': {
+            PaperProps={{
+              sx: {
                 width: SIDEBAR_WIDTH,
                 boxSizing: 'border-box',
                 marginTop: `${HEADER_HEIGHT}px`,
@@ -149,10 +148,8 @@ const DocumentLayout = () => {
         </Menu>
       </Stack>
 
-      <Stack marginLeft={isMobile ? 0 : SIDEBAR_WIDTH / 4 - PADDING_SM} padding={isMobile ? 0 : PADDING_XS}>
-        <Outlet />
-      </Stack>
-    </>
+      <Outlet />
+    </Stack>
   );
 };
 

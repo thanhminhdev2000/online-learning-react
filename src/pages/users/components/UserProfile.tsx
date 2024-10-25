@@ -15,14 +15,11 @@ const UserProfile = () => {
   const formInstance = useForm({
     resolver: zodResolver(userProfileSchema),
     values: {
-      id: user.id,
       email: user.email,
       username: user.username,
       fullName: user.fullName,
       gender: user.gender,
       dateOfBirth: user.dateOfBirth,
-      avatar: user.avatar,
-      role: user.role,
     },
   });
 
@@ -35,12 +32,14 @@ const UserProfile = () => {
   const { mutate } = useUpdateUser({ userId: user?.id as number });
 
   const onSubmit = handleSubmit((data) => {
-    data.id = user.id;
-    mutate(data, {
-      onSuccess(data) {
-        login(data.user);
+    mutate(
+      { ...user, ...data },
+      {
+        onSuccess(data) {
+          login(data.user);
+        },
       },
-    });
+    );
   });
 
   return (
@@ -65,7 +64,7 @@ const UserProfile = () => {
             />
           </Stack>
         </FormProvider>
-        <FlexEnd marginTop={2}>
+        <FlexEnd marginTop={4}>
           <Button variant="contained" type="submit">
             Lưu thay đổi
           </Button>

@@ -132,7 +132,7 @@ const UserManagePage = () => {
           )}
         </TableContainer>
 
-        <Stack marginTop={2} justifyContent="end">
+        <Stack marginTop={4} justifyContent="end">
           <Select sx={{ height: 32 }} value={limit} onChange={(e) => setLimit(Number(e.target.value))}>
             <MenuItem value={LIMIT}>{LIMIT}</MenuItem>
             <MenuItem value={50}>50</MenuItem>
