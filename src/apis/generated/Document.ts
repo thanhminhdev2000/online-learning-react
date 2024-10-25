@@ -12,6 +12,9 @@
 import {
   DocumentListDataDto,
   DocumentListErrorDto,
+  PopularListDataDto,
+  PopularListErrorDto,
+  PopularListParamsDto,
   UploadCreateDataDto,
   UploadCreateErrorDto,
   UploadCreatePayloadDto,
@@ -32,7 +35,6 @@ export class Document<SecurityDataType = unknown> {
    * @name DocumentList
    * @summary List of classes with their subjects and document counts
    * @request GET:/documents/
-   * @secure
    * @response `200` `DocumentListDataDto` OK
    * @response `500` `ErrorDto` Internal Server Error
    */
@@ -40,7 +42,24 @@ export class Document<SecurityDataType = unknown> {
     this.http.request<DocumentListDataDto, DocumentListErrorDto>({
       path: `/documents/`,
       method: 'GET',
-      secure: true,
+      ...params,
+    });
+  /**
+   * @description Retrieves documents, ordered by either views in descending order
+   *
+   * @tags Document
+   * @name PopularList
+   * @summary Get documents ordered by views
+   * @request GET:/documents/popular
+   * @response `200` `PopularListDataDto` OK
+   * @response `400` `ErrorDto` Bad Request
+   * @response `500` `ErrorDto` Internal Server Error
+   */
+  popularList = (query: PopularListParamsDto, params: RequestParams = {}) =>
+    this.http.request<PopularListDataDto, PopularListErrorDto>({
+      path: `/documents/popular`,
+      method: 'GET',
+      query: query,
       ...params,
     });
   /**

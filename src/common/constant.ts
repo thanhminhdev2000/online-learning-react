@@ -31,7 +31,7 @@ export const DATE_FORMAT = 'YYYY-MM-DD';
 export const DATE_FORMAT_VN = 'DD/MM/YYYY';
 export const HEADER_HEIGHT = 48;
 export const LIMIT = 15;
-export const SIDEBAR_WIDTH = 240;
+export const SIDEBAR_WIDTH = 200;
 export const PADDING_SM = 20;
 export const PADDING_XS = 4;
 

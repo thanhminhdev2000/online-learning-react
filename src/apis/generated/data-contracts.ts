@@ -40,6 +40,17 @@ export interface CreateUserRequestDto {
   username: string;
 }
 
+export interface DocumentsResponseDto {
+  author: string;
+  category: string;
+  documentType: string;
+  downloads: string;
+  fileUrl: string;
+  id: number;
+  title: string;
+  views: string;
+}
+
 export interface ErrorDto {
   error: string;
 }
@@ -150,6 +161,15 @@ export type ContactCreateErrorDto = ErrorDto;
 export type DocumentListDataDto = ClassWithSubjectsDto[];
 
 export type DocumentListErrorDto = ErrorDto;
+
+export interface PopularListParamsDto {
+  /** Limit Documents */
+  limit?: number;
+}
+
+export type PopularListDataDto = DocumentsResponseDto[];
+
+export type PopularListErrorDto = ErrorDto;
 
 export interface UploadCreatePayloadDto {
   /** Subject ID */

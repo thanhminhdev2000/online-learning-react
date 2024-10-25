@@ -4,7 +4,7 @@ import { HEADER_HEIGHT } from '@common/constant';
 import { AlignCenter, ItemCenter, SpaceBetween, TypographyHover } from '@common/styled';
 import { routes } from '@components/navbar/constant';
 import { NavbarWrapper, StyledMenuItem } from '@components/navbar/styled';
-import { Avatar, Button, Container, Menu, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, Menu, Stack, Typography } from '@mui/material';
 import useAuthStore from '@store/authStore';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -72,10 +72,10 @@ const Navbar = () => {
               <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>
                 <StyledMenuItem onClick={() => closeAccountMenu(`users/${user.id}`)}>Hồ sơ</StyledMenuItem>
                 {user.role === UserRoleDto.RoleAdmin && (
-                  <>
+                  <Box>
                     <StyledMenuItem onClick={() => closeAccountMenu('users')}>Quản trị</StyledMenuItem>
                     <StyledMenuItem onClick={() => closeAccountMenu('document/upload')}>Đăng tài liệu</StyledMenuItem>
-                  </>
+                  </Box>
                 )}
 
                 <StyledMenuItem

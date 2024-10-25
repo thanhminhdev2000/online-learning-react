@@ -25,6 +25,7 @@ export const BoxContainer = styled(Box)(({ theme: { spacing } }) => ({
 export const TypographyHover = styled(Typography)(({ theme: { spacing } }) => ({
   padding: spacing(1, 2),
   borderRadius: spacing(2),
+  textTransform: 'uppercase',
 
   '&:hover': {
     backgroundColor: BACKGROUND_COLOR_HOVER,
@@ -35,6 +36,13 @@ export const TypographyHover = styled(Typography)(({ theme: { spacing } }) => ({
 export const TypographyLink = styled(Typography)(() => ({
   cursor: 'pointer',
   color: '#2e69ff',
+}));
+
+export const OverflowMultiLine = styled(Typography)(() => ({
+  display: '-webkit-box',
+  WebkitBoxOrient: 'vertical',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 }));
 
 export const CFormLabel = styled(FormLabel)(() => ({
