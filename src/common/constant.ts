@@ -31,3 +31,8 @@ export const DATE_FORMAT = 'YYYY-MM-DD';
 export const DATE_FORMAT_VN = 'DD/MM/YYYY';
 export const HEADER_HEIGHT = 40;
 export const LIMIT = 15;
+export const SIDEBAR_WIDTH = 240;
+export const PADDING_SM = 20;
+export const PADDING_XS = 4;
+
+export const BACKGROUND_COLOR_HOVER = 'rgba(0, 0, 0, 0.04)';

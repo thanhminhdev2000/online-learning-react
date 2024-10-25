@@ -3,7 +3,7 @@ import Navbar from '@components/navbar';
 import { Box, Stack } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 
-const Layout = () => {
+const MainLayout = () => {
   return (
     <Background alignItems="center">
       <Box width="100%">
@@ -18,4 +18,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default MainLayout;

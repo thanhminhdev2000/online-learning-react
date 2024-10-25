@@ -1,3 +1,4 @@
+import { BACKGROUND_COLOR_HOVER } from '@common/constant';
 import { IconButton, MenuItem, Stack, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -18,7 +19,7 @@ export const NavItem = styled(Link)(({ theme }) => ({
   color: '#000',
 
   '&:hover': {
-    backgroundColor: 'rgba(0, 0, 0, 0.02)',
+    backgroundColor: BACKGROUND_COLOR_HOVER,
   },
 }));
 

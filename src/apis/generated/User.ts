@@ -131,6 +131,7 @@ export class User<SecurityDataType = unknown> {
    * @secure
    * @response `200` `UserUpdateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
+   * @response `404` `ErrorDto` Not Found
    * @response `500` `ErrorDto` Internal Server Error
    */
   userUpdate = (userId: number, user: UserDetailDto, params: RequestParams = {}) =>
@@ -172,6 +173,7 @@ export class User<SecurityDataType = unknown> {
    * @secure
    * @response `200` `AvatarUpdateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
+   * @response `404` `ErrorDto` Not Found
    * @response `500` `ErrorDto` Internal Server Error
    */
   avatarUpdate = (userId: number, data: AvatarUpdatePayloadDto, params: RequestParams = {}) =>

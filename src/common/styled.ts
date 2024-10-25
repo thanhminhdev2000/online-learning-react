@@ -1,9 +1,10 @@
+import { BACKGROUND_COLOR_HOVER } from '@common/constant';
 import { Box, FormLabel, Stack, styled, Typography } from '@mui/material';
 
 export const AuthContainer = styled('form')(({ theme }) => ({
   padding: 16,
   borderRadius: '8px',
-  boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+  boxShadow: `0px 4px 12px ${BACKGROUND_COLOR_HOVER}`,
   backgroundColor: '#fff',
   maxWidth: '600px',
   minWidth: '300px',
@@ -29,7 +30,7 @@ export const TypographyHover = styled(Typography)(({ theme: { spacing } }) => ({
   fontWeight: 'bold',
 
   '&:hover': {
-    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+    backgroundColor: BACKGROUND_COLOR_HOVER,
     cursor: 'pointer',
   },
 }));

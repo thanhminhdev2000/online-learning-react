@@ -14,6 +14,13 @@ export interface AccessTokenResponseDto {
   expiresIn: number;
 }
 
+export interface ClassWithSubjectsDto {
+  classId?: number;
+  className?: string;
+  count?: number;
+  subjects?: SubjectIdDto[];
+}
+
 export interface ContactDto {
   content: string;
   email: string;
@@ -75,6 +82,12 @@ export interface ResetPasswordRequestDto {
   password: string;
 }
 
+export interface SubjectIdDto {
+  count?: number;
+  subjectId?: number;
+  subjectName?: string;
+}
+
 export interface UpdateUserResponseDto {
   message: string;
   user: UserDetailDto;
@@ -82,6 +95,7 @@ export interface UpdateUserResponseDto {
 
 export interface UserDetailDto {
   avatar: string;
+  createdAt: string;
   dateOfBirth: string;
   email: string;
   fullName: string;
@@ -132,6 +146,10 @@ export type ResetPasswordErrorDto = ErrorDto;
 export type ContactCreateDataDto = MessageDto;
 
 export type ContactCreateErrorDto = ErrorDto;
+
+export type DocumentationsListDataDto = ClassWithSubjectsDto[];
+
+export type DocumentationsListErrorDto = ErrorDto;
 
 export interface UserListParamsDto {
   /** Filter by email */

@@ -1,6 +1,6 @@
 import { UserRoleDto } from '@apis/generated/data-contracts';
 import { useLogout } from '@apis/hooks/authentication.hook';
-import { HEADER_HEIGHT } from '@common/constant';
+import { HEADER_HEIGHT, PADDING_SM } from '@common/constant';
 import { AlignCenter, ItemCenter, TypographyHover } from '@common/styled';
 import { routes } from '@components/navbar/constant';
 import { NavbarWrapper, StyledMenuItem } from '@components/navbar/styled';
@@ -36,7 +36,7 @@ const Navbar = () => {
 
   return (
     <NavbarWrapper>
-      <Box display="flex" justifyContent="space-between" width={{ xs: '100%', sm: '90%' }}>
+      <Box display="flex" justifyContent="space-between" width="100%" paddingX={{ xs: 4, sm: PADDING_SM }}>
         <Box display="flex" alignItems="center" height={HEADER_HEIGHT}>
           <AlignCenter onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
             <img src="/logo.svg" width={125} />
