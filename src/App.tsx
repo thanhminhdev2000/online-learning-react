@@ -10,8 +10,6 @@ import ResetPasswordPage from '@pages/authentication/resetPassword';
 import SignUpPage from '@pages/authentication/signup';
 import ContactPage from '@pages/contact';
 import DocumentPage from '@pages/document';
-import DocumentDetailPage from '@pages/document/documentDetail';
-import DocumentUploadPage from '@pages/document/documentUpload';
 import HomePage from '@pages/home';
 import LearnPage from '@pages/learn';
 import UserDetailPage from '@pages/users/UserDetailPage';
@@ -21,6 +19,7 @@ import { userInit } from '@store/constant';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
+import DocumentBySubjectPage from '@pages/document/documentDetail';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 const queryClient = new QueryClient();
 
@@ -51,8 +50,7 @@ const App = () => {
 
               <Route element={<DocumentLayout />}>
                 <Route path="/document" element={<DocumentPage />} />
-                <Route path="/document/:subjectId" element={<DocumentDetailPage />} />
-                <Route path="/document/upload" element={<DocumentUploadPage />} />
+                <Route path="/document/:subjectId" element={<DocumentBySubjectPage />} />
               </Route>
 
               <Route path="/learn" element={<LearnPage />} />

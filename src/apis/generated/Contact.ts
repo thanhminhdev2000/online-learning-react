@@ -25,13 +25,13 @@ export class Contact<SecurityDataType = unknown> {
    * @tags Contact
    * @name ContactCreate
    * @summary Send email contact
-   * @request POST:/contact/
+   * @request POST:/contacts/
    * @response `200` `ContactCreateDataDto` OK
    * @response `500` `ErrorDto` Internal Server Error
    */
   contactCreate = (contact: ContactDto, params: RequestParams = {}) =>
     this.http.request<ContactCreateDataDto, ContactCreateErrorDto>({
-      path: `/contact/`,
+      path: `/contacts/`,
       method: 'POST',
       body: contact,
       type: ContentType.Json,

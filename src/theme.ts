@@ -20,10 +20,18 @@ export const theme = createTheme({
     },
   },
   components: {
-    MuiOutlinedInput: {
+    MuiTextField: {
+      defaultProps: {
+        size: 'small',
+      },
+    },
+    MuiButton: {
+      defaultProps: {
+        size: 'small',
+      },
       styleOverrides: {
-        inputSizeSmall: {
-          padding: '6px 12px',
+        sizeSmall: {
+          height: 32,
         },
       },
     },
@@ -32,13 +40,10 @@ export const theme = createTheme({
         direction: 'row',
       },
     },
-    MuiButton: {
+    MuiMenuItem: {
       styleOverrides: {
         root: {
-          '@media (max-width:600px)': {
-            fontSize: '13px',
-            padding: '4px 8px',
-          },
+          padding: '0 8px',
         },
       },
     },
@@ -57,6 +62,14 @@ export const theme = createTheme({
         },
         body: {
           padding: '2px 6px',
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        inputSizeSmall: {
+          padding: '6px 12px',
+          backgroundColor: 'white',
         },
       },
     },

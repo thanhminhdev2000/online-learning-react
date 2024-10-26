@@ -38,11 +38,14 @@ export const TypographyLink = styled(Typography)(() => ({
   color: '#2e69ff',
 }));
 
-export const OverflowMultiLine = styled(Typography)(() => ({
+export const OverflowMultiLine = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== 'lines',
+})<{ lines?: number }>(({ lines = 1 }) => ({
   display: '-webkit-box',
   WebkitBoxOrient: 'vertical',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+  WebkitLineClamp: lines,
 }));
 
 export const CFormLabel = styled(FormLabel)(() => ({

@@ -12,9 +12,9 @@
 import {
   DocumentListDataDto,
   DocumentListErrorDto,
-  PopularListDataDto,
-  PopularListErrorDto,
-  PopularListParamsDto,
+  DocumentListParamsDto,
+  SubjectsListDataDto,
+  SubjectsListErrorDto,
   UploadCreateDataDto,
   UploadCreateErrorDto,
   UploadCreatePayloadDto,
@@ -29,37 +29,37 @@ export class Document<SecurityDataType = unknown> {
   }
 
   /**
-   * @description List of classes with their subjects and document counts
+   * @description Trả về danh sách các tài liệu, có thể lọc theo `subjectId` và `title`. Giới hạn số lượng tài liệu trả về bằng tham số `limit`.
    *
    * @tags Document
    * @name DocumentList
-   * @summary List of classes with their subjects and document counts
+   * @summary Lấy danh sách tài liệu
    * @request GET:/documents/
    * @response `200` `DocumentListDataDto` OK
-   * @response `500` `ErrorDto` Internal Server Error
-   */
-  documentList = (params: RequestParams = {}) =>
-    this.http.request<DocumentListDataDto, DocumentListErrorDto>({
-      path: `/documents/`,
-      method: 'GET',
-      ...params,
-    });
-  /**
-   * @description Retrieves documents, ordered by either views in descending order
-   *
-   * @tags Document
-   * @name PopularList
-   * @summary Get documents ordered by views
-   * @request GET:/documents/popular
-   * @response `200` `PopularListDataDto` OK
    * @response `400` `ErrorDto` Bad Request
    * @response `500` `ErrorDto` Internal Server Error
    */
-  popularList = (query: PopularListParamsDto, params: RequestParams = {}) =>
-    this.http.request<PopularListDataDto, PopularListErrorDto>({
-      path: `/documents/popular`,
+  documentList = (query: DocumentListParamsDto, params: RequestParams = {}) =>
+    this.http.request<DocumentListDataDto, DocumentListErrorDto>({
+      path: `/documents/`,
       method: 'GET',
       query: query,
+      ...params,
+    });
+  /**
+   * @description List of classes with their subjects and document counts
+   *
+   * @tags Document
+   * @name SubjectsList
+   * @summary List of classes with their subjects and document counts
+   * @request GET:/documents/subjects
+   * @response `200` `SubjectsListDataDto` OK
+   * @response `500` `ErrorDto` Internal Server Error
+   */
+  subjectsList = (params: RequestParams = {}) =>
+    this.http.request<SubjectsListDataDto, SubjectsListErrorDto>({
+      path: `/documents/subjects`,
+      method: 'GET',
       ...params,
     });
   /**

@@ -44,11 +44,11 @@ export interface DocumentsResponseDto {
   author: string;
   category: string;
   documentType: string;
-  downloads: string;
+  downloads: number;
   fileUrl: string;
   id: number;
   title: string;
-  views: string;
+  views: number;
 }
 
 export interface ErrorDto {
@@ -106,7 +106,6 @@ export interface UpdateUserResponseDto {
 
 export interface UserDetailDto {
   avatar: string;
-  createdAt: string;
   dateOfBirth: string;
   email: string;
   fullName: string;
@@ -158,18 +157,25 @@ export type ContactCreateDataDto = MessageDto;
 
 export type ContactCreateErrorDto = ErrorDto;
 
-export type DocumentListDataDto = ClassWithSubjectsDto[];
+export interface DocumentListParamsDto {
+  /**
+   * Giới hạn số lượng tài liệu trả về
+   * @default 40
+   */
+  limit?: number;
+  /** ID của môn học */
+  subjectId?: number;
+  /** Tiêu đề của tài liệu (tìm kiếm bằng LIKE) */
+  title?: string;
+}
+
+export type DocumentListDataDto = DocumentsResponseDto[];
 
 export type DocumentListErrorDto = ErrorDto;
 
-export interface PopularListParamsDto {
-  /** Limit Documents */
-  limit?: number;
-}
+export type SubjectsListDataDto = ClassWithSubjectsDto[];
 
-export type PopularListDataDto = DocumentsResponseDto[];
-
-export type PopularListErrorDto = ErrorDto;
+export type SubjectsListErrorDto = ErrorDto;
 
 export interface UploadCreatePayloadDto {
   /** Subject ID */
@@ -183,7 +189,7 @@ export interface UploadCreatePayloadDto {
   file: File;
 }
 
-export type UploadCreateDataDto = ClassWithSubjectsDto[];
+export type UploadCreateDataDto = MessageDto;
 
 export type UploadCreateErrorDto = ErrorDto;
 

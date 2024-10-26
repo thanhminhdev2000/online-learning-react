@@ -15,6 +15,7 @@ export const ModalWrapper = styled(Paper)(({ theme }) => ({
   transform: 'translate(-50%, -50%)',
   maxWidth: 600,
   minWidth: 350,
+  width: '40%',
   bgcolor: 'white',
   padding: theme.spacing(4),
   border: 'none',

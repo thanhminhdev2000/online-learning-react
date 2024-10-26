@@ -1,5 +1,5 @@
 import { MAIN_COLOR } from '@common/constant';
-import { Box, Card, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 
 export const HoverBox = styled(Box)(() => ({
   position: 'absolute',
@@ -16,14 +16,17 @@ export const HoverBox = styled(Box)(() => ({
   transition: 'transform 0.3s ease-in-out',
 }));
 
-export const DocumentCard = styled(Card)(() => ({
-  height: 220,
-  position: 'relative',
-  flex: '1 1 calc(25% - 16px)',
-  minWidth: '250px',
-  marginBottom: '16px',
-  overflow: 'hidden',
-  '&:hover .hover-content': {
-    transform: 'translateY(0)',
+export const DocumentListWrapper = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(1,1fr)',
+  gap: theme.spacing(4),
+  marginTop: theme.spacing(5),
+
+  [theme.breakpoints.up('sm')]: {
+    gridTemplateColumns: 'repeat(2,1fr)',
+  },
+
+  [theme.breakpoints.up('md')]: {
+    gridTemplateColumns: 'repeat(4,1fr)',
   },
 }));

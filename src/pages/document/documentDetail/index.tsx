@@ -1,5 +1,11 @@
-const DocumentDetailPage = () => {
-  return <div>DocumentDetailPage</div>;
+import DocumentCard from '@pages/document/components/DocumentCard';
+
+import { useParams } from 'react-router-dom';
+
+const DocumentBySubjectPage = () => {
+  const { subjectId } = useParams();
+
+  return <DocumentCard subjectId={Number(subjectId)} />;
 };
 
-export default DocumentDetailPage;
+export default DocumentBySubjectPage;

@@ -1,8 +1,10 @@
 import { ReactNode } from 'react';
 
 export interface IOptions {
-  key: string;
-  value: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  key: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
 }
 
 export interface CModalProps {

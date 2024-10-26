@@ -11,18 +11,28 @@ interface CInputProps {
   size?: 'small' | 'medium';
   textArea?: boolean;
   disabled?: boolean;
+  showLabel?: boolean;
+  backgroundColor?: string;
 }
 
-const CInput = ({ label, errorMsg, registerProps, type = 'text', size = 'small', textArea, disabled }: CInputProps) => {
+const CInput = ({
+  label,
+  errorMsg,
+  registerProps,
+  type = 'text',
+  textArea,
+  disabled,
+  showLabel = true,
+}: CInputProps) => {
   return (
     <FormWrapper>
-      <CFormLabel>{label}</CFormLabel>
+      {showLabel && <CFormLabel>{label}</CFormLabel>}
+
       <InputWrapper>
         <TextField
           fullWidth
           type={type}
           variant="outlined"
-          size={size}
           placeholder={label}
           multiline={textArea}
           rows={4}

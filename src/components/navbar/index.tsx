@@ -74,7 +74,6 @@ const Navbar = () => {
                 {user.role === UserRoleDto.RoleAdmin && (
                   <Box>
                     <StyledMenuItem onClick={() => closeAccountMenu('users')}>Quản trị</StyledMenuItem>
-                    <StyledMenuItem onClick={() => closeAccountMenu('document/upload')}>Đăng tài liệu</StyledMenuItem>
                   </Box>
                 )}
 

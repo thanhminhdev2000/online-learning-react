@@ -49,7 +49,6 @@ const DocumentLayout = () => {
   };
 
   const { data = [] } = useGetSubjects();
-  console.log(data);
 
   const open = Boolean(anchorEl);
 

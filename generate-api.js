@@ -49,7 +49,7 @@ generateApi({
         return templateRouteName.replace('Create', '').replace('Update', '');
       }
 
-      return templateRouteName.replace('users', 'user').replace('documents', 'document');
+      return templateRouteName.replace('users', 'user').replace('documents', 'document').replace('contacts', 'contact');
     },
   },
 });
