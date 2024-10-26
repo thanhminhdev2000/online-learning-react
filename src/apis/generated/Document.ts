@@ -10,6 +10,8 @@
  */
 
 import {
+  DocumentDeleteDataDto,
+  DocumentDeleteErrorDto,
   DocumentListDataDto,
   DocumentListErrorDto,
   DocumentListParamsDto,
@@ -80,6 +82,24 @@ export class Document<SecurityDataType = unknown> {
       body: data,
       secure: true,
       type: ContentType.FormData,
+      ...params,
+    });
+  /**
+   * @description Delete a document by document ID
+   *
+   * @tags Document
+   * @name DocumentDelete
+   * @summary Delete document
+   * @request DELETE:/documents/{documentId}
+   * @secure
+   * @response `200` `DocumentDeleteDataDto` OK
+   * @response `500` `ErrorDto` Internal Server Error
+   */
+  documentDelete = (documentId: number, params: RequestParams = {}) =>
+    this.http.request<DocumentDeleteDataDto, DocumentDeleteErrorDto>({
+      path: `/documents/${documentId}`,
+      method: 'DELETE',
+      secure: true,
       ...params,
     });
 }

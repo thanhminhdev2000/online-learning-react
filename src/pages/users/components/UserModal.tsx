@@ -18,10 +18,9 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 interface UserProps extends CModalProps {
   data: UserDetailDto;
-  refetch: () => void;
 }
 
-const UserModal = ({ open, onClose, data, refetch }: UserProps) => {
+const UserModal = ({ open, onClose, data }: UserProps) => {
   const formInstance = useForm({
     resolver: zodResolver(signUpSchema),
     values: {
@@ -53,7 +52,6 @@ const UserModal = ({ open, onClose, data, refetch }: UserProps) => {
       updateUser(formData, {
         onSuccess() {
           onClose();
-          refetch();
         },
       });
     } else {

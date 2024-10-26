@@ -1,5 +1,4 @@
 import { UserDetailDto } from '@apis/generated/data-contracts';
-import DocumentLayout from '@components/layout/DocumentLayout';
 import MainLayout from '@components/layout/MainLayout';
 import ProtectedRoute from '@components/layout/ProtectedRoute';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -19,7 +18,6 @@ import { userInit } from '@store/constant';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
-import DocumentBySubjectPage from '@pages/document/documentDetail';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 const queryClient = new QueryClient();
 
@@ -48,12 +46,8 @@ const App = () => {
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
               <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
-              <Route element={<DocumentLayout />}>
-                <Route path="/document" element={<DocumentPage />} />
-                <Route path="/document/:subjectId" element={<DocumentBySubjectPage />} />
-              </Route>
-
-              <Route path="/learn" element={<LearnPage />} />
+              <Route path="/documents" element={<DocumentPage />} />
+              <Route path="/courses" element={<LearnPage />} />
               <Route path="/contact" element={<ContactPage />} />
 
               <Route path="/users/:userId" element={<UserDetailPage />} />

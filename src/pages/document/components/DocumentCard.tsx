@@ -1,22 +1,28 @@
 import { DocumentListParamsDto, UserRoleDto } from '@apis/generated/data-contracts';
-import { useGetDocuments } from '@apis/hooks/document.hook';
+import { useDeleteDocument, useGetDocuments, useGetSubjects } from '@apis/hooks/document.hook';
 import { MAIN_COLOR } from '@common/constant';
 import { AlignCenter, OverflowMultiLine, SpaceBetween } from '@common/styled';
 import CInput from '@components/cInput';
 import { SearchOutlined } from '@mui/icons-material';
+
 import DownloadIcon from '@mui/icons-material/Download';
 import FolderIcon from '@mui/icons-material/Folder';
 import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Box, Button, Card, CardContent, Divider, Stack, Typography } from '@mui/material';
-import { DocumentListWrapper } from '@pages/document/styled';
+import { Box, Button, CardContent, Divider, Stack, Typography } from '@mui/material';
+import DocumentUploadModal from '@pages/document/components/DocumentUploadModal';
+import { CardStyled, DeleteIconStyled, DocumentListWrapper } from '@pages/document/styled';
 import useAuthStore from '@store/authStore';
+import useSubjectStore from '@store/subjectStore';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-const DocumentCard = ({ subjectId, onOpen }: { subjectId?: number; onOpen?: () => void }) => {
+const DocumentCard = ({ refetch }: { refetch: () => void }) => {
   const { user } = useAuthStore();
+  const { classId, subjectId } = useSubjectStore();
   const [search, setSearch] = useState<DocumentListParamsDto>({});
+  const [openUploadDocumentModal, setOpenUploadDocumentModal] = useState(false);
+  const { data: subjectData = [] } = useGetSubjects();
 
   const { register, handleSubmit } = useForm();
 
@@ -26,22 +32,36 @@ const DocumentCard = ({ subjectId, onOpen }: { subjectId?: number; onOpen?: () =
 
   const { data } = useGetDocuments({
     ...search,
-    subjectId,
+    subjectId: subjectId ? subjectId : undefined,
   });
+
+  const { mutate } = useDeleteDocument();
+
+  const openPdfFile = (url: string) => {
+    window.open(url, '_blank');
+  };
+
+  const handleDeleteDocument = (documentId: number) => {
+    mutate(documentId, {
+      onSuccess() {
+        refetch();
+      },
+    });
+  };
 
   return (
     <form onSubmit={onSubmit}>
       <Box padding={2}>
         <SpaceBetween>
           <Box>
-            <Typography variant="h6" fontWeight="bold" marginTop={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
+            <Typography variant="h6" marginTop={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
               TÀI LIỆU NỔI BẬT
             </Typography>
           </Box>
 
           <AlignCenter gap={2}>
             {user.role === UserRoleDto.RoleAdmin && (
-              <Button variant="contained" sx={{ width: '140px' }} onClick={onOpen}>
+              <Button variant="contained" sx={{ width: '140px' }} onClick={() => setOpenUploadDocumentModal(true)}>
                 Đăng tải tài liệu
               </Button>
             )}
@@ -53,10 +73,10 @@ const DocumentCard = ({ subjectId, onOpen }: { subjectId?: number; onOpen?: () =
         </SpaceBetween>
 
         <DocumentListWrapper>
-          {data?.map((doc) => (
-            <Card key={doc.id} sx={{ height: 220 }}>
+          {data?.map((document) => (
+            <CardStyled key={document.id} onClick={() => openPdfFile(document.fileUrl)}>
               <CardContent>
-                <Box paddingX={2}>
+                <Box paddingX={2} sx={{ position: 'relative' }}>
                   <OverflowMultiLine
                     variant="h6"
                     lines={2}
@@ -66,12 +86,21 @@ const DocumentCard = ({ subjectId, onOpen }: { subjectId?: number; onOpen?: () =
                       height: 64,
                     }}
                   >
-                    {doc.title}
+                    {document.title}
                   </OverflowMultiLine>
 
-                  <AlignCenter marginTop={1}>
-                    <FolderIcon sx={{ marginRight: 1, fontSize: 26 }} />
-                    <OverflowMultiLine sx={{ textAlign: 'center' }}>{doc.category}</OverflowMultiLine>
+                  {user.role === UserRoleDto.RoleAdmin && (
+                    <DeleteIconStyled
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteDocument(document.id);
+                      }}
+                    />
+                  )}
+
+                  <AlignCenter marginTop={1} gap={1}>
+                    <FolderIcon sx={{ fontSize: 26 }} />
+                    <OverflowMultiLine sx={{ textAlign: 'center' }}>{document.category}</OverflowMultiLine>
                   </AlignCenter>
                 </Box>
 
@@ -81,12 +110,12 @@ const DocumentCard = ({ subjectId, onOpen }: { subjectId?: number; onOpen?: () =
                   <AlignCenter justifyContent="space-between" marginTop={4}>
                     <Stack gap={1}>
                       <VisibilityIcon />
-                      <Typography>{doc.views}</Typography>
+                      <Typography>{document.views}</Typography>
                     </Stack>
 
                     <Stack gap={1}>
                       <DownloadIcon />
-                      <Typography>{doc.downloads}</Typography>
+                      <Typography>{document.downloads}</Typography>
                     </Stack>
                   </AlignCenter>
 
@@ -97,15 +126,24 @@ const DocumentCard = ({ subjectId, onOpen }: { subjectId?: number; onOpen?: () =
                         WebkitLineClamp: 1,
                       }}
                     >
-                      Tác giả: {doc.author}
+                      Tác giả: {document.author}
                     </OverflowMultiLine>
                   </AlignCenter>
                 </Box>
               </CardContent>
-            </Card>
+            </CardStyled>
           ))}
         </DocumentListWrapper>
       </Box>
+
+      <DocumentUploadModal
+        refetch={refetch}
+        data={subjectData}
+        classId={classId}
+        subjectId={subjectId}
+        open={openUploadDocumentModal}
+        onClose={() => setOpenUploadDocumentModal(false)}
+      />
     </form>
   );
 };

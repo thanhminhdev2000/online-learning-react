@@ -9,8 +9,10 @@ export interface IOptions {
 
 export interface CModalProps {
   open: boolean;
+  onSubmit?: () => void;
   onClose: () => void;
   children?: ReactNode;
+  content?: string;
 }
 
 export type IPlainObject = {

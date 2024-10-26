@@ -1,19 +1,18 @@
 import { UserDetailDto, UserGenderDto, UserListParamsDto, UserRoleDto } from '@apis/generated/data-contracts';
 import { useDeleteUser, useGetUsers } from '@apis/hooks/user.hook';
-import { DATE_FORMAT_VN, HEADER_HEIGHT, LIMIT } from '@common/constant';
+import { DATE_FORMAT_VN, LIMIT } from '@common/constant';
 import { SpaceBetween } from '@common/styled';
+import CConfirmModal from '@components/cConfirmModal';
 import {
   Box,
   Button,
   MenuItem,
   Pagination,
-  Paper,
   Select,
   Stack,
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
   Typography,
@@ -22,6 +21,7 @@ import Container from '@mui/material/Container';
 import SearchForm from '@pages/users/components/SearchForm';
 import UserModal from '@pages/users/components/UserModal';
 import { userSearchInit } from '@pages/users/constant';
+import { PaperStyled, TableContainerStyled, TableRowStyled } from '@pages/users/styled';
 import { userInit } from '@store/constant';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
@@ -30,9 +30,11 @@ import 'react-toastify/dist/ReactToastify.css';
 const UserManagePage = () => {
   const [rowData, setRowData] = useState(userInit);
   const [openUserModal, setOpenUserModal] = useState(false);
+  const [openDeleteUserModal, setOpenDeleteUserModal] = useState(false);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(LIMIT);
   const [search, setSearch] = useState<UserListParamsDto>(userSearchInit);
+  const [selectedId, setSelectedId] = useState(0);
   const { mutate } = useDeleteUser();
 
   const { data: response, refetch } = useGetUsers({ ...search, page, limit });
@@ -50,6 +52,7 @@ const UserManagePage = () => {
     mutate(userId, {
       onSuccess() {
         refetch();
+        setOpenDeleteUserModal(false);
       },
     });
   };
@@ -62,7 +65,7 @@ const UserManagePage = () => {
 
   return (
     <Container maxWidth="lg">
-      <Paper sx={{ minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`, padding: 4 }}>
+      <PaperStyled>
         <SpaceBetween>
           <Typography variant="h6" fontWeight="bold" textTransform="uppercase">
             Quản lý người dùng
@@ -75,7 +78,7 @@ const UserManagePage = () => {
 
         <SearchForm onSearch={handleSearch} />
 
-        <TableContainer sx={{ border: '1px solid #ccc', marginTop: 4 }}>
+        <TableContainerStyled>
           <Table>
             <TableHead>
               <TableRow>
@@ -91,17 +94,11 @@ const UserManagePage = () => {
 
             <TableBody>
               {data?.map((row) => (
-                <TableRow
+                <TableRowStyled
                   key={row.id}
                   onClick={() => {
                     setOpenUserModal(true);
                     setRowData(row);
-                  }}
-                  sx={{
-                    '&:hover': {
-                      backgroundColor: '#f5f5f5',
-                      cursor: 'pointer',
-                    },
                   }}
                 >
                   <TableCell>{row.email}</TableCell>
@@ -114,13 +111,14 @@ const UserManagePage = () => {
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleDeleteUser(row.id);
+                        setOpenDeleteUserModal(true);
+                        setSelectedId(row.id);
                       }}
                     >
                       Xoá
                     </Button>
                   </TableCell>
-                </TableRow>
+                </TableRowStyled>
               ))}
             </TableBody>
           </Table>
@@ -130,7 +128,7 @@ const UserManagePage = () => {
               <Typography>Không có dữ liệu</Typography>
             </Box>
           )}
-        </TableContainer>
+        </TableContainerStyled>
 
         <Stack marginTop={4} justifyContent="end">
           <Select sx={{ height: 32 }} value={limit} onChange={(e) => setLimit(Number(e.target.value))}>
@@ -157,9 +155,15 @@ const UserManagePage = () => {
             setRowData(userInit);
           }}
           data={rowData as UserDetailDto}
-          refetch={refetch}
         />
-      </Paper>
+
+        <CConfirmModal
+          open={openDeleteUserModal}
+          onClose={() => setOpenDeleteUserModal(false)}
+          content="Bạn có chắc chắn muốn xoá nó không?"
+          onSubmit={() => handleDeleteUser(selectedId)}
+        />
+      </PaperStyled>
     </Container>
   );
 };

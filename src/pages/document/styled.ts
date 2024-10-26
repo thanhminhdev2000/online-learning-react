@@ -1,5 +1,6 @@
-import { MAIN_COLOR } from '@common/constant';
-import { Box, styled } from '@mui/material';
+import { BACKGROUND_COLOR_HOVER, MAIN_COLOR } from '@common/constant';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Box, Card, ListItem, styled } from '@mui/material';
 
 export const HoverBox = styled(Box)(() => ({
   position: 'absolute',
@@ -29,4 +30,29 @@ export const DocumentListWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     gridTemplateColumns: 'repeat(4,1fr)',
   },
+}));
+
+export const CardStyled = styled(Card)(() => ({
+  height: 220,
+  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+  cursor: 'pointer',
+  '&:hover': {
+    transform: 'translateY(-10px)',
+    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.3)',
+  },
+}));
+
+export const DeleteIconStyled = styled(DeleteIcon)(() => ({
+  position: 'absolute',
+  top: 5,
+  right: 0,
+  ':hover': {
+    backgroundColor: BACKGROUND_COLOR_HOVER,
+  },
+}));
+export const ListItemStyled = styled(ListItem)(() => ({
+  backgroundColor: MAIN_COLOR,
+  color: 'white',
+  fontWeight: 'bold',
+  cursor: 'pointer',
 }));

@@ -1,4 +1,5 @@
-import { useGetSubjects, useUploadDocument } from '@apis/hooks/document.hook';
+import { ClassWithSubjectsDto } from '@apis/generated/data-contracts';
+import { useUploadDocument } from '@apis/hooks/document.hook';
 import { FlexEnd, SpaceBetween } from '@common/styled';
 import { CModalProps, IOptions } from '@common/type';
 import CInput from '@components/cInput';
@@ -12,16 +13,26 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { uploadDocumentSchema } from '@pages/document/type';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-const DocumentUploadModal = ({ open, onClose }: CModalProps) => {
+interface DocumentUploadModalProps extends CModalProps {
+  refetch: () => void;
+  data: ClassWithSubjectsDto[];
+  classId: number;
+  subjectId: number;
+}
+
+const DocumentUploadModal = ({ refetch, data, classId, subjectId, open, onClose }: DocumentUploadModalProps) => {
+  const [fileName, setFileName] = useState<string | null>(null);
+
   const formInstance = useForm({
     resolver: zodResolver(uploadDocumentSchema),
     values: {
       title: '',
-      classId: 0,
-      subjectId: 0,
+      classId,
+      subjectId,
+      author: '',
       file: undefined,
     },
   });
@@ -35,52 +46,64 @@ const DocumentUploadModal = ({ open, onClose }: CModalProps) => {
     formState: { errors },
   } = formInstance;
 
-  const { data = [] } = useGetSubjects();
-  const classId = watch('classId');
+  const classIdSelected = watch('classId');
 
   const classOptions = useMemo(() => {
     const options: IOptions[] = data.map((item) => ({
       key: item.className,
       value: item.classId,
     }));
+
     return options;
   }, [data]);
 
   const subjectOptions = useMemo(() => {
-    const classData = data.find((item) => item.classId === classId)?.subjects;
+    const classData = data.find((item) => item.classId === classIdSelected)?.subjects;
     const options: IOptions[] = (classData || [])?.map((item) => ({
       key: item.subjectName,
       value: item.subjectId,
     }));
 
     return options;
-  }, [classId, data]);
+  }, [classIdSelected, data]);
 
   const { mutate } = useUploadDocument();
 
   const handleSubmitForm = handleSubmit((data) => {
-    console.log(data.file);
     if (!data.file) {
       return;
     }
 
-    mutate({
-      title: data.title,
-      subjectId: Number(data.subjectId),
-      file: data.file,
-    });
+    mutate(
+      {
+        title: data.title,
+        subjectId: Number(data.subjectId),
+        file: data.file,
+        author: data.author,
+      },
+      {
+        onSuccess() {
+          reset();
+          onClose();
+          refetch();
+        },
+      },
+    );
   });
 
   const closeModal = () => {
     reset();
+    setFileName(null);
     onClose();
   };
 
+  useEffect(() => {}, []);
+
   return (
-    <form onSubmit={handleSubmitForm}>
-      <FormProvider {...formInstance}>
-        <Modal open={open} onClose={closeModal}>
-          <ModalWrapper>
+    <FormProvider {...formInstance}>
+      <Modal open={open} onClose={closeModal}>
+        <ModalWrapper>
+          <form onSubmit={handleSubmitForm}>
             <SpaceBetween alignItems="center">
               <Typography variant="h6">Đăng tải tài liệu</Typography>
               <Close onClick={closeModal} sx={{ cursor: 'pointer' }} />
@@ -89,17 +112,21 @@ const DocumentUploadModal = ({ open, onClose }: CModalProps) => {
             <Stack flexDirection="column" gap={4} marginY={2}>
               <CInput label="Tiêu đề" registerProps={register('title')} errorMsg={errors.title?.message} />
               <CSelect
-                label="Lớp học"
+                label="Tên lớp học"
                 registerProps={register('classId')}
                 errorMsg={errors.classId?.message}
                 selectOptions={classOptions}
+                disabled={!!classId}
               />
               <CSelect
-                label="Môn học"
+                label="Tên môn học"
                 registerProps={register('subjectId')}
                 errorMsg={errors.subjectId?.message}
                 selectOptions={subjectOptions}
+                disabled={!!subjectId}
               />
+
+              <CInput label="Tên tác giả" registerProps={register('author')} errorMsg={errors.author?.message} />
 
               <Stack flexDirection="column">
                 <Button variant="outlined" component="label" sx={{ textTransform: 'none' }}>
@@ -112,10 +139,16 @@ const DocumentUploadModal = ({ open, onClose }: CModalProps) => {
                       onChange: (e) => {
                         const file = e.target.files?.[0] || null;
                         setValue('file', file, { shouldValidate: true });
+                        setFileName(file ? file.name : null);
                       },
                     })}
                   />
                 </Button>
+                {fileName && (
+                  <Typography variant="body2" color="text.secondary" sx={{ marginTop: 1 }}>
+                    {fileName}
+                  </Typography>
+                )}
                 <ErrorMessage message={errors.file?.message} />
               </Stack>
             </Stack>
@@ -126,10 +159,10 @@ const DocumentUploadModal = ({ open, onClose }: CModalProps) => {
                 Save
               </Button>
             </FlexEnd>
-          </ModalWrapper>
-        </Modal>
-      </FormProvider>
-    </form>
+          </form>
+        </ModalWrapper>
+      </Modal>
+    </FormProvider>
   );
 };
 

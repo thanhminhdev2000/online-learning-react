@@ -182,6 +182,8 @@ export interface UploadCreatePayloadDto {
   subjectId: number;
   /** Document title */
   title: string;
+  /** Document author */
+  author: string;
   /**
    * File to upload
    * @format binary
@@ -192,6 +194,10 @@ export interface UploadCreatePayloadDto {
 export type UploadCreateDataDto = MessageDto;
 
 export type UploadCreateErrorDto = ErrorDto;
+
+export type DocumentDeleteDataDto = MessageDto;
+
+export type DocumentDeleteErrorDto = ErrorDto;
 
 export interface UserListParamsDto {
   dateOfBirth?: string;
