@@ -84,6 +84,7 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
                       fontWeight: 'bold',
                       color: MAIN_COLOR,
                       height: 64,
+                      paddingRight: 3,
                     }}
                   >
                     {document.title}

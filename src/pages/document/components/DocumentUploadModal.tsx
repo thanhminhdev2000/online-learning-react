@@ -139,6 +139,7 @@ const DocumentUploadModal = ({ refetch, data, classId, subjectId, open, onClose 
                       onChange: (e) => {
                         const file = e.target.files?.[0] || null;
                         setValue('file', file, { shouldValidate: true });
+                        setValue('title', file ? file.name.split('.')[0] : '');
                         setFileName(file ? file.name : null);
                       },
                     })}

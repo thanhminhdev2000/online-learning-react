@@ -1,14 +1,11 @@
 import { useContact } from '@apis/hooks/contact.hook';
-import { BoxContainer, ItemCenter, TypographyLink } from '@common/styled';
+import { BoxContainer, ItemCenter } from '@common/styled';
 import CInput from '@components/cInput';
 import SendIcon from '@mui/icons-material/Send';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 const ContactPage = () => {
-  const navigate = useNavigate();
-
   const formInstance = useForm({
     values: {
       fullName: '',
@@ -71,13 +68,6 @@ const ContactPage = () => {
                 <Typography variant="body1" gutterBottom>
                   <strong>Email:</strong> thanhminh.nguyendev@gmail.com
                 </Typography>
-
-                <Stack gap={1}>
-                  <strong>Fan Page: </strong>
-                  <TypographyLink onClick={() => navigate('https://www.facebook.com/360LearningSuite/')}>
-                    https://www.facebook.com/360LearningSuite/
-                  </TypographyLink>
-                </Stack>
               </Box>
             </BoxContainer>
           </Stack>
