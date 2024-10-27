@@ -1,5 +1,6 @@
 import { UserDetailDto } from '@apis/generated/data-contracts';
 import MainLayout from '@components/layout/MainLayout';
+import PageNotFound from '@components/layout/PageNotFound';
 import ProtectedRoute from '@components/layout/ProtectedRoute';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider/LocalizationProvider';
@@ -60,6 +61,8 @@ const App = () => {
                   </ProtectedRoute>
                 }
               />
+
+              <Route path="*" element={<PageNotFound />} />
             </Route>
           </Routes>
         </Router>
