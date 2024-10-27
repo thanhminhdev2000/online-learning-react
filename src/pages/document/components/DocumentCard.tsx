@@ -1,5 +1,5 @@
-import { DocumentListParamsDto, UserRoleDto } from '@apis/generated/data-contracts';
-import { useDeleteDocument, useGetDocuments } from '@apis/hooks/document.hook';
+import { DocumentListParamsDto, DocumentsResponseDto, UserRoleDto } from '@apis/generated/data-contracts';
+import { useDeleteDocument, useGetDocuments, useUpdateDocument } from '@apis/hooks/document.hook';
 import { MAIN_COLOR } from '@common/constant';
 import { AlignCenter, OverflowMultiLine, SpaceBetween } from '@common/styled';
 import CConfirmModal from '@components/cConfirmModal';
@@ -37,17 +37,28 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
     subjectId: subjectId ? subjectId : undefined,
   });
 
-  const { mutate } = useDeleteDocument();
+  const { mutate: updateDocument } = useUpdateDocument();
+  const { mutate: deleteDocument } = useDeleteDocument();
 
   const openPdfFile = (url: string) => {
     window.open(url, '_blank');
   };
 
   const handleDeleteDocument = (documentId: number) => {
-    mutate(documentId, {
+    deleteDocument(documentId, {
       onSuccess() {
         refetch();
         setOpenDeleteUserModal(false);
+      },
+    });
+  };
+
+  const handleUpdateViews = (data: DocumentsResponseDto) => {
+    updateDocument({
+      documentId: data.id,
+      payload: {
+        ...data,
+        views: data.views + 1,
       },
     });
   };
@@ -80,6 +91,8 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
             <CardStyled
               key={document.id}
               onClick={() => {
+                setSelectedId(document.id);
+                handleUpdateViews(document);
                 openPdfFile(document.fileUrl);
               }}
             >

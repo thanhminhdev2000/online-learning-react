@@ -7,6 +7,9 @@ import {
   DocumentListDataDto,
   DocumentListErrorDto,
   DocumentListParamsDto,
+  DocumentUpdateDataDto,
+  DocumentUpdateErrorDto,
+  DocumentUpdatePayloadDto,
   SubjectsListDataDto,
   SubjectsListErrorDto,
 } from '@apis/generated/data-contracts';
@@ -56,6 +59,29 @@ export const useCreateDocument = (): UseMutationResult<
     },
     onSuccess(data) {
       toast.success(data.message);
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.getDocuments],
+      });
+    },
+    onError(data) {
+      toast.error(data.error);
+    },
+  });
+};
+
+export const useUpdateDocument = (): UseMutationResult<
+  DocumentUpdateDataDto,
+  DocumentUpdateErrorDto,
+  { documentId: number; payload: DocumentUpdatePayloadDto },
+  unknown
+> => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ documentId, payload }) => {
+      return documentApi.documentUpdate(documentId, payload);
+    },
+    onSuccess() {
       queryClient.invalidateQueries({
         queryKey: [queryKeys.getDocuments],
       });

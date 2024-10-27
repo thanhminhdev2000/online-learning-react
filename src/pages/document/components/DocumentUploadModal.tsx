@@ -1,4 +1,4 @@
-import { useCreateDocument } from '@apis/hooks/document.hook';
+import { useCreateDocument, useUpdateDocument } from '@apis/hooks/document.hook';
 import { FlexEnd, SpaceBetween } from '@common/styled';
 import { CModalProps, IOptions } from '@common/type';
 import CInput from '@components/cInput';
@@ -11,10 +11,11 @@ import { Stack } from '@mui/material';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
-import { uploadDocumentSchema } from '@pages/document/type';
+import { createdDocumentSchema, updatedDocumentSchema } from '@pages/document/type';
 import useSubjectStore from '@store/subjectStore';
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 const DocumentUploadModal = ({ refetch, open, onClose }: CModalProps) => {
   const AWS_URL = 'https://online-learning-aws.s3.us-east-1.amazonaws.com/pdfs/';
@@ -24,7 +25,7 @@ const DocumentUploadModal = ({ refetch, open, onClose }: CModalProps) => {
   const [fileName, setFileName] = useState<string | null>(awsFileName);
 
   const formInstance = useForm({
-    resolver: zodResolver(uploadDocumentSchema),
+    resolver: zodResolver(selectedDocument.id ? updatedDocumentSchema : createdDocumentSchema),
     values: {
       title: selectedDocument.title || '',
       classId: selectedDocument.classId || classId,
@@ -64,14 +65,36 @@ const DocumentUploadModal = ({ refetch, open, onClose }: CModalProps) => {
     return options;
   }, [classIdSelected, subjects]);
 
-  const { mutate, isPending } = useCreateDocument();
+  const { mutate: createDocument, isPending: pendingCreate } = useCreateDocument();
+  const { mutate: updateDocument, isPending: pendingUpdate } = useUpdateDocument();
 
   const handleSubmitForm = handleSubmit((formData) => {
     if (!formData.file) {
       return;
     }
 
-    mutate(
+    if (selectedDocument.id) {
+      updateDocument(
+        {
+          documentId: selectedDocument.id,
+          payload: {
+            title: formData.title,
+            file: formData.file,
+            author: formData.author,
+          },
+        },
+        {
+          onSuccess(data) {
+            closeModal();
+            refetch?.();
+            toast.success(data.message);
+          },
+        },
+      );
+      return;
+    }
+
+    createDocument(
       {
         title: formData.title,
         subjectId: Number(formData.subjectId),
@@ -112,14 +135,14 @@ const DocumentUploadModal = ({ refetch, open, onClose }: CModalProps) => {
                 registerProps={register('classId')}
                 errorMsg={errors.classId?.message}
                 selectOptions={classOptions}
-                disabled={!!classId}
+                disabled={!!selectedDocument.id}
               />
               <CSelect
                 label="Tên môn học"
                 registerProps={register('subjectId')}
                 errorMsg={errors.subjectId?.message}
                 selectOptions={subjectOptions}
-                disabled={!!subjectId}
+                disabled={!!selectedDocument.id}
               />
 
               <CInput label="Tên tác giả" registerProps={register('author')} errorMsg={errors.author?.message} />
@@ -152,7 +175,12 @@ const DocumentUploadModal = ({ refetch, open, onClose }: CModalProps) => {
 
             <FlexEnd marginTop={4} gap={2}>
               <Button onClick={closeModal}>Huỷ bỏ</Button>
-              <Button variant="contained" type="submit" disabled={isPending} onClick={handleSubmitForm}>
+              <Button
+                variant="contained"
+                type="submit"
+                disabled={pendingCreate || pendingUpdate}
+                onClick={handleSubmitForm}
+              >
                 Lưu
               </Button>
             </FlexEnd>
