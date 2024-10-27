@@ -10,6 +10,7 @@ interface AuthState {
   login: (user: UserDetailDto, accessToken?: string) => void;
   logout: () => void;
   getUser: () => UserDetailDto;
+  getToken: () => string;
 }
 
 const useAuthStore = create<AuthState>((set, get) => ({
@@ -47,6 +48,9 @@ const useAuthStore = create<AuthState>((set, get) => ({
   getUser: () => {
     const user: UserDetailDto = JSON.parse(localStorage.getItem('user') as string);
     return user;
+  },
+  getToken() {
+    return JSON.parse(localStorage.getItem('accessToken') as string);
   },
 }));
 

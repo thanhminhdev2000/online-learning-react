@@ -13,6 +13,7 @@ export interface CModalProps {
   onClose: () => void;
   children?: ReactNode;
   content?: string;
+  refetch?: () => void;
 }
 
 export type IPlainObject = {

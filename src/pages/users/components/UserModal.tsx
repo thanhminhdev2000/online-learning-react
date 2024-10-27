@@ -44,8 +44,8 @@ const UserModal = ({ open, onClose, data }: UserProps) => {
     reset,
   } = formInstance;
 
-  const { mutate: createAdmin } = useCreateAdmin();
-  const { mutate: updateUser } = useUpdateUser({ userId: data.id });
+  const { mutate: createAdmin, isPending: pendingCreate } = useCreateAdmin();
+  const { mutate: updateUser, isPending: pendingUpdate } = useUpdateUser({ userId: data.id });
 
   const handleSubmitForm = handleSubmit((formData) => {
     if (data.id) {
@@ -120,9 +120,14 @@ const UserModal = ({ open, onClose, data }: UserProps) => {
             </Stack>
 
             <FlexEnd marginTop={4} gap={2}>
-              <Button onClick={closeModal}>Cancel</Button>
-              <Button variant="contained" type="submit" onClick={handleSubmitForm}>
-                Save
+              <Button onClick={closeModal}>Huỷ bỏ</Button>
+              <Button
+                variant="contained"
+                type="submit"
+                onClick={handleSubmitForm}
+                disabled={pendingCreate || pendingUpdate}
+              >
+                Lưu
               </Button>
             </FlexEnd>
           </ModalWrapper>

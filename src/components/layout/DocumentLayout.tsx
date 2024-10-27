@@ -1,6 +1,6 @@
 import { ClassWithSubjectsDto, SubjectIdDto } from '@apis/generated/data-contracts';
 import { useGetSubjects } from '@apis/hooks/document.hook';
-import { BACKGROUND_COLOR_HOVER, COUNT_COLOR, SIDEBAR_WIDTH } from '@common/constant';
+import { BACKGROUND_COLOR_HOVER, COUNT_COLOR, MAIN_COLOR, SIDEBAR_WIDTH } from '@common/constant';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   Box,
@@ -15,16 +15,14 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import DocumentCard from '@pages/document/components/DocumentCard';
-import { ListItemStyled } from '@pages/document/styled';
 import useSubjectStore from '@store/subjectStore';
 
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-const DocumentPage = () => {
-  const { setClassId, setSubjectId, setSubjects } = useSubjectStore();
+const DocumentLayout = () => {
   const navigate = useNavigate();
+  const { setClassId, setSubjectId } = useSubjectStore();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [hoveredItem, setHoveredItem] = useState<ClassWithSubjectsDto | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -50,20 +48,13 @@ const DocumentPage = () => {
     handleDrawerToggle();
   };
 
-  const { data = [], refetch } = useGetSubjects();
-
-  const handleReset = () => {
-    setClassId(0);
-    setSubjectId(0);
-    handleMenuClose();
-    handleDrawerToggle();
-  };
+  const { data = [] } = useGetSubjects();
 
   const open = Boolean(anchorEl);
 
   const drawerContent = (
     <List sx={{ padding: 0 }}>
-      <ListItemStyled onClick={handleReset}>DANH MỤC TÀI LIỆU</ListItemStyled>
+      <ListItem sx={{ backgroundColor: MAIN_COLOR, color: 'white', fontWeight: 'bold' }}>DANH MỤC TÀI LIỆU</ListItem>
       {data.map((item, index) => (
         <ListItem
           sx={{
@@ -81,12 +72,6 @@ const DocumentPage = () => {
       ))}
     </List>
   );
-
-  useEffect(() => {
-    if (data.length) {
-      setSubjects(data);
-    }
-  }, [data, setSubjects]);
 
   return (
     <Stack flexDirection="column">
@@ -144,9 +129,11 @@ const DocumentPage = () => {
         </Menu>
       </Stack>
 
-      <DocumentCard refetch={refetch} />
+      <Box>
+        <Outlet />
+      </Box>
     </Stack>
   );
 };
 
-export default DocumentPage;
+export default DocumentLayout;

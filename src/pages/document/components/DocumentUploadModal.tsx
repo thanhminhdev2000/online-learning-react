@@ -1,5 +1,4 @@
-import { ClassWithSubjectsDto } from '@apis/generated/data-contracts';
-import { useUploadDocument } from '@apis/hooks/document.hook';
+import { useCreateDocument } from '@apis/hooks/document.hook';
 import { FlexEnd, SpaceBetween } from '@common/styled';
 import { CModalProps, IOptions } from '@common/type';
 import CInput from '@components/cInput';
@@ -13,26 +12,24 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { uploadDocumentSchema } from '@pages/document/type';
+import useSubjectStore from '@store/subjectStore';
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-interface DocumentUploadModalProps extends CModalProps {
-  refetch: () => void;
-  data: ClassWithSubjectsDto[];
-  classId: number;
-  subjectId: number;
-}
+const DocumentUploadModal = ({ refetch, open, onClose }: CModalProps) => {
+  const AWS_URL = 'https://online-learning-aws.s3.us-east-1.amazonaws.com/pdfs/';
+  const { classId, subjectId, subjects, selectedDocument } = useSubjectStore();
 
-const DocumentUploadModal = ({ refetch, data, classId, subjectId, open, onClose }: DocumentUploadModalProps) => {
-  const [fileName, setFileName] = useState<string | null>(null);
+  const awsFileName = selectedDocument.fileUrl?.split(AWS_URL)[1];
+  const [fileName, setFileName] = useState<string | null>(awsFileName);
 
   const formInstance = useForm({
     resolver: zodResolver(uploadDocumentSchema),
     values: {
-      title: '',
-      classId,
-      subjectId,
-      author: '',
+      title: selectedDocument.title || '',
+      classId: selectedDocument.classId || classId,
+      subjectId: selectedDocument.subjectId || subjectId,
+      author: selectedDocument.author,
       file: undefined,
     },
   });
@@ -49,43 +46,42 @@ const DocumentUploadModal = ({ refetch, data, classId, subjectId, open, onClose 
   const classIdSelected = watch('classId');
 
   const classOptions = useMemo(() => {
-    const options: IOptions[] = data.map((item) => ({
+    const options: IOptions[] = subjects.map((item) => ({
       key: item.className,
       value: item.classId,
     }));
 
     return options;
-  }, [data]);
+  }, [subjects]);
 
   const subjectOptions = useMemo(() => {
-    const classData = data.find((item) => item.classId === classIdSelected)?.subjects;
+    const classData = subjects.find((item) => item.classId === classIdSelected)?.subjects;
     const options: IOptions[] = (classData || [])?.map((item) => ({
       key: item.subjectName,
       value: item.subjectId,
     }));
 
     return options;
-  }, [classIdSelected, data]);
+  }, [classIdSelected, subjects]);
 
-  const { mutate } = useUploadDocument();
+  const { mutate, isPending } = useCreateDocument();
 
-  const handleSubmitForm = handleSubmit((data) => {
-    if (!data.file) {
+  const handleSubmitForm = handleSubmit((formData) => {
+    if (!formData.file) {
       return;
     }
 
     mutate(
       {
-        title: data.title,
-        subjectId: Number(data.subjectId),
-        file: data.file,
-        author: data.author,
+        title: formData.title,
+        subjectId: Number(formData.subjectId),
+        file: formData.file,
+        author: formData.author,
       },
       {
         onSuccess() {
-          reset();
-          onClose();
-          refetch();
+          closeModal();
+          refetch?.();
         },
       },
     );
@@ -140,14 +136,14 @@ const DocumentUploadModal = ({ refetch, data, classId, subjectId, open, onClose 
                         const file = e.target.files?.[0] || null;
                         setValue('file', file, { shouldValidate: true });
                         setValue('title', file ? file.name.split('.')[0] : '');
-                        setFileName(file ? file.name : null);
+                        setFileName(file.name);
                       },
                     })}
                   />
                 </Button>
-                {fileName && (
+                {(awsFileName || fileName) && (
                   <Typography variant="body2" color="text.secondary" sx={{ marginTop: 1 }}>
-                    {fileName}
+                    {awsFileName || fileName}
                   </Typography>
                 )}
                 <ErrorMessage message={errors.file?.message} />
@@ -155,9 +151,9 @@ const DocumentUploadModal = ({ refetch, data, classId, subjectId, open, onClose 
             </Stack>
 
             <FlexEnd marginTop={4} gap={2}>
-              <Button onClick={closeModal}>Cancel</Button>
-              <Button variant="contained" type="submit" onClick={handleSubmitForm}>
-                Save
+              <Button onClick={closeModal}>Huỷ bỏ</Button>
+              <Button variant="contained" type="submit" disabled={isPending} onClick={handleSubmitForm}>
+                Lưu
               </Button>
             </FlexEnd>
           </form>

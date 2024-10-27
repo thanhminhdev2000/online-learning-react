@@ -7,7 +7,13 @@ import { Box, Button, Stack } from '@mui/material';
 import { userSearchInit } from '@pages/users/constant';
 import { FormProvider, useForm } from 'react-hook-form';
 
-const SearchForm = ({ onSearch }: { onSearch: (data: UserListParamsDto) => void }) => {
+const SearchForm = ({
+  onSearch,
+  isFetching,
+}: {
+  onSearch: (data: UserListParamsDto) => void;
+  isFetching?: boolean;
+}) => {
   const formInstance = useForm<UserListParamsDto>({
     values: userSearchInit,
   });
@@ -53,7 +59,7 @@ const SearchForm = ({ onSearch }: { onSearch: (data: UserListParamsDto) => void 
               <Button size="small" onClick={() => reset()}>
                 Reset
               </Button>
-              <Button size="small" variant="contained" type="submit">
+              <Button size="small" variant="contained" type="submit" disabled={isFetching}>
                 Tìm kiếm
               </Button>
             </Stack>

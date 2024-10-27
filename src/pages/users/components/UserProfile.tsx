@@ -29,7 +29,7 @@ const UserProfile = () => {
     formState: { errors },
   } = formInstance;
 
-  const { mutate } = useUpdateUser({ userId: user?.id as number });
+  const { mutate, isPending } = useUpdateUser({ userId: user?.id as number });
 
   const onSubmit = handleSubmit((data) => {
     mutate(
@@ -65,7 +65,7 @@ const UserProfile = () => {
           </Stack>
         </FormProvider>
         <FlexEnd marginTop={4}>
-          <Button variant="contained" type="submit">
+          <Button variant="contained" type="submit" disabled={isPending}>
             Lưu thay đổi
           </Button>
         </FlexEnd>

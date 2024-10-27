@@ -6,12 +6,14 @@ import { routes } from '@components/navbar/constant';
 import { NavbarWrapper, StyledMenuItem } from '@components/navbar/styled';
 import { Avatar, Box, Button, Container, Menu, Stack, Typography } from '@mui/material';
 import useAuthStore from '@store/authStore';
+import useSubjectStore from '@store/subjectStore';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
+  const { setClassId, setSubjectId } = useSubjectStore();
   const [accountMenu, setAccountMenu] = useState<null | HTMLElement>(null);
   const color = 'black';
 
@@ -54,7 +56,11 @@ const Navbar = () => {
                   key={route.path}
                   display={{ xs: 'none', sm: 'block' }}
                   sx={{ padding: 3, color: 'white' }}
-                  onClick={() => navigate(route.path)}
+                  onClick={() => {
+                    navigate(route.path);
+                    setClassId(0);
+                    setSubjectId(0);
+                  }}
                 >
                   {route.pathName}
                 </TypographyHover>

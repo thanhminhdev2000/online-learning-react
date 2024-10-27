@@ -26,7 +26,7 @@ const SignUpPage = () => {
     handleSubmit,
     formState: { errors },
   } = formInstance;
-  const { mutate } = useCreateUser();
+  const { mutate, isPending } = useCreateUser();
 
   const onSubmit = handleSubmit((data) => {
     mutate(
@@ -86,7 +86,7 @@ const SignUpPage = () => {
         </FormProvider>
 
         <Box marginTop={4}>
-          <Button fullWidth variant="contained" type="submit">
+          <Button fullWidth variant="contained" type="submit" disabled={isPending}>
             Đăng ký
           </Button>
         </Box>

@@ -10,7 +10,7 @@ const UserAvatar = () => {
   const [avatar, setAvatar] = useState<string>(user.avatar);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const { mutate } = useUpdateUserAvatar({ userId: user.id });
+  const { mutate, isPending } = useUpdateUserAvatar({ userId: user.id });
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -74,7 +74,7 @@ const UserAvatar = () => {
       </Stack>
 
       <FlexEnd marginTop={4}>
-        <Button variant="contained" onClick={handleUploadClick}>
+        <Button variant="contained" disabled={isPending} onClick={handleUploadClick}>
           Lưu thay đổi
         </Button>
       </FlexEnd>

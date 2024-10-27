@@ -24,7 +24,7 @@ const ForgotPasswordPage = () => {
     },
   });
 
-  const { mutate } = useForgotPassword();
+  const { mutate, isPending } = useForgotPassword();
 
   const onSubmit = handleSubmit((data) => {
     mutate(data, {
@@ -55,7 +55,7 @@ const ForgotPasswordPage = () => {
             </Stack>
 
             <Box marginTop={4}>
-              <Button fullWidth variant="contained" type="submit">
+              <Button fullWidth variant="contained" disabled={isPending} type="submit">
                 Xác nhận
               </Button>
             </Box>

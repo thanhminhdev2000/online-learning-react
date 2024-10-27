@@ -43,10 +43,12 @@ export interface CreateUserRequestDto {
 export interface DocumentsResponseDto {
   author: string;
   category: string;
+  classId: number;
   documentType: string;
   downloads: number;
   fileUrl: string;
   id: number;
+  subjectId: number;
   title: string;
   views: number;
 }
@@ -173,17 +175,13 @@ export type DocumentListDataDto = DocumentsResponseDto[];
 
 export type DocumentListErrorDto = ErrorDto;
 
-export type SubjectsListDataDto = ClassWithSubjectsDto[];
-
-export type SubjectsListErrorDto = ErrorDto;
-
-export interface UploadCreatePayloadDto {
+export interface DocumentCreatePayloadDto {
   /** Subject ID */
   subjectId: number;
   /** Document title */
   title: string;
   /** Document author */
-  author: string;
+  author?: string;
   /**
    * File to upload
    * @format binary
@@ -191,9 +189,30 @@ export interface UploadCreatePayloadDto {
   file: File;
 }
 
-export type UploadCreateDataDto = MessageDto;
+export type DocumentCreateDataDto = MessageDto;
 
-export type UploadCreateErrorDto = ErrorDto;
+export type DocumentCreateErrorDto = ErrorDto;
+
+export type SubjectsListDataDto = ClassWithSubjectsDto[];
+
+export type SubjectsListErrorDto = ErrorDto;
+
+export interface DocumentUpdatePayloadDto {
+  /** Document title */
+  title?: string;
+  /** Document author */
+  author?: string;
+  /** Number of views */
+  views?: number;
+  /** Number of downloads */
+  downloads?: number;
+  /** File to replace the existing document file */
+  file?: File;
+}
+
+export type DocumentUpdateDataDto = MessageDto;
+
+export type DocumentUpdateErrorDto = ErrorDto;
 
 export type DocumentDeleteDataDto = MessageDto;
 

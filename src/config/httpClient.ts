@@ -1,5 +1,13 @@
 import { HttpClient } from '@apis/generated/http-client';
+import useAuthStore from '@store/authStore';
 import { cleanObject } from '@utils/index';
+import axios from 'axios';
+
+const axiosInstance = axios.create({
+  // @ts-expect-error 'env' does not exist on type 'ImportMeta'
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true,
+});
 
 const httpClient = new HttpClient({
   // @ts-expect-error 'env' does not exist on type 'ImportMeta'
@@ -30,11 +38,23 @@ httpClient.instance.interceptors.response.use(
     return response;
   },
   async (error) => {
-    if (error.response) {
-      return Promise.reject(error.response.data);
-    }
+    const originalRequest = error.config;
+    const { getToken, logout, login } = useAuthStore();
 
-    return Promise.reject(error.message);
+    if (error.response.status === 401 || error.response.status === 403) {
+      console.log('error.response.status', error.response.status);
+      const reponse = await axiosInstance.post('/auth/refresh-token');
+      login(reponse.data.accessToken, reponse.data.expiresIn);
+
+      const accessToken = getToken();
+      try {
+        httpClient.instance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+        return httpClient.instance(originalRequest);
+      } catch (refreshError) {
+        logout();
+        return Promise.reject(refreshError);
+      }
+    }
   },
 );
 

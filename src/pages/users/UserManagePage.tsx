@@ -37,7 +37,7 @@ const UserManagePage = () => {
   const [selectedId, setSelectedId] = useState(0);
   const { mutate } = useDeleteUser();
 
-  const { data: response, refetch } = useGetUsers({ ...search, page, limit });
+  const { data: response, refetch, isFetching } = useGetUsers({ ...search, page, limit });
   const { data, paging } = response || {};
   const { limit: limitPerPage = 1, totalCount = 0 } = paging || {};
 
@@ -76,7 +76,7 @@ const UserManagePage = () => {
           </Button>
         </SpaceBetween>
 
-        <SearchForm onSearch={handleSearch} />
+        <SearchForm onSearch={handleSearch} isFetching={isFetching} />
 
         <TableContainerStyled>
           <Table>
@@ -134,7 +134,7 @@ const UserManagePage = () => {
           <Select sx={{ height: 32 }} value={limit} onChange={(e) => setLimit(Number(e.target.value))}>
             <MenuItem value={LIMIT}>{LIMIT}</MenuItem>
             <MenuItem value={50}>50</MenuItem>
-            <MenuItem value={100}>1004</MenuItem>
+            <MenuItem value={100}>100</MenuItem>
           </Select>
 
           <Pagination

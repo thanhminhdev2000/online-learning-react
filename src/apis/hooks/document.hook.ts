@@ -1,4 +1,7 @@
 import {
+  DocumentCreateDataDto,
+  DocumentCreateErrorDto,
+  DocumentCreatePayloadDto,
   DocumentDeleteDataDto,
   DocumentDeleteErrorDto,
   DocumentListDataDto,
@@ -6,9 +9,6 @@ import {
   DocumentListParamsDto,
   SubjectsListDataDto,
   SubjectsListErrorDto,
-  UploadCreateDataDto,
-  UploadCreateErrorDto,
-  UploadCreatePayloadDto,
 } from '@apis/generated/data-contracts';
 import { Document } from '@apis/generated/Document';
 import httpClient from '@config/httpClient';
@@ -42,17 +42,17 @@ export const useGetDocuments = (
   });
 };
 
-export const useUploadDocument = (): UseMutationResult<
-  UploadCreateDataDto,
-  UploadCreateErrorDto,
-  UploadCreatePayloadDto,
+export const useCreateDocument = (): UseMutationResult<
+  DocumentCreateDataDto,
+  DocumentCreateErrorDto,
+  DocumentCreatePayloadDto,
   unknown
 > => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload: UploadCreatePayloadDto) => {
-      return documentApi.uploadCreate(payload);
+    mutationFn: (payload: DocumentCreatePayloadDto) => {
+      return documentApi.documentCreate(payload);
     },
     onSuccess(data) {
       toast.success(data.message);

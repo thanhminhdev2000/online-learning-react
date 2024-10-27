@@ -20,7 +20,7 @@ const UserPassword = () => {
     values: updatePasswordInit,
   });
 
-  const { mutate } = useUpdateUserPassword({ userId: user.id });
+  const { mutate, isPending } = useUpdateUserPassword({ userId: user.id });
 
   const onSubmit = handleSubmit((data) => {
     mutate(data);
@@ -51,7 +51,7 @@ const UserPassword = () => {
           />
 
           <FlexEnd marginTop={4}>
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" disabled={isPending}>
               Đổi mật khẩu
             </Button>
           </FlexEnd>

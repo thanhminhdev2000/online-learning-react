@@ -24,7 +24,7 @@ const LoginPage = () => {
     values: loginInit,
   });
 
-  const { mutate } = useLogin();
+  const { mutate, isPending } = useLogin();
 
   const onSubmit = handleSubmit((data) => {
     mutate(data, {
@@ -61,7 +61,7 @@ const LoginPage = () => {
         </Stack>
 
         <Box marginTop={4}>
-          <Button fullWidth variant="contained" type="submit">
+          <Button fullWidth variant="contained" type="submit" disabled={isPending}>
             Đăng nhập
           </Button>
         </Box>

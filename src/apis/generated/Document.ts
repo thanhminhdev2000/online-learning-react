@@ -10,16 +10,19 @@
  */
 
 import {
+  DocumentCreateDataDto,
+  DocumentCreateErrorDto,
+  DocumentCreatePayloadDto,
   DocumentDeleteDataDto,
   DocumentDeleteErrorDto,
   DocumentListDataDto,
   DocumentListErrorDto,
   DocumentListParamsDto,
+  DocumentUpdateDataDto,
+  DocumentUpdateErrorDto,
+  DocumentUpdatePayloadDto,
   SubjectsListDataDto,
   SubjectsListErrorDto,
-  UploadCreateDataDto,
-  UploadCreateErrorDto,
-  UploadCreatePayloadDto,
 } from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
 
@@ -49,6 +52,26 @@ export class Document<SecurityDataType = unknown> {
       ...params,
     });
   /**
+   * @description Upload document file
+   *
+   * @tags Document
+   * @name DocumentCreate
+   * @summary Upload document file
+   * @request POST:/documents/
+   * @secure
+   * @response `200` `DocumentCreateDataDto` OK
+   * @response `500` `ErrorDto` Internal Server Error
+   */
+  documentCreate = (data: DocumentCreatePayloadDto, params: RequestParams = {}) =>
+    this.http.request<DocumentCreateDataDto, DocumentCreateErrorDto>({
+      path: `/documents/`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.FormData,
+      ...params,
+    });
+  /**
    * @description List of classes with their subjects and document counts
    *
    * @tags Document
@@ -65,20 +88,22 @@ export class Document<SecurityDataType = unknown> {
       ...params,
     });
   /**
-   * @description Upload document file
+   * @description Update a document's information and optionally replace its file by document ID
    *
    * @tags Document
-   * @name UploadCreate
-   * @summary Upload document file
-   * @request POST:/documents/upload
+   * @name DocumentUpdate
+   * @summary Update a document, including replacing its file
+   * @request PUT:/documents/{documentId}
    * @secure
-   * @response `200` `UploadCreateDataDto` OK
+   * @response `200` `DocumentUpdateDataDto` OK
+   * @response `400` `ErrorDto` Bad Request
+   * @response `403` `ErrorDto` Forbidden
    * @response `500` `ErrorDto` Internal Server Error
    */
-  uploadCreate = (data: UploadCreatePayloadDto, params: RequestParams = {}) =>
-    this.http.request<UploadCreateDataDto, UploadCreateErrorDto>({
-      path: `/documents/upload`,
-      method: 'POST',
+  documentUpdate = (documentId: number, data: DocumentUpdatePayloadDto, params: RequestParams = {}) =>
+    this.http.request<DocumentUpdateDataDto, DocumentUpdateErrorDto>({
+      path: `/documents/${documentId}`,
+      method: 'PUT',
       body: data,
       secure: true,
       type: ContentType.FormData,

@@ -1,5 +1,6 @@
 import { BACKGROUND_COLOR_HOVER, MAIN_COLOR } from '@common/constant';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Box, Card, ListItem, styled } from '@mui/material';
 
 export const HoverBox = styled(Box)(() => ({
@@ -42,7 +43,7 @@ export const CardStyled = styled(Card)(() => ({
   },
 }));
 
-export const DeleteIconStyled = styled(DeleteIcon)(() => ({
+export const DeleteIconStyled = styled(DeleteOutlineIcon)(() => ({
   position: 'absolute',
   top: 5,
   right: 0,
@@ -50,6 +51,16 @@ export const DeleteIconStyled = styled(DeleteIcon)(() => ({
     backgroundColor: BACKGROUND_COLOR_HOVER,
   },
 }));
+
+export const EditIconStyled = styled(EditOutlinedIcon)(() => ({
+  position: 'absolute',
+  top: 30,
+  right: 0,
+  ':hover': {
+    backgroundColor: BACKGROUND_COLOR_HOVER,
+  },
+}));
+
 export const ListItemStyled = styled(ListItem)(() => ({
   backgroundColor: MAIN_COLOR,
   color: 'white',

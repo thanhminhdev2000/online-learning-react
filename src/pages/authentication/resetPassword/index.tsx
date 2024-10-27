@@ -21,7 +21,7 @@ const ResetPasswordPage = () => {
     values: resetPasswordInit,
   });
 
-  const { mutate } = useResetPassword({ token });
+  const { mutate, isPending } = useResetPassword({ token });
 
   const onSubmit = handleSubmit((data) => {
     mutate(data, {
@@ -59,7 +59,7 @@ const ResetPasswordPage = () => {
           </Stack>
 
           <Box marginTop={4}>
-            <Button fullWidth variant="contained" type="submit">
+            <Button fullWidth variant="contained" type="submit" disabled={isPending}>
               Xác nhận
             </Button>
           </Box>

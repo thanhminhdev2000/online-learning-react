@@ -15,7 +15,7 @@ const ContactPage = () => {
     },
   });
 
-  const { mutate } = useContact();
+  const { mutate, isPending } = useContact();
 
   const { register, handleSubmit, reset } = formInstance;
 
@@ -47,7 +47,7 @@ const ContactPage = () => {
                   <CInput label="Tiêu đề" registerProps={register('email')} />
                   <CInput label="Nội dung" registerProps={register('content')} textArea />
                 </Stack>
-                <Button variant="contained" endIcon={<SendIcon />} sx={{ mt: 2 }} type="submit">
+                <Button variant="contained" endIcon={<SendIcon />} sx={{ mt: 2 }} type="submit" disabled={isPending}>
                   Gửi
                 </Button>
               </Stack>

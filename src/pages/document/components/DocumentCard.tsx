@@ -1,7 +1,8 @@
 import { DocumentListParamsDto, UserRoleDto } from '@apis/generated/data-contracts';
-import { useDeleteDocument, useGetDocuments, useGetSubjects } from '@apis/hooks/document.hook';
+import { useDeleteDocument, useGetDocuments } from '@apis/hooks/document.hook';
 import { MAIN_COLOR } from '@common/constant';
 import { AlignCenter, OverflowMultiLine, SpaceBetween } from '@common/styled';
+import CConfirmModal from '@components/cConfirmModal';
 import CInput from '@components/cInput';
 import { SearchOutlined } from '@mui/icons-material';
 
@@ -11,7 +12,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Box, Button, CardContent, Divider, Stack, Typography } from '@mui/material';
 import DocumentUploadModal from '@pages/document/components/DocumentUploadModal';
-import { CardStyled, DeleteIconStyled, DocumentListWrapper } from '@pages/document/styled';
+import { CardStyled, DeleteIconStyled, DocumentListWrapper, EditIconStyled } from '@pages/document/styled';
 import useAuthStore from '@store/authStore';
 import useSubjectStore from '@store/subjectStore';
 import { useState } from 'react';
@@ -19,10 +20,11 @@ import { useForm } from 'react-hook-form';
 
 const DocumentCard = ({ refetch }: { refetch: () => void }) => {
   const { user } = useAuthStore();
-  const { classId, subjectId } = useSubjectStore();
+  const { subjectId, setSelectedDocument } = useSubjectStore();
   const [search, setSearch] = useState<DocumentListParamsDto>({});
   const [openUploadDocumentModal, setOpenUploadDocumentModal] = useState(false);
-  const { data: subjectData = [] } = useGetSubjects();
+  const [openDeleteUserModal, setOpenDeleteUserModal] = useState(false);
+  const [selectedId, setSelectedId] = useState(0);
 
   const { register, handleSubmit } = useForm();
 
@@ -45,6 +47,7 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
     mutate(documentId, {
       onSuccess() {
         refetch();
+        setOpenDeleteUserModal(false);
       },
     });
   };
@@ -74,7 +77,12 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
 
         <DocumentListWrapper>
           {data?.map((document) => (
-            <CardStyled key={document.id} onClick={() => openPdfFile(document.fileUrl)}>
+            <CardStyled
+              key={document.id}
+              onClick={() => {
+                openPdfFile(document.fileUrl);
+              }}
+            >
               <CardContent>
                 <Box paddingX={2} sx={{ position: 'relative' }}>
                   <OverflowMultiLine
@@ -84,7 +92,7 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
                       fontWeight: 'bold',
                       color: MAIN_COLOR,
                       height: 64,
-                      paddingRight: 3,
+                      paddingRight: 5,
                     }}
                   >
                     {document.title}
@@ -94,7 +102,18 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
                     <DeleteIconStyled
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleDeleteDocument(document.id);
+                        setSelectedId(document.id);
+                        setOpenDeleteUserModal(true);
+                      }}
+                    />
+                  )}
+                  {user.role === UserRoleDto.RoleAdmin && (
+                    <EditIconStyled
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedDocument(document);
+                        setOpenUploadDocumentModal(true);
+                        setSelectedId(document.id);
                       }}
                     />
                   )}
@@ -139,11 +158,15 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
 
       <DocumentUploadModal
         refetch={refetch}
-        data={subjectData}
-        classId={classId}
-        subjectId={subjectId}
         open={openUploadDocumentModal}
         onClose={() => setOpenUploadDocumentModal(false)}
+      />
+
+      <CConfirmModal
+        open={openDeleteUserModal}
+        onClose={() => setOpenDeleteUserModal(false)}
+        content="Bạn có chắc chắn muốn xoá nó không?"
+        onSubmit={() => handleDeleteDocument(selectedId)}
       />
     </form>
   );
