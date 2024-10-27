@@ -4,14 +4,12 @@ import { cleanObject } from '@utils/index';
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  // @ts-expect-error 'env' does not exist on type 'ImportMeta'
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: 'http://178.128.104.103:8080/api/v1',
   withCredentials: true,
 });
 
 const httpClient = new HttpClient({
-  // @ts-expect-error 'env' does not exist on type 'ImportMeta'
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: 'http://178.128.104.103:8080/api/v1',
   withCredentials: true,
 });
 
