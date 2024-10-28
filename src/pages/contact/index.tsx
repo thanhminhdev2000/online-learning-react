@@ -1,12 +1,15 @@
 import { useContact } from '@apis/hooks/contact.hook';
 import { BoxContainer, ItemCenter } from '@common/styled';
 import CInput from '@components/cInput';
+import { zodResolver } from '@hookform/resolvers/zod';
 import SendIcon from '@mui/icons-material/Send';
 import { Box, Button, Stack, Typography } from '@mui/material';
+import { contactSchema } from '@pages/contact/type';
 import { FormProvider, useForm } from 'react-hook-form';
 
 const ContactPage = () => {
   const formInstance = useForm({
+    resolver: zodResolver(contactSchema),
     values: {
       fullName: '',
       email: '',
@@ -17,7 +20,12 @@ const ContactPage = () => {
 
   const { mutate, isPending } = useContact();
 
-  const { register, handleSubmit, reset } = formInstance;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = formInstance;
 
   const onSubmit = handleSubmit((data) => {
     mutate(data, {
@@ -42,10 +50,15 @@ const ContactPage = () => {
                 </Typography>
 
                 <Stack flexDirection="column" gap={2} marginTop={4}>
-                  <CInput label="Họ tên" registerProps={register('fullName')} />
-                  <CInput label="Email" registerProps={register('email')} />
-                  <CInput label="Tiêu đề" registerProps={register('email')} />
-                  <CInput label="Nội dung" registerProps={register('content')} textArea />
+                  <CInput label="Họ tên" registerProps={register('fullName')} errorMsg={errors.fullName?.message} />
+                  <CInput label="Email" registerProps={register('email')} errorMsg={errors.email?.message} />
+                  <CInput label="Tiêu đề" registerProps={register('email')} errorMsg={errors.email?.message} />
+                  <CInput
+                    label="Nội dung"
+                    registerProps={register('content')}
+                    errorMsg={errors.content?.message}
+                    textArea
+                  />
                 </Stack>
                 <Button variant="contained" endIcon={<SendIcon />} sx={{ mt: 2 }} type="submit" disabled={isPending}>
                   Gửi

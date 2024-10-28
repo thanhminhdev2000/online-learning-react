@@ -27,7 +27,6 @@ export const BoxContainer = styled(Box)(({ theme: { spacing } }) => ({
 export const TypographyHover = styled(Typography)(({ theme: { spacing } }) => ({
   padding: spacing(1, 2),
   borderRadius: spacing(2),
-  textTransform: 'uppercase',
 
   '&:hover': {
     backgroundColor: BACKGROUND_COLOR_HOVER,
