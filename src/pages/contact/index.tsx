@@ -52,7 +52,7 @@ const ContactPage = () => {
                 <Stack flexDirection="column" gap={2} marginTop={4}>
                   <CInput label="Họ tên" registerProps={register('fullName')} errorMsg={errors.fullName?.message} />
                   <CInput label="Email" registerProps={register('email')} errorMsg={errors.email?.message} />
-                  <CInput label="Tiêu đề" registerProps={register('email')} errorMsg={errors.email?.message} />
+                  <CInput label="Tiêu đề" registerProps={register('title')} errorMsg={errors.title?.message} />
                   <CInput
                     label="Nội dung"
                     registerProps={register('content')}
