@@ -3,10 +3,12 @@ import { Box, FormLabel, Stack, styled, Typography } from '@mui/material';
 
 export const AuthContainer = styled('form')(({ theme }) => ({
   padding: theme.spacing(4),
+  margin: theme.spacing(4),
   borderRadius: '8px',
   boxShadow: `0px 4px 12px ${BACKGROUND_COLOR_HOVER}`,
   backgroundColor: 'white',
-  minWidth: '600px',
+  maxWidth: '600px',
+  width: '100%',
 
   [theme.breakpoints.down('xs')]: {
     padding: 8,

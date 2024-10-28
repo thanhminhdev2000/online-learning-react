@@ -54,7 +54,6 @@ const Navbar = () => {
               {routes.map((route) => (
                 <TypographyHover
                   key={route.path}
-                  display={{ xs: 'none', sm: 'block' }}
                   sx={{ padding: 3, color: 'white' }}
                   onClick={() => {
                     navigate(route.path);
