@@ -20,7 +20,7 @@ const UserPassword = () => {
     values: updatePasswordInit,
   });
 
-  const { mutate, isPending } = useUpdateUserPassword({ userId: user.id });
+  const { mutate, isPending } = useUpdateUserPassword({ id: user.id });
 
   const onSubmit = handleSubmit((data) => {
     mutate(data);

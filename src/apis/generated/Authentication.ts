@@ -17,6 +17,7 @@ import {
   LoginErrorDto,
   LoginRequestDto,
   LogoutDataDto,
+  LogoutErrorDto,
   RefreshTokenDataDto,
   RefreshTokenErrorDto,
   ResetPasswordDataDto,
@@ -43,6 +44,7 @@ export class Authentication<SecurityDataType = unknown> {
    * @response `200` `ForgotPasswordDataDto` OK
    * @response `400` `ErrorDto` Bad Request
    * @response `404` `ErrorDto` Not Found
+   * @response `500` `ErrorDto` Server error
    */
   forgotPassword = (email: ForgotPasswordRequestDto, params: RequestParams = {}) =>
     this.http.request<ForgotPasswordDataDto, ForgotPasswordErrorDto>({
@@ -61,8 +63,9 @@ export class Authentication<SecurityDataType = unknown> {
    * @summary Log in
    * @request POST:/auth/login
    * @response `200` `LoginDataDto` OK
-   * @response `400` `ErrorDto` Bad Request
-   * @response `401` `ErrorDto` Unauthorized
+   * @response `400` `ErrorDto` Invalid request
+   * @response `401` `ErrorDto` Authentication failed
+   * @response `500` `ErrorDto` Server error
    */
   login = (user: LoginRequestDto, params: RequestParams = {}) =>
     this.http.request<LoginDataDto, LoginErrorDto>({
@@ -74,30 +77,33 @@ export class Authentication<SecurityDataType = unknown> {
       ...params,
     });
   /**
-   * @description Log out by clearing the refresh token
+   * @description Log out by clearing the refresh token and invalidating the session
    *
    * @tags Authentication
    * @name Logout
    * @summary Log out
    * @request POST:/auth/logout
-   * @response `200` `LogoutDataDto` OK
+   * @response `200` `LogoutDataDto` Logout successful
+   * @response `401` `ErrorDto` No refresh token found
    */
   logout = (params: RequestParams = {}) =>
-    this.http.request<LogoutDataDto, any>({
+    this.http.request<LogoutDataDto, LogoutErrorDto>({
       path: `/auth/logout`,
       method: 'POST',
       format: 'json',
       ...params,
     });
   /**
-   * @description Refresh the access token using the refresh token
+   * @description Refresh both access token and refresh token
    *
    * @tags Authentication
    * @name RefreshToken
    * @summary Refresh access token
    * @request POST:/auth/refresh-token
-   * @response `200` `RefreshTokenDataDto` OK
-   * @response `401` `ErrorDto` Unauthorized
+   * @response `200` `RefreshTokenDataDto` Returns new access token and sets new refresh token cookie
+   * @response `400` `ErrorDto` Invalid user ID
+   * @response `401` `ErrorDto` Invalid or missing refresh token
+   * @response `500` `ErrorDto` Server error
    */
   refreshToken = (params: RequestParams = {}) =>
     this.http.request<RefreshTokenDataDto, RefreshTokenErrorDto>({
@@ -114,8 +120,9 @@ export class Authentication<SecurityDataType = unknown> {
    * @summary Reset user password
    * @request POST:/auth/reset-password
    * @response `200` `ResetPasswordDataDto` OK
-   * @response `400` `ErrorDto` Bad Request
-   * @response `401` `ErrorDto` Unauthorized
+   * @response `400` `ErrorDto` Invalid request or password
+   * @response `401` `ErrorDto` Invalid or expired token
+   * @response `500` `ErrorDto` Server error
    */
   resetPassword = (query: ResetPasswordParamsDto, password: ResetPasswordRequestDto, params: RequestParams = {}) =>
     this.http.request<ResetPasswordDataDto, ResetPasswordErrorDto>({

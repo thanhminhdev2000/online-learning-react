@@ -34,11 +34,11 @@ export class Document<SecurityDataType = unknown> {
   }
 
   /**
-   * @description Trả về danh sách các tài liệu, có thể lọc theo `subjectId` và `title`. Giới hạn số lượng tài liệu trả về bằng tham số `limit`.
+   * @description Returns a list of documents, which can be filtered by `subjectId` and `title`. Limits the number of returned documents using the `limit` parameter.
    *
    * @tags Document
    * @name DocumentList
-   * @summary Lấy danh sách tài liệu
+   * @summary Retrieve document list
    * @request GET:/documents/
    * @response `200` `DocumentListDataDto` OK
    * @response `400` `ErrorDto` Bad Request
@@ -93,16 +93,16 @@ export class Document<SecurityDataType = unknown> {
    * @tags Document
    * @name DocumentUpdate
    * @summary Update a document, including replacing its file
-   * @request PUT:/documents/{documentId}
+   * @request PUT:/documents/{id}
    * @secure
    * @response `200` `DocumentUpdateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
    * @response `403` `ErrorDto` Forbidden
    * @response `500` `ErrorDto` Internal Server Error
    */
-  documentUpdate = (documentId: number, data: DocumentUpdatePayloadDto, params: RequestParams = {}) =>
+  documentUpdate = (id: number, data: DocumentUpdatePayloadDto, params: RequestParams = {}) =>
     this.http.request<DocumentUpdateDataDto, DocumentUpdateErrorDto>({
-      path: `/documents/${documentId}`,
+      path: `/documents/${id}`,
       method: 'PUT',
       body: data,
       secure: true,
@@ -115,14 +115,14 @@ export class Document<SecurityDataType = unknown> {
    * @tags Document
    * @name DocumentDelete
    * @summary Delete document
-   * @request DELETE:/documents/{documentId}
+   * @request DELETE:/documents/{id}
    * @secure
    * @response `200` `DocumentDeleteDataDto` OK
    * @response `500` `ErrorDto` Internal Server Error
    */
-  documentDelete = (documentId: number, params: RequestParams = {}) =>
+  documentDelete = (id: number, params: RequestParams = {}) =>
     this.http.request<DocumentDeleteDataDto, DocumentDeleteErrorDto>({
-      path: `/documents/${documentId}`,
+      path: `/documents/${id}`,
       method: 'DELETE',
       secure: true,
       ...params,

@@ -10,7 +10,7 @@ const UserAvatar = () => {
   const [avatar, setAvatar] = useState<string>(user.avatar);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const { mutate, isPending } = useUpdateUserAvatar({ userId: user.id });
+  const { mutate, isPending } = useUpdateUserAvatar({ id: user.id });
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

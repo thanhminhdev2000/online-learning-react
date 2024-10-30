@@ -40,11 +40,11 @@ export const useGetUsers = (query?: UserListParamsDto): UseQueryResult<UserListD
   });
 };
 
-export const useGetUser = (userId: number): UseQueryResult<UserListDataDto, UserListErrorDto> => {
+export const useGetUser = (id: number): UseQueryResult<UserListDataDto, UserListErrorDto> => {
   return useQuery({
-    queryKey: [queryKeys.getAll, userId],
+    queryKey: [queryKeys.getAll, id],
     queryFn: () => {
-      return userApi.userDetail(userId);
+      return userApi.userDetail(id);
     },
   });
 };
@@ -98,15 +98,15 @@ export const useCreateAdmin = (): UseMutationResult<
 };
 
 export const useUpdateUser = ({
-  userId,
+  id,
 }: {
-  userId: number;
+  id: number;
 }): UseMutationResult<UserUpdateDataDto, UserUpdateErrorDto, UserDetailDto, unknown> => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (payload: UserDetailDto) => {
-      return userApi.userUpdate(userId, payload);
+      return userApi.userUpdate(id, payload);
     },
     onSuccess(data) {
       toast.success(data.message);
@@ -121,15 +121,15 @@ export const useUpdateUser = ({
 };
 
 export const useUpdateUserAvatar = ({
-  userId,
+  id,
 }: {
-  userId: number;
+  id: number;
 }): UseMutationResult<AvatarUpdateDataDto, AvatarUpdateErrorDto, AvatarUpdatePayloadDto, unknown> => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (payload: AvatarUpdatePayloadDto) => {
-      return userApi.avatarUpdate(userId, payload);
+      return userApi.avatarUpdate(id, payload);
     },
     onSuccess(data) {
       toast.success(data.message);
@@ -144,15 +144,15 @@ export const useUpdateUserAvatar = ({
 };
 
 export const useUpdateUserPassword = ({
-  userId,
+  id,
 }: {
-  userId: number;
+  id: number;
 }): UseMutationResult<PasswordUpdateDataDto, PasswordUpdateErrorDto, PasswordUpdateRequestDto, unknown> => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (payload: PasswordUpdateRequestDto) => {
-      return userApi.passwordUpdate(userId, payload);
+      return userApi.passwordUpdate(id, payload);
     },
     onSuccess(data) {
       toast.success(data.message);
@@ -170,8 +170,8 @@ export const useDeleteUser = (): UseMutationResult<UserDeleteDataDto, UserDelete
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (userId: number) => {
-      return userApi.userDelete(userId);
+    mutationFn: (id: number) => {
+      return userApi.userDelete(id);
     },
     onSuccess(data) {
       toast.success(data.message);

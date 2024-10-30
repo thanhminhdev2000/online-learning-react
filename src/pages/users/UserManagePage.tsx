@@ -48,8 +48,8 @@ const UserManagePage = () => {
     setSearch(data);
   };
 
-  const handleDeleteUser = (userId: number) => {
-    mutate(userId, {
+  const handleDeleteUser = (id: number) => {
+    mutate(id, {
       onSuccess() {
         refetch();
         setOpenDeleteUserModal(false);

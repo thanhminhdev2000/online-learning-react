@@ -1,4 +1,4 @@
-import { UserDetailDto, UserRoleDto } from '@apis/generated/data-contracts';
+import { UserDetailDto } from '@apis/generated/data-contracts';
 import { useCreateAdmin, useUpdateUser } from '@apis/hooks/user.hook';
 import { genderOptions } from '@common/constant';
 import { FlexEnd } from '@common/styled';
@@ -45,7 +45,7 @@ const UserModal = ({ open, onClose, data }: UserProps) => {
   } = formInstance;
 
   const { mutate: createAdmin, isPending: pendingCreate } = useCreateAdmin();
-  const { mutate: updateUser, isPending: pendingUpdate } = useUpdateUser({ userId: data.id });
+  const { mutate: updateUser, isPending: pendingUpdate } = useUpdateUser({ id: data.id });
 
   const handleSubmitForm = handleSubmit((formData) => {
     if (data.id) {
@@ -55,14 +55,11 @@ const UserModal = ({ open, onClose, data }: UserProps) => {
         },
       });
     } else {
-      createAdmin(
-        { ...formData, role: UserRoleDto.RoleAdmin },
-        {
-          onSuccess() {
-            onClose();
-          },
+      createAdmin(formData, {
+        onSuccess() {
+          onClose();
         },
-      );
+      });
     }
   });
 

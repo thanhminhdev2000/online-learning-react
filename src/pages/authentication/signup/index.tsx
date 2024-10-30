@@ -7,12 +7,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 
-import { UserGenderDto } from '@apis/generated/data-contracts';
 import { AuthContainer, ItemCenter, TypographyLink } from '@common/styled';
 import { signUpInit } from '@pages/authentication/constant';
 import { signUpSchema } from '@pages/authentication/type';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { UserGenderDto } from '@apis/generated/data-contracts';
 
 const SignUpPage = () => {
   const navigate = useNavigate();

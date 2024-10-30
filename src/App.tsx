@@ -1,4 +1,3 @@
-import { UserDetailDto } from '@apis/generated/data-contracts';
 import MainLayout from '@components/layout/MainLayout';
 import PageNotFound from '@components/layout/PageNotFound';
 import ProtectedRoute from '@components/layout/ProtectedRoute';
@@ -11,7 +10,6 @@ import SignUpPage from '@pages/authentication/signup';
 import ContactPage from '@pages/contact';
 import DocumentPage from '@pages/document';
 import HomePage from '@pages/home';
-import LearnPage from '@pages/learn';
 import UserDetailPage from '@pages/users/UserDetailPage';
 import UserManagePage from '@pages/users/UserManagePage';
 import useAuthStore from '@store/authStore';
@@ -19,7 +17,9 @@ import { userInit } from '@store/constant';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
+import { UserDetailDto } from '@apis/generated/data-contracts';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import CoursePage from './pages/course';
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -48,10 +48,10 @@ const App = () => {
               <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
               <Route path="/documents" element={<DocumentPage />} />
-              <Route path="/courses" element={<LearnPage />} />
+              <Route path="/courses" element={<CoursePage />} />
               <Route path="/contact" element={<ContactPage />} />
 
-              <Route path="/users/:userId" element={<UserDetailPage />} />
+              <Route path="/users/:id" element={<UserDetailPage />} />
 
               <Route
                 path="/users"

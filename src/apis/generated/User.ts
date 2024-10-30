@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* tslint:disable */
 /*
  * ---------------------------------------------------------------
@@ -65,7 +66,7 @@ export class User<SecurityDataType = unknown> {
    *
    * @tags User
    * @name UserCreate
-   * @summary Register a new user
+   * @summary Register a new regular user
    * @request POST:/users/
    * @response `200` `UserCreateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
@@ -106,15 +107,15 @@ export class User<SecurityDataType = unknown> {
    * @tags User
    * @name UserDetail
    * @summary Get user by ID
-   * @request GET:/users/{userId}
+   * @request GET:/users/{id}
    * @secure
    * @response `200` `UserDetailDataDto` OK
    * @response `404` `ErrorDto` Not Found
    * @response `500` `ErrorDto` Internal Server Error
    */
-  userDetail = (userId: number, params: RequestParams = {}) =>
+  userDetail = (id: number, params: RequestParams = {}) =>
     this.http.request<UserDetailDataDto, UserDetailErrorDto>({
-      path: `/users/${userId}`,
+      path: `/users/${id}`,
       method: 'GET',
       secure: true,
       format: 'json',
@@ -126,16 +127,16 @@ export class User<SecurityDataType = unknown> {
    * @tags User
    * @name UserUpdate
    * @summary Update user information
-   * @request PUT:/users/{userId}
+   * @request PUT:/users/{id}
    * @secure
    * @response `200` `UserUpdateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
    * @response `404` `ErrorDto` Not Found
    * @response `500` `ErrorDto` Internal Server Error
    */
-  userUpdate = (userId: number, user: UserDetailDto, params: RequestParams = {}) =>
+  userUpdate = (id: number, user: UserDetailDto, params: RequestParams = {}) =>
     this.http.request<UserUpdateDataDto, UserUpdateErrorDto>({
-      path: `/users/${userId}`,
+      path: `/users/${id}`,
       method: 'PUT',
       body: user,
       secure: true,
@@ -144,40 +145,42 @@ export class User<SecurityDataType = unknown> {
       ...params,
     });
   /**
-   * @description Delete a user by user ID
+   * @description Soft delete a user by user ID. Only admins can delete users, and admins cannot delete their own account.
    *
    * @tags User
    * @name UserDelete
    * @summary Delete user
-   * @request DELETE:/users/{userId}
+   * @request DELETE:/users/{id}
    * @secure
    * @response `200` `UserDeleteDataDto` OK
-   * @response `404` `ErrorDto` Not Found
-   * @response `500` `ErrorDto` Internal Server Error
+   * @response `403` `ErrorDto` Permission denied or trying to delete own account
+   * @response `404` `ErrorDto` User not found
+   * @response `500` `ErrorDto` Server error
    */
-  userDelete = (userId: number, params: RequestParams = {}) =>
+  userDelete = (id: number, params: RequestParams = {}) =>
     this.http.request<UserDeleteDataDto, UserDeleteErrorDto>({
-      path: `/users/${userId}`,
+      path: `/users/${id}`,
       method: 'DELETE',
       secure: true,
       ...params,
     });
   /**
-   * @description Update the avatar for a specific user
+   * @description Update the avatar for a specific user. Users can update their own avatar, admins can update any user's avatar
    *
    * @tags User
    * @name AvatarUpdate
    * @summary Update user avatar
-   * @request PUT:/users/{userId}/avatar
+   * @request PUT:/users/{id}/avatar
    * @secure
    * @response `200` `AvatarUpdateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
+   * @response `403` `ErrorDto` Forbidden
    * @response `404` `ErrorDto` Not Found
    * @response `500` `ErrorDto` Internal Server Error
    */
-  avatarUpdate = (userId: number, data: AvatarUpdatePayloadDto, params: RequestParams = {}) =>
+  avatarUpdate = (id: number, data: AvatarUpdatePayloadDto, params: RequestParams = {}) =>
     this.http.request<AvatarUpdateDataDto, AvatarUpdateErrorDto>({
-      path: `/users/${userId}/avatar`,
+      path: `/users/${id}/avatar`,
       method: 'PUT',
       body: data,
       secure: true,
@@ -186,21 +189,21 @@ export class User<SecurityDataType = unknown> {
       ...params,
     });
   /**
-   * @description Change the user's password
+   * @description Change the user's password. Users can change their own password, admins can change any user's password
    *
    * @tags User
    * @name PasswordUpdate
    * @summary Change user password
-   * @request PUT:/users/{userId}/password
+   * @request PUT:/users/{id}/password
    * @secure
    * @response `200` `PasswordUpdateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
    * @response `401` `ErrorDto` Unauthorized
    * @response `404` `ErrorDto` Not Found
    */
-  passwordUpdate = (userId: number, password: PasswordUpdateRequestDto, params: RequestParams = {}) =>
+  passwordUpdate = (id: number, password: PasswordUpdateRequestDto, params: RequestParams = {}) =>
     this.http.request<PasswordUpdateDataDto, PasswordUpdateErrorDto>({
-      path: `/users/${userId}/password`,
+      path: `/users/${id}/password`,
       method: 'PUT',
       body: password,
       secure: true,

@@ -29,7 +29,7 @@ const UserProfile = () => {
     formState: { errors },
   } = formInstance;
 
-  const { mutate, isPending } = useUpdateUser({ userId: user?.id as number });
+  const { mutate, isPending } = useUpdateUser({ id: user?.id as number });
 
   const onSubmit = handleSubmit((data) => {
     mutate(

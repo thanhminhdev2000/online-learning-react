@@ -10,15 +10,15 @@
  */
 
 export interface AccessTokenResponseDto {
-  accessToken: string;
-  expiresIn: number;
+  accessToken?: string;
+  expiresIn?: number;
 }
 
-export interface ClassWithSubjectsDto {
-  classId: number;
-  className: string;
+export interface ClassDto {
   count: number;
-  subjects: SubjectIdDto[];
+  id: number;
+  name: string;
+  subjects: SubjectDto[];
 }
 
 export interface ContactDto {
@@ -28,23 +28,42 @@ export interface ContactDto {
   title: string;
 }
 
+export interface CourseDto {
+  description?: string;
+  id?: number;
+  instructor?: string;
+  price?: number;
+  subjectId?: number;
+  thumbnailUrl?: string;
+  title?: string;
+}
+
 export interface CreateUserRequestDto {
-  avatar: string;
+  avatar?: string;
   dateOfBirth: string;
   email: string;
   fullName: string;
   gender: UserGenderDto;
   /** @minLength 6 */
   password: string;
+  phoneNumber?: string;
   role?: UserRoleDto;
+  /**
+   * @minLength 3
+   * @maxLength 50
+   */
   username: string;
 }
 
-export interface DocumentsResponseDto {
+export interface CreateUserResponseDto {
+  message?: string;
+  user?: UserDetailDto;
+}
+
+export interface DocumentDto {
   author: string;
   category: string;
   classId: number;
-  documentType: string;
   downloads: number;
   fileUrl: string;
   id: number;
@@ -54,7 +73,7 @@ export interface DocumentsResponseDto {
 }
 
 export interface ErrorDto {
-  error: string;
+  error?: string;
 }
 
 export interface ForgotPasswordRequestDto {
@@ -74,7 +93,21 @@ export interface LoginResponseDto {
 }
 
 export interface MessageDto {
-  message: string;
+  message?: string;
+}
+
+export interface PaginatedResponseDto {
+  data?: any;
+  meta?: PaginationDto;
+}
+
+export interface PaginationDto {
+  hasNext?: boolean;
+  hasPrevious?: boolean;
+  limit?: number;
+  page?: number;
+  total?: number;
+  totalPages?: number;
 }
 
 export interface PagingInfoDto {
@@ -95,10 +128,10 @@ export interface ResetPasswordRequestDto {
   password: string;
 }
 
-export interface SubjectIdDto {
+export interface SubjectDto {
   count: number;
-  subjectId: number;
-  subjectName: string;
+  id: number;
+  name: string;
 }
 
 export interface UpdateUserResponseDto {
@@ -107,12 +140,13 @@ export interface UpdateUserResponseDto {
 }
 
 export interface UserDetailDto {
-  avatar: string;
+  avatar?: string;
   dateOfBirth: string;
   email: string;
   fullName: string;
   gender: UserGenderDto;
   id: number;
+  phoneNumber?: string;
   role: UserRoleDto;
   username: string;
 }
@@ -120,6 +154,7 @@ export interface UserDetailDto {
 export enum UserGenderDto {
   GenderFemale = 'female',
   GenderMale = 'male',
+  GenderOther = 'other',
 }
 
 export interface UserResponseDto {
@@ -142,6 +177,8 @@ export type LoginErrorDto = ErrorDto;
 
 export type LogoutDataDto = MessageDto;
 
+export type LogoutErrorDto = ErrorDto;
+
 export type RefreshTokenDataDto = AccessTokenResponseDto;
 
 export type RefreshTokenErrorDto = ErrorDto;
@@ -159,19 +196,69 @@ export type ContactCreateDataDto = MessageDto;
 
 export type ContactCreateErrorDto = ErrorDto;
 
+export interface CoursesListParamsDto {
+  /** Page number (default: 1) */
+  page?: number;
+  /** Items per page (default: 10) */
+  limit?: number;
+  /** Filter by subject ID */
+  subject?: number;
+  /** Search in title and description */
+  search?: string;
+  /** Sort field (title, price) (default: id) */
+  sort?: string;
+  /** Sort order (asc, desc) (default: asc) */
+  order?: string;
+}
+
+export type CoursesListDataDto = PaginatedResponseDto;
+
+export type CoursesListErrorDto = ErrorDto;
+
+export type CoursesCreateDataDto = CourseDto;
+
+export type CoursesCreateErrorDto = ErrorDto;
+
+export type CoursesDetailDataDto = CourseDto;
+
+export type CoursesDetailErrorDto = ErrorDto;
+
+export interface CoursesUpdatePayloadDto {
+  /** Subject ID */
+  subjectId: number;
+  /** Course Title */
+  title: string;
+  /** Course Description */
+  description: string;
+  /** Course Price */
+  price: number;
+  /** Instructor Name */
+  instructor: string;
+  /** Thumbnail Image */
+  thumbnail: File;
+}
+
+export type CoursesUpdateDataDto = CourseDto;
+
+export type CoursesUpdateErrorDto = ErrorDto;
+
+export type CoursesDeleteDataDto = MessageDto;
+
+export type CoursesDeleteErrorDto = ErrorDto;
+
 export interface DocumentListParamsDto {
   /**
-   * Giới hạn số lượng tài liệu trả về
+   * Limit the number of documents returned
    * @default 40
    */
   limit?: number;
-  /** ID của môn học */
+  /** Subject ID */
   subjectId?: number;
-  /** Tiêu đề của tài liệu (tìm kiếm bằng LIKE) */
+  /** Document title (searched using LIKE) */
   title?: string;
 }
 
-export type DocumentListDataDto = DocumentsResponseDto[];
+export type DocumentListDataDto = DocumentDto[];
 
 export type DocumentListErrorDto = ErrorDto;
 
@@ -193,7 +280,7 @@ export type DocumentCreateDataDto = MessageDto;
 
 export type DocumentCreateErrorDto = ErrorDto;
 
-export type SubjectsListDataDto = ClassWithSubjectsDto[];
+export type SubjectsListDataDto = ClassDto[];
 
 export type SubjectsListErrorDto = ErrorDto;
 
@@ -237,11 +324,11 @@ export type UserListDataDto = UserResponseDto;
 
 export type UserListErrorDto = ErrorDto;
 
-export type UserCreateDataDto = MessageDto;
+export type UserCreateDataDto = CreateUserResponseDto;
 
 export type UserCreateErrorDto = ErrorDto;
 
-export type AdminCreateDataDto = MessageDto;
+export type AdminCreateDataDto = CreateUserResponseDto;
 
 export type AdminCreateErrorDto = ErrorDto;
 
