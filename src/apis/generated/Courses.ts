@@ -10,18 +10,19 @@
  */
 
 import {
-  CoursesCreateDataDto,
-  CoursesCreateErrorDto,
-  CoursesDeleteDataDto,
-  CoursesDeleteErrorDto,
-  CoursesDetailDataDto,
-  CoursesDetailErrorDto,
-  CoursesListDataDto,
-  CoursesListErrorDto,
-  CoursesListParamsDto,
-  CoursesUpdateDataDto,
-  CoursesUpdateErrorDto,
-  CoursesUpdatePayloadDto,
+  CourseCreateDataDto,
+  CourseCreateErrorDto,
+  CourseCreatePayloadDto,
+  CourseDeleteDataDto,
+  CourseDeleteErrorDto,
+  CourseDetailDataDto,
+  CourseDetailErrorDto,
+  CourseListDataDto,
+  CourseListErrorDto,
+  CourseListParamsDto,
+  CourseUpdateDataDto,
+  CourseUpdateErrorDto,
+  CourseUpdatePayloadDto,
 } from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
 
@@ -36,15 +37,15 @@ export class Courses<SecurityDataType = unknown> {
    * @description Retrieve a list of all courses with optional filtering and pagination
    *
    * @tags courses
-   * @name CoursesList
+   * @name CourseList
    * @summary Get all courses
    * @request GET:/courses
-   * @response `200` `CoursesListDataDto` OK
+   * @response `200` `CourseListDataDto` OK
    * @response `400` `ErrorDto` Bad Request
    * @response `500` `ErrorDto` Internal Server Error
    */
-  coursesList = (query: CoursesListParamsDto, params: RequestParams = {}) =>
-    this.http.request<CoursesListDataDto, CoursesListErrorDto>({
+  courseList = (query: CourseListParamsDto, params: RequestParams = {}) =>
+    this.http.request<CourseListDataDto, CourseListErrorDto>({
       path: `/courses`,
       method: 'GET',
       query: query,
@@ -55,15 +56,15 @@ export class Courses<SecurityDataType = unknown> {
    * @description Create a new course with the provided details
    *
    * @tags courses
-   * @name CoursesCreate
+   * @name CourseCreate
    * @summary Create a new course
    * @request POST:/courses
-   * @response `200` `CoursesCreateDataDto` OK
+   * @response `200` `CourseCreateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
    * @response `500` `ErrorDto` Internal Server Error
    */
-  coursesCreate = (data: any, params: RequestParams = {}) =>
-    this.http.request<CoursesCreateDataDto, CoursesCreateErrorDto>({
+  courseCreate = (data: CourseCreatePayloadDto, params: RequestParams = {}) =>
+    this.http.request<CourseCreateDataDto, CourseCreateErrorDto>({
       path: `/courses`,
       method: 'POST',
       body: data,
@@ -75,16 +76,16 @@ export class Courses<SecurityDataType = unknown> {
    * @description Retrieve a single course using its ID
    *
    * @tags courses
-   * @name CoursesDetail
+   * @name CourseDetail
    * @summary Get a course by ID
    * @request GET:/courses/{id}
-   * @response `200` `CoursesDetailDataDto` OK
+   * @response `200` `CourseDetailDataDto` OK
    * @response `400` `ErrorDto` Bad Request
    * @response `404` `ErrorDto` Not Found
    * @response `500` `ErrorDto` Internal Server Error
    */
-  coursesDetail = (id: number, params: RequestParams = {}) =>
-    this.http.request<CoursesDetailDataDto, CoursesDetailErrorDto>({
+  courseDetail = (id: number, params: RequestParams = {}) =>
+    this.http.request<CourseDetailDataDto, CourseDetailErrorDto>({
       path: `/courses/${id}`,
       method: 'GET',
       format: 'json',
@@ -94,16 +95,16 @@ export class Courses<SecurityDataType = unknown> {
    * @description Update course details by ID
    *
    * @tags courses
-   * @name CoursesUpdate
+   * @name CourseUpdate
    * @summary Update an existing course
    * @request PUT:/courses/{id}
-   * @response `200` `CoursesUpdateDataDto` OK
+   * @response `200` `CourseUpdateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
    * @response `404` `ErrorDto` Not Found
    * @response `500` `ErrorDto` Internal Server Error
    */
-  coursesUpdate = (id: number, data: CoursesUpdatePayloadDto, params: RequestParams = {}) =>
-    this.http.request<CoursesUpdateDataDto, CoursesUpdateErrorDto>({
+  courseUpdate = (id: number, data: CourseUpdatePayloadDto, params: RequestParams = {}) =>
+    this.http.request<CourseUpdateDataDto, CourseUpdateErrorDto>({
       path: `/courses/${id}`,
       method: 'PUT',
       body: data,
@@ -115,15 +116,15 @@ export class Courses<SecurityDataType = unknown> {
    * @description Delete a course by ID
    *
    * @tags courses
-   * @name CoursesDelete
+   * @name CourseDelete
    * @summary Delete a course
    * @request DELETE:/courses/{id}
-   * @response `200` `CoursesDeleteDataDto` OK
+   * @response `200` `CourseDeleteDataDto` OK
    * @response `404` `ErrorDto` Not Found
    * @response `500` `ErrorDto` Internal Server Error
    */
-  coursesDelete = (id: number, params: RequestParams = {}) =>
-    this.http.request<CoursesDeleteDataDto, CoursesDeleteErrorDto>({
+  courseDelete = (id: number, params: RequestParams = {}) =>
+    this.http.request<CourseDeleteDataDto, CourseDeleteErrorDto>({
       path: `/courses/${id}`,
       method: 'DELETE',
       format: 'json',

@@ -18,7 +18,7 @@ export const HoverBox = styled(Box)(() => ({
   transition: 'transform 0.3s ease-in-out',
 }));
 
-export const DocumentListWrapper = styled(Box)(({ theme }) => ({
+export const ListWrapper = styled(Box)(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(1,1fr)',
   gap: theme.spacing(4),

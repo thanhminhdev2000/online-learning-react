@@ -1,4 +1,4 @@
-import { DocumentListParamsDto, DocumentsResponseDto, UserRoleDto } from '@apis/generated/data-contracts';
+import { DocumentDto, DocumentListParamsDto, UserRoleDto } from '@apis/generated/data-contracts';
 import { useDeleteDocument, useGetDocuments, useUpdateDocument } from '@apis/hooks/document.hook';
 import { MAIN_COLOR } from '@common/constant';
 import { AlignCenter, OverflowMultiLine, SpaceBetween } from '@common/styled';
@@ -11,8 +11,8 @@ import FolderIcon from '@mui/icons-material/Folder';
 import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Box, Button, CardContent, Divider, Stack, Typography } from '@mui/material';
-import DocumentUploadModal from '@pages/document/components/DocumentUploadModal';
-import { CardStyled, DeleteIconStyled, DocumentListWrapper, EditIconStyled } from '@pages/document/styled';
+import DocumentModal from '@pages/document/components/DocumentModal';
+import { CardStyled, DeleteIconStyled, EditIconStyled, ListWrapper } from '@pages/document/styled';
 import useAuthStore from '@store/authStore';
 import useSubjectStore from '@store/subjectStore';
 import { useState } from 'react';
@@ -22,11 +22,11 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
   const { user } = useAuthStore();
   const { subjectId, setSelectedDocument } = useSubjectStore();
   const [search, setSearch] = useState<DocumentListParamsDto>({});
-  const [openUploadDocumentModal, setOpenUploadDocumentModal] = useState(false);
+  const [openCreateDocumentModal, setOpenCreateDocumentModal] = useState(false);
   const [openDeleteUserModal, setOpenDeleteUserModal] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({});
 
   const onSubmit = handleSubmit((data) => {
     setSearch(data);
@@ -53,7 +53,7 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
     });
   };
 
-  const handleUpdateViews = (data: DocumentsResponseDto) => {
+  const handleUpdateViews = (data: DocumentDto) => {
     updateDocument({
       documentId: data.id,
       payload: {
@@ -75,7 +75,7 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
 
           <AlignCenter gap={2}>
             {user.role === UserRoleDto.RoleAdmin && (
-              <Button variant="contained" sx={{ width: '140px' }} onClick={() => setOpenUploadDocumentModal(true)}>
+              <Button variant="contained" sx={{ width: '140px' }} onClick={() => setOpenCreateDocumentModal(true)}>
                 Đăng tải tài liệu
               </Button>
             )}
@@ -86,7 +86,7 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
           </AlignCenter>
         </SpaceBetween>
 
-        <DocumentListWrapper>
+        <ListWrapper>
           {data?.map((document) => (
             <CardStyled
               key={document.id}
@@ -125,7 +125,7 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
                       onClick={(e) => {
                         e.stopPropagation();
                         setSelectedDocument(document);
-                        setOpenUploadDocumentModal(true);
+                        setOpenCreateDocumentModal(true);
                         setSelectedId(document.id);
                       }}
                     />
@@ -166,13 +166,13 @@ const DocumentCard = ({ refetch }: { refetch: () => void }) => {
               </CardContent>
             </CardStyled>
           ))}
-        </DocumentListWrapper>
+        </ListWrapper>
       </Box>
 
-      <DocumentUploadModal
+      <DocumentModal
         refetch={refetch}
-        open={openUploadDocumentModal}
-        onClose={() => setOpenUploadDocumentModal(false)}
+        open={openCreateDocumentModal}
+        onClose={() => setOpenCreateDocumentModal(false)}
       />
 
       <CConfirmModal

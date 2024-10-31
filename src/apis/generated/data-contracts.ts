@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* tslint:disable */
 /*
  * ---------------------------------------------------------------
@@ -29,13 +28,18 @@ export interface ContactDto {
 }
 
 export interface CourseDto {
-  description?: string;
-  id?: number;
-  instructor?: string;
-  price?: number;
-  subjectId?: number;
-  thumbnailUrl?: string;
-  title?: string;
+  description: string;
+  id: number;
+  instructor: string;
+  price: number;
+  subjectId: number;
+  thumbnailUrl: string;
+  title: string;
+}
+
+export interface CourseListResponseDto {
+  data: CourseDto[];
+  paging: PagingDto;
 }
 
 export interface CreateUserRequestDto {
@@ -46,7 +50,6 @@ export interface CreateUserRequestDto {
   gender: UserGenderDto;
   /** @minLength 6 */
   password: string;
-  phoneNumber?: string;
   role?: UserRoleDto;
   /**
    * @minLength 3
@@ -56,8 +59,8 @@ export interface CreateUserRequestDto {
 }
 
 export interface CreateUserResponseDto {
-  message?: string;
-  user?: UserDetailDto;
+  message: string;
+  user: UserDetailDto;
 }
 
 export interface DocumentDto {
@@ -73,7 +76,7 @@ export interface DocumentDto {
 }
 
 export interface ErrorDto {
-  error?: string;
+  error: string;
 }
 
 export interface ForgotPasswordRequestDto {
@@ -93,27 +96,13 @@ export interface LoginResponseDto {
 }
 
 export interface MessageDto {
-  message?: string;
+  message: string;
 }
 
-export interface PaginatedResponseDto {
-  data?: any;
-  meta?: PaginationDto;
-}
-
-export interface PaginationDto {
-  hasNext?: boolean;
-  hasPrevious?: boolean;
-  limit?: number;
-  page?: number;
-  total?: number;
-  totalPages?: number;
-}
-
-export interface PagingInfoDto {
+export interface PagingDto {
   limit: number;
   page: number;
-  totalCount: number;
+  total: number;
 }
 
 export interface PasswordUpdateRequestDto {
@@ -146,7 +135,6 @@ export interface UserDetailDto {
   fullName: string;
   gender: UserGenderDto;
   id: number;
-  phoneNumber?: string;
   role: UserRoleDto;
   username: string;
 }
@@ -157,9 +145,9 @@ export enum UserGenderDto {
   GenderOther = 'other',
 }
 
-export interface UserResponseDto {
+export interface UserListResponseDto {
   data: UserDetailDto[];
-  paging: PagingInfoDto;
+  paging: PagingDto;
 }
 
 export enum UserRoleDto {
@@ -196,7 +184,7 @@ export type ContactCreateDataDto = MessageDto;
 
 export type ContactCreateErrorDto = ErrorDto;
 
-export interface CoursesListParamsDto {
+export interface CourseListParamsDto {
   /** Page number (default: 1) */
   page?: number;
   /** Items per page (default: 10) */
@@ -211,19 +199,11 @@ export interface CoursesListParamsDto {
   order?: string;
 }
 
-export type CoursesListDataDto = PaginatedResponseDto;
+export type CourseListDataDto = CourseListResponseDto;
 
-export type CoursesListErrorDto = ErrorDto;
+export type CourseListErrorDto = ErrorDto;
 
-export type CoursesCreateDataDto = CourseDto;
-
-export type CoursesCreateErrorDto = ErrorDto;
-
-export type CoursesDetailDataDto = CourseDto;
-
-export type CoursesDetailErrorDto = ErrorDto;
-
-export interface CoursesUpdatePayloadDto {
+export interface CourseCreatePayloadDto {
   /** Subject ID */
   subjectId: number;
   /** Course Title */
@@ -234,17 +214,43 @@ export interface CoursesUpdatePayloadDto {
   price: number;
   /** Instructor Name */
   instructor: string;
-  /** Thumbnail Image */
+  /**
+   * Thumbnail Image
+   * @format binary
+   */
   thumbnail: File;
 }
 
-export type CoursesUpdateDataDto = CourseDto;
+export type CourseCreateDataDto = CourseDto;
 
-export type CoursesUpdateErrorDto = ErrorDto;
+export type CourseCreateErrorDto = ErrorDto;
 
-export type CoursesDeleteDataDto = MessageDto;
+export type CourseDetailDataDto = CourseDto;
 
-export type CoursesDeleteErrorDto = ErrorDto;
+export type CourseDetailErrorDto = ErrorDto;
+
+export interface CourseUpdatePayloadDto {
+  /** Subject ID */
+  subjectId?: number;
+  /** Course Title */
+  title?: string;
+  /** Course Description */
+  description?: string;
+  /** Course Price */
+  price?: number;
+  /** Instructor Name */
+  instructor?: string;
+  /** Thumbnail Image */
+  thumbnail?: File;
+}
+
+export type CourseUpdateDataDto = CourseDto;
+
+export type CourseUpdateErrorDto = ErrorDto;
+
+export type CourseDeleteDataDto = MessageDto;
+
+export type CourseDeleteErrorDto = ErrorDto;
 
 export interface DocumentListParamsDto {
   /**
@@ -320,7 +326,7 @@ export interface UserListParamsDto {
   username?: string;
 }
 
-export type UserListDataDto = UserResponseDto;
+export type UserListDataDto = UserListResponseDto;
 
 export type UserListErrorDto = ErrorDto;
 

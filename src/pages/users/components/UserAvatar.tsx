@@ -41,7 +41,7 @@ const UserAvatar = () => {
     event.preventDefault();
   };
 
-  const handleUploadClick = () => {
+  const handleCreateClick = () => {
     if (selectedFile) {
       mutate(
         { avatar: selectedFile },
@@ -74,7 +74,7 @@ const UserAvatar = () => {
       </Stack>
 
       <FlexEnd marginTop={4}>
-        <Button variant="contained" disabled={isPending} onClick={handleUploadClick}>
+        <Button variant="contained" disabled={isPending} onClick={handleCreateClick}>
           Lưu thay đổi
         </Button>
       </FlexEnd>

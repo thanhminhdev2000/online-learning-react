@@ -17,7 +17,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-const DocumentUploadModal = ({ refetch, open, onClose }: CModalProps) => {
+const DocumentModal = ({ refetch, open, onClose }: CModalProps) => {
   const AWS_URL = 'https://online-learning-aws.s3.us-east-1.amazonaws.com/pdfs/';
   const { classId, subjectId, subjects, selectedDocument } = useSubjectStore();
 
@@ -48,18 +48,18 @@ const DocumentUploadModal = ({ refetch, open, onClose }: CModalProps) => {
 
   const classOptions = useMemo(() => {
     const options: IOptions[] = subjects.map((item) => ({
-      key: item.className,
-      value: item.classId,
+      key: item.name,
+      value: item.id,
     }));
 
     return options;
   }, [subjects]);
 
   const subjectOptions = useMemo(() => {
-    const classData = subjects.find((item) => item.classId === classIdSelected)?.subjects;
+    const classData = subjects.find((item) => item.id === classIdSelected)?.subjects;
     const options: IOptions[] = (classData || [])?.map((item) => ({
-      key: item.subjectName,
-      value: item.subjectId,
+      key: item.name,
+      value: item.id,
     }));
 
     return options;
@@ -191,4 +191,4 @@ const DocumentUploadModal = ({ refetch, open, onClose }: CModalProps) => {
   );
 };
 
-export default DocumentUploadModal;
+export default DocumentModal;
