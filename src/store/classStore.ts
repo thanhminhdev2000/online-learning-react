@@ -1,34 +1,40 @@
-import { ClassDto, DocumentDto } from '@apis/generated/data-contracts';
+import { ClassDto, CourseDto, DocumentDto } from '@apis/generated/data-contracts';
 import { create } from 'zustand';
 
-interface SubjectState {
+interface ClassState {
   classId: number;
   subjectId: number;
-  subjects: ClassDto[];
+  classes: ClassDto[];
   selectedDocument: DocumentDto;
+  selectedCourse: CourseDto;
   setClassId: (classId: number) => void;
   setSubjectId: (subjectId: number) => void;
-  setSubjects: (subjects: ClassDto[]) => void;
+  setClasses: (classes: ClassDto[]) => void;
   setSelectedDocument: (selectedDocument: DocumentDto) => void;
+  setSelectedCourse: (selectedCourse: CourseDto) => void;
 }
 
-const useSubjectStore = create<SubjectState>((set) => ({
+const useClassStore = create<ClassState>((set) => ({
   classId: 0,
   subjectId: 0,
-  subjects: [],
+  classes: [],
   selectedDocument: {} as DocumentDto,
+  selectedCourse: {} as CourseDto,
   setClassId: (classId: number) => {
     set({ classId });
   },
   setSubjectId: (subjectId: number) => {
     set({ subjectId });
   },
-  setSubjects: (subjects: ClassDto[]) => {
-    set({ subjects });
+  setClasses: (classes: ClassDto[]) => {
+    set({ classes });
   },
   setSelectedDocument: (selectedDocument: DocumentDto) => {
     set({ selectedDocument });
   },
+  setSelectedCourse: (selectedCourse: CourseDto) => {
+    set({ selectedCourse });
+  },
 }));
 
-export default useSubjectStore;
+export default useClassStore;

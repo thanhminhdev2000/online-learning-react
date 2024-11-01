@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* tslint:disable */
 /*
  * ---------------------------------------------------------------
@@ -9,8 +10,8 @@
  */
 
 export interface AccessTokenResponseDto {
-  accessToken?: string;
-  expiresIn?: number;
+  accessToken: string;
+  expiresIn: number;
 }
 
 export interface ClassDto {
@@ -28,6 +29,7 @@ export interface ContactDto {
 }
 
 export interface CourseDto {
+  classId: number;
   description: string;
   id: number;
   instructor: string;
@@ -286,9 +288,9 @@ export type DocumentCreateDataDto = MessageDto;
 
 export type DocumentCreateErrorDto = ErrorDto;
 
-export type SubjectsListDataDto = ClassDto[];
+export type ClassesListDataDto = ClassDto[];
 
-export type SubjectsListErrorDto = ErrorDto;
+export type ClassesListErrorDto = ErrorDto;
 
 export interface DocumentUpdatePayloadDto {
   /** Document title */

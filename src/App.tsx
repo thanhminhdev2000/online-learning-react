@@ -14,16 +14,18 @@ import UserDetailPage from '@pages/users/UserDetailPage';
 import UserManagePage from '@pages/users/UserManagePage';
 import useAuthStore from '@store/authStore';
 import { userInit } from '@store/constant';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 import { UserDetailDto } from '@apis/generated/data-contracts';
+import { useGetClasses } from '@apis/hooks/document.hook';
+import CourseDetailPage from '@pages/course/components/CourseDetail';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import CoursePage from './pages/course';
-const queryClient = new QueryClient();
+import useClassStore from './store/classStore';
 
 const App = () => {
   const { login, checkTokenExpiration } = useAuthStore();
+  const { setClasses } = useClassStore();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user') as string);
@@ -35,39 +37,46 @@ const App = () => {
     checkTokenExpiration();
   }, [login, checkTokenExpiration]);
 
+  const { data = [] } = useGetClasses();
+
+  useEffect(() => {
+    if (data?.length) {
+      setClasses(data);
+    }
+  }, [data, setClasses]);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Router>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route element={<MainLayout />}>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignUpPage />} />
-              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-              <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route element={<MainLayout />}>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
-              <Route path="/documents" element={<DocumentPage />} />
-              <Route path="/courses" element={<CoursePage />} />
-              <Route path="/contact" element={<ContactPage />} />
+            <Route path="/documents" element={<DocumentPage />} />
+            <Route path="/courses" element={<CoursePage />} />
+            <Route path="/courses/:id" element={<CourseDetailPage />} />
+            <Route path="/contact" element={<ContactPage />} />
 
-              <Route path="/users/:id" element={<UserDetailPage />} />
+            <Route path="/users/:id" element={<UserDetailPage />} />
 
-              <Route
-                path="/users"
-                element={
-                  <ProtectedRoute>
-                    <UserManagePage />
-                  </ProtectedRoute>
-                }
-              />
+            <Route
+              path="/users"
+              element={
+                <ProtectedRoute>
+                  <UserManagePage />
+                </ProtectedRoute>
+              }
+            />
 
-              <Route path="*" element={<PageNotFound />} />
-            </Route>
-          </Routes>
-        </Router>
-      </LocalizationProvider>
-    </QueryClientProvider>
+            <Route path="*" element={<PageNotFound />} />
+          </Route>
+        </Routes>
+      </Router>
+    </LocalizationProvider>
   );
 };
 

@@ -1,6 +1,5 @@
 import { ClassDto, SubjectDto } from '@apis/generated/data-contracts';
-import { useGetClasses } from '@apis/hooks/document.hook';
-import { BACKGROUND_COLOR_HOVER, COUNT_COLOR, MAIN_COLOR, SIDEBAR_WIDTH } from '@common/constant';
+import { BACKGROUND_COLOR_HOVER, COUNT_COLOR, SIDEBAR_WIDTH } from '@common/constant';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   Box,
@@ -15,14 +14,15 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import useSubjectStore from '../../store/classStore';
+import useClassStore from '../../store/classStore';
 
-import React, { useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { ListItemStyled } from '@common/styled';
+import React, { ReactNode, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const DocumentLayout = () => {
+const ClassMenu = ({ children }: { children?: ReactNode }) => {
+  const { setClassId, setSubjectId, classes } = useClassStore();
   const navigate = useNavigate();
-  const { setClassId, setSubjectId } = useSubjectStore();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [hoveredItem, setHoveredItem] = useState<ClassDto | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -48,14 +48,19 @@ const DocumentLayout = () => {
     handleDrawerToggle();
   };
 
-  const { data = [] } = useGetClasses();
+  const handleReset = () => {
+    setClassId(0);
+    setSubjectId(0);
+    handleMenuClose();
+    handleDrawerToggle();
+  };
 
   const open = Boolean(anchorEl);
 
   const drawerContent = (
     <List sx={{ padding: 0 }}>
-      <ListItem sx={{ backgroundColor: MAIN_COLOR, color: 'white', fontWeight: 'bold' }}>DANH MỤC TÀI LIỆU</ListItem>
-      {data.map((item, index) => (
+      <ListItemStyled onClick={handleReset}>DANH MỤC</ListItemStyled>
+      {classes.map((item, index) => (
         <ListItem
           sx={{
             cursor: 'pointer',
@@ -81,7 +86,7 @@ const DocumentLayout = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" onClick={() => navigate('/')}>
-            DANH MỤC TÀI LIỆU
+            DANH MỤC
           </Typography>
         </Toolbar>
 
@@ -129,11 +134,9 @@ const DocumentLayout = () => {
         </Menu>
       </Stack>
 
-      <Box>
-        <Outlet />
-      </Box>
+      {children}
     </Stack>
   );
 };
 
-export default DocumentLayout;
+export default ClassMenu;

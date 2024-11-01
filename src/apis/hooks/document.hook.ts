@@ -1,4 +1,6 @@
 import {
+  ClassesListDataDto,
+  ClassesListErrorDto,
   DocumentCreateDataDto,
   DocumentCreateErrorDto,
   DocumentCreatePayloadDto,
@@ -10,8 +12,6 @@ import {
   DocumentUpdateDataDto,
   DocumentUpdateErrorDto,
   DocumentUpdatePayloadDto,
-  SubjectsListDataDto,
-  SubjectsListErrorDto,
 } from '@apis/generated/data-contracts';
 import { Document } from '@apis/generated/Document';
 import httpClient from '@config/httpClient';
@@ -21,15 +21,15 @@ import { toast } from 'react-toastify';
 export const documentApi = new Document(httpClient);
 
 const queryKeys = {
-  getSubjects: 'getSubjects',
+  getClasses: 'getClasses',
   getDocuments: 'getDocuments',
 };
 
-export const useGetSubjects = (): UseQueryResult<SubjectsListDataDto, SubjectsListErrorDto> => {
+export const useGetClasses = (): UseQueryResult<ClassesListDataDto, ClassesListErrorDto> => {
   return useQuery({
-    queryKey: [queryKeys.getSubjects],
+    queryKey: [queryKeys.getClasses],
     queryFn: () => {
-      return documentApi.subjectsList();
+      return documentApi.classesList();
     },
   });
 };
@@ -38,7 +38,7 @@ export const useGetDocuments = (
   query: DocumentListParamsDto,
 ): UseQueryResult<DocumentListDataDto, DocumentListErrorDto> => {
   return useQuery({
-    queryKey: [queryKeys.getDocuments, query],
+    queryKey: [queryKeys.getClasses, queryKeys.getDocuments, query],
     queryFn: () => {
       return documentApi.documentList(query);
     },
@@ -60,7 +60,7 @@ export const useCreateDocument = (): UseMutationResult<
     onSuccess(data) {
       toast.success(data.message);
       queryClient.invalidateQueries({
-        queryKey: [queryKeys.getDocuments],
+        queryKey: [queryKeys.getClasses, queryKeys.getDocuments],
       });
     },
     onError(data) {
@@ -83,7 +83,7 @@ export const useUpdateDocument = (): UseMutationResult<
     },
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: [queryKeys.getDocuments],
+        queryKey: [queryKeys.getClasses, queryKeys.getDocuments],
       });
     },
     onError(data) {
@@ -107,7 +107,7 @@ export const useDeleteDocument = (): UseMutationResult<
     onSuccess(data) {
       toast.success(data.message);
       queryClient.invalidateQueries({
-        queryKey: [queryKeys.getDocuments],
+        queryKey: [queryKeys.getClasses, queryKeys.getDocuments],
       });
     },
     onError(data) {

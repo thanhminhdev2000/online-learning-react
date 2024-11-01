@@ -10,6 +10,8 @@
  */
 
 import {
+  ClassesListDataDto,
+  ClassesListErrorDto,
   DocumentCreateDataDto,
   DocumentCreateErrorDto,
   DocumentCreatePayloadDto,
@@ -21,8 +23,6 @@ import {
   DocumentUpdateDataDto,
   DocumentUpdateErrorDto,
   DocumentUpdatePayloadDto,
-  SubjectsListDataDto,
-  SubjectsListErrorDto,
 } from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
 
@@ -75,15 +75,15 @@ export class Document<SecurityDataType = unknown> {
    * @description List of classes with their subjects and document counts
    *
    * @tags Document
-   * @name SubjectsList
+   * @name ClassesList
    * @summary List of classes with their subjects and document counts
-   * @request GET:/documents/subjects
-   * @response `200` `SubjectsListDataDto` OK
+   * @request GET:/documents/classes
+   * @response `200` `ClassesListDataDto` OK
    * @response `500` `ErrorDto` Internal Server Error
    */
-  subjectsList = (params: RequestParams = {}) =>
-    this.http.request<SubjectsListDataDto, SubjectsListErrorDto>({
-      path: `/documents/subjects`,
+  classesList = (params: RequestParams = {}) =>
+    this.http.request<ClassesListDataDto, ClassesListErrorDto>({
+      path: `/documents/classes`,
       method: 'GET',
       ...params,
     });

@@ -57,7 +57,7 @@ const ContactPage = () => {
                     label="Nội dung"
                     registerProps={register('content')}
                     errorMsg={errors.content?.message}
-                    textArea
+                    multiline
                   />
                 </Stack>
                 <Button variant="contained" endIcon={<SendIcon />} sx={{ mt: 2 }} type="submit" disabled={isPending}>

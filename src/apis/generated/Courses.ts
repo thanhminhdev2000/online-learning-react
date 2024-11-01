@@ -39,14 +39,14 @@ export class Courses<SecurityDataType = unknown> {
    * @tags courses
    * @name CourseList
    * @summary Get all courses
-   * @request GET:/courses
+   * @request GET:/courses/
    * @response `200` `CourseListDataDto` OK
    * @response `400` `ErrorDto` Bad Request
    * @response `500` `ErrorDto` Internal Server Error
    */
   courseList = (query: CourseListParamsDto, params: RequestParams = {}) =>
     this.http.request<CourseListDataDto, CourseListErrorDto>({
-      path: `/courses`,
+      path: `/courses/`,
       method: 'GET',
       query: query,
       format: 'json',
@@ -58,14 +58,14 @@ export class Courses<SecurityDataType = unknown> {
    * @tags courses
    * @name CourseCreate
    * @summary Create a new course
-   * @request POST:/courses
+   * @request POST:/courses/
    * @response `200` `CourseCreateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
    * @response `500` `ErrorDto` Internal Server Error
    */
   courseCreate = (data: CourseCreatePayloadDto, params: RequestParams = {}) =>
     this.http.request<CourseCreateDataDto, CourseCreateErrorDto>({
-      path: `/courses`,
+      path: `/courses/`,
       method: 'POST',
       body: data,
       type: ContentType.FormData,

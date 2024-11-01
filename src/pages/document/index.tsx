@@ -1,151 +1,188 @@
-import { ClassDto, SubjectDto } from '@apis/generated/data-contracts';
-import { useGetSubjects } from '@apis/hooks/document.hook';
-import { BACKGROUND_COLOR_HOVER, COUNT_COLOR, SIDEBAR_WIDTH } from '@common/constant';
-import MenuIcon from '@mui/icons-material/Menu';
+import { DocumentDto, DocumentListParamsDto, UserRoleDto } from '@apis/generated/data-contracts';
+import { useDeleteDocument, useGetDocuments, useUpdateDocument } from '@apis/hooks/document.hook';
+import { MAIN_COLOR } from '@common/constant';
 import {
-  Box,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Stack,
-  Toolbar,
-  Typography,
-} from '@mui/material';
-import DocumentCard from '@pages/document/components/DocumentCard';
-import { ListItemStyled } from '@pages/document/styled';
-import useSubjectStore from '@store/subjectStore';
+  AlignCenter,
+  CardStyled,
+  DeleteIconStyled,
+  EditIconStyled,
+  MaxFourElement,
+  OverflowMultiLine,
+  SpaceBetween,
+} from '@common/styled';
+import CConfirmModal from '@components/cConfirmModal';
+import CInput from '@components/cInput';
+import ClassMenu from '@components/layout/ClassMenu';
+import { SearchOutlined } from '@mui/icons-material';
 
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import NoDataAvailable from '@components/NoData';
+import DownloadIcon from '@mui/icons-material/Download';
+import FolderIcon from '@mui/icons-material/Folder';
+import PersonIcon from '@mui/icons-material/Person';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Box, Button, CardContent, Divider, Stack, Typography } from '@mui/material';
+import DocumentModal from '@pages/document/components/DocumentModal';
+import useAuthStore from '@store/authStore';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import useSubjectStore from '../../store/classStore';
 
 const DocumentPage = () => {
-  const { setClassId, setSubjectId, setSubjects } = useSubjectStore();
-  const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [hoveredItem, setHoveredItem] = useState<ClassDto | null>(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const { user } = useAuthStore();
+  const { subjectId, setSelectedDocument } = useSubjectStore();
+  const [search, setSearch] = useState<DocumentListParamsDto>({});
+  const [openCreateDocumentModal, setOpenCreateDocumentModal] = useState(false);
+  const [openDeleteDocumentModal, setOpenDeleteDocumentModal] = useState(false);
+  const [selectedId, setSelectedId] = useState(0);
 
-  const handleDrawerToggle = () => {
-    setDrawerOpen(!drawerOpen);
+  const { register, handleSubmit } = useForm({});
+
+  const onSubmit = handleSubmit((data) => {
+    setSearch(data);
+  });
+
+  const { data } = useGetDocuments({
+    ...search,
+    subjectId: subjectId ? subjectId : undefined,
+  });
+
+  const { mutate: updateDocument } = useUpdateDocument();
+  const { mutate: deleteDocument } = useDeleteDocument();
+
+  const openPdfFile = (url: string) => {
+    window.open(url, '_blank');
   };
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>, item: ClassDto) => {
-    setAnchorEl(event.currentTarget);
-    setHoveredItem(item);
-    setClassId(item.id);
+  const handleDeleteDocument = (documentId: number) => {
+    deleteDocument(documentId, {
+      onSuccess() {
+        setOpenDeleteDocumentModal(false);
+      },
+    });
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    setHoveredItem(null);
+  const handleUpdateViews = (data: DocumentDto) => {
+    updateDocument({
+      documentId: data.id,
+      payload: {
+        ...data,
+        views: data.views + 1,
+      },
+    });
   };
-
-  const handleItemClick = (subject: SubjectDto) => {
-    setSubjectId(subject.id);
-    handleMenuClose();
-    handleDrawerToggle();
-  };
-
-  const { data = [], refetch } = useGetSubjects();
-
-  const handleReset = () => {
-    setClassId(0);
-    setSubjectId(0);
-    handleMenuClose();
-    handleDrawerToggle();
-  };
-
-  const open = Boolean(anchorEl);
-
-  const drawerContent = (
-    <List sx={{ padding: 0 }}>
-      <ListItemStyled onClick={handleReset}>DANH MỤC TÀI LIỆU</ListItemStyled>
-      {data.map((item, index) => (
-        <ListItem
-          sx={{
-            cursor: 'pointer',
-            ':hover': {
-              backgroundColor: BACKGROUND_COLOR_HOVER,
-            },
-          }}
-          key={index}
-          onClick={(event) => handleMenuOpen(event, item)}
-        >
-          <ListItemText primary={item.name} />
-          <Typography sx={{ color: COUNT_COLOR, marginLeft: 2 }}>{item.count}</Typography>
-        </ListItem>
-      ))}
-    </List>
-  );
-
-  useEffect(() => {
-    if (data.length) {
-      setSubjects(data);
-    }
-  }, [data, setSubjects]);
 
   return (
-    <Stack flexDirection="column">
-      <Stack>
-        <Toolbar>
-          <IconButton sx={{ paddingLeft: 0 }} edge="start" onClick={handleDrawerToggle}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" onClick={() => navigate('/')}>
-            DANH MỤC TÀI LIỆU
-          </Typography>
-        </Toolbar>
+    <ClassMenu>
+      <form onSubmit={onSubmit}>
+        <Box padding={2}>
+          <SpaceBetween>
+            <Box>
+              <Typography variant="h6" marginTop={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
+                TÀI LIỆU NỔI BẬT
+              </Typography>
+            </Box>
 
-        <Drawer
-          variant="temporary"
-          open={drawerOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            '& .MuiDrawer-paper': {
-              width: SIDEBAR_WIDTH,
-              boxSizing: 'border-box',
-            },
-          }}
-        >
-          {drawerContent}
-        </Drawer>
+            <AlignCenter gap={2}>
+              {user.role === UserRoleDto.RoleAdmin && (
+                <Button variant="contained" sx={{ width: '140px' }} onClick={() => setOpenCreateDocumentModal(true)}>
+                  Đăng tải tài liệu
+                </Button>
+              )}
+              <AlignCenter gap={2}>
+                <CInput label="Tìm kiếm theo tiêu đề" registerProps={register('title')} showLabel={false} />
+                <SearchOutlined onClick={onSubmit} sx={{ width: 32, height: 32 }} />
+              </AlignCenter>
+            </AlignCenter>
+          </SpaceBetween>
 
-        <Menu
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleMenuClose}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-        >
-          <Box padding={1}>
-            <Typography variant="h6">Chọn môn học</Typography>
-            {hoveredItem?.subjects?.map((subject, index) => (
-              <MenuItem key={index} onClick={() => handleItemClick(subject)} sx={{ width: 180 }}>
-                <Typography>{subject.name}</Typography>
-                <Typography width="100%" align="right" sx={{ color: '#ff9800' }}>
-                  {subject.count}
-                </Typography>
-              </MenuItem>
+          <MaxFourElement>
+            {data?.map((document) => (
+              <CardStyled
+                key={document.id}
+                onClick={() => {
+                  setSelectedId(document.id);
+                  handleUpdateViews(document);
+                  openPdfFile(document.fileUrl);
+                }}
+              >
+                <CardContent>
+                  <Box paddingX={2} sx={{ position: 'relative' }}>
+                    <OverflowMultiLine
+                      variant="h6"
+                      lines={2}
+                      sx={{
+                        fontWeight: 'bold',
+                        color: MAIN_COLOR,
+                        height: 64,
+                        paddingRight: 5,
+                      }}
+                    >
+                      {document.title}
+                    </OverflowMultiLine>
+
+                    {user.role === UserRoleDto.RoleAdmin && (
+                      <DeleteIconStyled
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedId(document.id);
+                          setOpenDeleteDocumentModal(true);
+                        }}
+                      />
+                    )}
+                    {user.role === UserRoleDto.RoleAdmin && (
+                      <EditIconStyled
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedDocument(document);
+                          setOpenCreateDocumentModal(true);
+                          setSelectedId(document.id);
+                        }}
+                      />
+                    )}
+
+                    <AlignCenter marginTop={1} gap={1}>
+                      <FolderIcon sx={{ fontSize: 26 }} />
+                      <OverflowMultiLine sx={{ textAlign: 'center' }}>{document.category}</OverflowMultiLine>
+                    </AlignCenter>
+                  </Box>
+
+                  <Divider sx={{ paddingY: 2 }} />
+
+                  <Box paddingX={2}>
+                    <AlignCenter justifyContent="space-between" marginTop={4}>
+                      <Stack gap={1}>
+                        <VisibilityIcon />
+                        <Typography>{document.views}</Typography>
+                      </Stack>
+
+                      <Stack gap={1}>
+                        <DownloadIcon />
+                        <Typography>{document.downloads}</Typography>
+                      </Stack>
+                    </AlignCenter>
+
+                    <AlignCenter marginTop={1} gap={1}>
+                      <PersonIcon />
+                      <OverflowMultiLine lines={1}>Tác giả: {document.author}</OverflowMultiLine>
+                    </AlignCenter>
+                  </Box>
+                </CardContent>
+              </CardStyled>
             ))}
-          </Box>
-        </Menu>
-      </Stack>
+          </MaxFourElement>
+          <NoDataAvailable length={data?.length || 0} />
+        </Box>
 
-      <DocumentCard refetch={refetch} />
-    </Stack>
+        <DocumentModal open={openCreateDocumentModal} onClose={() => setOpenCreateDocumentModal(false)} />
+
+        <CConfirmModal
+          open={openDeleteDocumentModal}
+          onClose={() => setOpenDeleteDocumentModal(false)}
+          content="Bạn có chắc chắn muốn xoá nó không?"
+          onSubmit={() => handleDeleteDocument(selectedId)}
+        />
+      </form>
+    </ClassMenu>
   );
 };
 

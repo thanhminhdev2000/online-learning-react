@@ -12,14 +12,14 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { createdDocumentSchema, updatedDocumentSchema } from '@pages/document/type';
-import useSubjectStore from '@store/subjectStore';
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import useClassStore from '../../../store/classStore';
 
 const DocumentModal = ({ refetch, open, onClose }: CModalProps) => {
   const AWS_URL = 'https://online-learning-aws.s3.us-east-1.amazonaws.com/pdfs/';
-  const { classId, subjectId, subjects, selectedDocument } = useSubjectStore();
+  const { classId, subjectId, classes, selectedDocument } = useClassStore();
 
   const awsFileName = selectedDocument.fileUrl?.split(AWS_URL)[1];
   const [fileName, setFileName] = useState<string | null>(awsFileName);
@@ -47,23 +47,23 @@ const DocumentModal = ({ refetch, open, onClose }: CModalProps) => {
   const classIdSelected = watch('classId');
 
   const classOptions = useMemo(() => {
-    const options: IOptions[] = subjects.map((item) => ({
+    const options: IOptions[] = classes.map((item) => ({
       key: item.name,
       value: item.id,
     }));
 
     return options;
-  }, [subjects]);
+  }, [classes]);
 
   const subjectOptions = useMemo(() => {
-    const classData = subjects.find((item) => item.id === classIdSelected)?.subjects;
+    const classData = classes.find((item) => item.id === classIdSelected)?.subjects;
     const options: IOptions[] = (classData || [])?.map((item) => ({
       key: item.name,
       value: item.id,
     }));
 
     return options;
-  }, [classIdSelected, subjects]);
+  }, [classIdSelected, classes]);
 
   const { mutate: createDocument, isPending: pendingCreate } = useCreateDocument();
   const { mutate: updateDocument, isPending: pendingUpdate } = useUpdateDocument();
@@ -124,7 +124,7 @@ const DocumentModal = ({ refetch, open, onClose }: CModalProps) => {
         <ModalWrapper>
           <form onSubmit={handleSubmitForm}>
             <SpaceBetween alignItems="center">
-              <Typography variant="h6">Đăng tải tài liệu</Typography>
+              <Typography variant="h6">Đăng tải</Typography>
               <Close onClick={closeModal} sx={{ cursor: 'pointer' }} />
             </SpaceBetween>
 
@@ -152,7 +152,7 @@ const DocumentModal = ({ refetch, open, onClose }: CModalProps) => {
                   Chọn file từ máy tính
                   <input
                     hidden
-                    accept="application/pdf,application/msword"
+                    accept="application/pdf"
                     type="file"
                     {...register('file', {
                       onChange: (e) => {

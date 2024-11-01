@@ -32,7 +32,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
 
     if (tokenExpirationTime && currentTime >= Number(tokenExpirationTime) - 60000) {
       const { accessToken, expiresIn } = await authenticationApi.refreshToken();
-      get().setToken(accessToken, expiresIn);
+      get().setToken(accessToken as string, expiresIn as number);
     }
   },
   login: (user: UserDetailDto) => {

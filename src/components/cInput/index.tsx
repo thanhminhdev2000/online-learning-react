@@ -9,34 +9,29 @@ interface CInputProps {
   registerProps: UseFormRegisterReturn;
   type?: 'text' | 'password';
   size?: 'small' | 'medium';
-  textArea?: boolean;
+  multiline?: boolean;
   disabled?: boolean;
   showLabel?: boolean;
   backgroundColor?: string;
 }
 
-const CInput = ({
-  label,
-  errorMsg,
-  registerProps,
-  type = 'text',
-  textArea,
-  disabled,
-  showLabel = true,
-}: CInputProps) => {
+const CInput = ({ label, errorMsg, registerProps, showLabel = true, ...rest }: CInputProps) => {
   return (
     <FormWrapper>
       {showLabel && <CFormLabel>{label}</CFormLabel>}
 
       <InputWrapper>
         <TextField
-          fullWidth
-          type={type}
           variant="outlined"
+          fullWidth
           placeholder={label}
-          multiline={textArea}
           rows={4}
-          disabled={disabled}
+          {...rest}
+          sx={{
+            textarea: {
+              padding: 0,
+            },
+          }}
           {...registerProps}
         />
       </InputWrapper>

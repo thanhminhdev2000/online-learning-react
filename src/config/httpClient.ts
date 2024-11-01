@@ -4,12 +4,12 @@ import { cleanObject } from '@utils/index';
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://159.223.40.127:8080/api/v1',
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 });
 
 const httpClient = new HttpClient({
-  baseURL: 'http://159.223.40.127:8080/api/v1',
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 });
 
@@ -40,7 +40,6 @@ httpClient.instance.interceptors.response.use(
     const { getToken, logout, login } = useAuthStore();
 
     if (error.response.status === 401 || error.response.status === 403) {
-      console.log('error.response.status', error.response.status);
       const reponse = await axiosInstance.post('/auth/refresh-token');
       login(reponse.data.accessToken, reponse.data.expiresIn);
 

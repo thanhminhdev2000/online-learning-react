@@ -6,9 +6,9 @@ import { routes } from '@components/navbar/constant';
 import { NavbarWrapper, StyledMenuItem } from '@components/navbar/styled';
 import { Avatar, Box, Button, Container, Menu, Stack, Typography } from '@mui/material';
 import useAuthStore from '@store/authStore';
-import useSubjectStore from '@store/subjectStore';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useSubjectStore from '../../store/classStore';
 
 const Navbar = () => {
   const navigate = useNavigate();
