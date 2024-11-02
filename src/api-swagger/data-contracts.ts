@@ -29,10 +29,12 @@ export interface ContactDto {
 }
 
 export interface CourseDto {
+  category: string;
   classId: number;
   description: string;
   id: number;
   instructor: string;
+  lessons: LessonDto[];
   price: number;
   subjectId: number;
   thumbnailUrl: string;
@@ -83,6 +85,15 @@ export interface ErrorDto {
 
 export interface ForgotPasswordRequestDto {
   email: string;
+}
+
+export interface LessonDto {
+  courseId: number;
+  duration: number;
+  id: number;
+  position: number;
+  title: string;
+  videoUrl: string;
 }
 
 export interface LoginRequestDto {
@@ -312,6 +323,41 @@ export type DocumentUpdateErrorDto = ErrorDto;
 export type DocumentDeleteDataDto = MessageDto;
 
 export type DocumentDeleteErrorDto = ErrorDto;
+
+export interface LessonCreatePayloadDto {
+  /** Course ID */
+  courseId: number;
+  /** Lesson Title */
+  title: string;
+  /** Position in Course */
+  position: number;
+  /**
+   * Video File
+   * @format binary
+   */
+  video: File;
+}
+
+export type LessonCreateDataDto = LessonDto;
+
+export type LessonCreateErrorDto = ErrorDto;
+
+export interface LessonUpdatePayloadDto {
+  /** Lesson Title */
+  title?: string;
+  /** Position in Course */
+  position: number;
+  /** Video File */
+  video?: File;
+}
+
+export type LessonUpdateDataDto = LessonDto;
+
+export type LessonUpdateErrorDto = ErrorDto;
+
+export type LessonDeleteDataDto = MessageDto;
+
+export type LessonDeleteErrorDto = ErrorDto;
 
 export interface UserListParamsDto {
   dateOfBirth?: string;

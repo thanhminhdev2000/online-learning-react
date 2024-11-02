@@ -1,5 +1,4 @@
-import { UserRoleDto } from '@apis/generated/data-contracts';
-import { useDeleteCourse, useGetCourses } from '@apis/hooks/course.hook';
+import { UserRoleDto } from '@api-swagger/data-contracts';
 import {
   AlignCenter,
   DeleteIconStyled,
@@ -14,6 +13,7 @@ import CConfirmModal from '@components/cConfirmModal';
 import CInput from '@components/cInput';
 import ClassMenu from '@components/layout/ClassMenu';
 import NoDataAvailable from '@components/NoData';
+import { useDeleteCourse, useGetCourses } from '@hooks/course.hook';
 import { SearchOutlined } from '@mui/icons-material';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import CourseModal from '@pages/course/components/CourseModal';
@@ -28,7 +28,7 @@ const CoursePage = () => {
   const { user } = useAuthStore();
   const { setSelectedCourse } = useClassStore();
   const [search, setSearch] = useState('');
-  const [openCreateCourseModal, setOpenCreateCourseModal] = useState(false);
+  const [openCourseModal, setOpenCourseModal] = useState(false);
   const [openDeleteCourseModal, setOpenDeleteCourseModal] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
 
@@ -69,7 +69,7 @@ const CoursePage = () => {
 
             <AlignCenter gap={2}>
               {user.role === UserRoleDto.RoleAdmin && (
-                <Button variant="contained" sx={{ width: '140px' }} onClick={() => setOpenCreateCourseModal(true)}>
+                <Button variant="contained" sx={{ width: '140px' }} onClick={() => setOpenCourseModal(true)}>
                   Tạo khoá học
                 </Button>
               )}
@@ -136,7 +136,7 @@ const CoursePage = () => {
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedCourse(course);
-                          setOpenCreateCourseModal(true);
+                          setOpenCourseModal(true);
                           setSelectedId(course.id);
                         }}
                       />
@@ -149,7 +149,7 @@ const CoursePage = () => {
           <NoDataAvailable length={data?.data?.length || 0} />
         </Box>
 
-        <CourseModal open={openCreateCourseModal} onClose={() => setOpenCreateCourseModal(false)} />
+        <CourseModal open={openCourseModal} onClose={() => setOpenCourseModal(false)} />
 
         <CConfirmModal
           open={openDeleteCourseModal}

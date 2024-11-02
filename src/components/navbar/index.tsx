@@ -1,5 +1,4 @@
-import { UserRoleDto } from '@apis/generated/data-contracts';
-import { useLogout } from '@apis/hooks/authentication.hook';
+import { UserRoleDto } from '@api-swagger/data-contracts';
 import { HEADER_HEIGHT } from '@common/constant';
 import { AlignCenter, ItemCenter, SpaceBetween, TypographyHover } from '@common/styled';
 import { routes } from '@components/navbar/constant';
@@ -8,6 +7,7 @@ import { Avatar, Box, Button, Container, Menu, Stack, Typography } from '@mui/ma
 import useAuthStore from '@store/authStore';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLogout } from '../../hooks/authentication.hook';
 import useSubjectStore from '../../store/classStore';
 
 const Navbar = () => {

@@ -1,4 +1,3 @@
-import { useUpdateUserPassword } from '@apis/hooks/user.hook';
 import { FlexEnd } from '@common/styled';
 import CInput from '@components/cInput';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -7,6 +6,7 @@ import { updatePasswordInit } from '@pages/authentication/constant';
 import { userPasswordSchema } from '@pages/authentication/type';
 import useAuthStore from '@store/authStore';
 import { useForm } from 'react-hook-form';
+import { useUpdateUserPassword } from '../../../hooks/user.hook';
 
 const UserPassword = () => {
   const { user } = useAuthStore();

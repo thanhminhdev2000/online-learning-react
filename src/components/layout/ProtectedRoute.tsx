@@ -1,4 +1,4 @@
-import { UserRoleDto } from '@apis/generated/data-contracts';
+import { UserRoleDto } from '@api-swagger/data-contracts';
 import useAuthStore from '@store/authStore';
 import { Navigate } from 'react-router-dom';
 

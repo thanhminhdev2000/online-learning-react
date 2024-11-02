@@ -1,4 +1,4 @@
-import { ClassDto, SubjectDto } from '@apis/generated/data-contracts';
+import { ClassDto, SubjectDto } from '@api-swagger/data-contracts';
 import { BACKGROUND_COLOR_HOVER, COUNT_COLOR, SIDEBAR_WIDTH } from '@common/constant';
 import MenuIcon from '@mui/icons-material/Menu';
 import {

@@ -1,10 +1,12 @@
+import dotenv from 'dotenv';
 import path from 'path';
 import { generateApi } from 'swagger-typescript-api';
+dotenv.config();
 
 generateApi({
   name: 'ApiClient.ts',
-  url: 'http://localhost:8080/swagger/doc.json',
-  output: path.resolve(process.cwd(), './src/apis/generated'),
+  url: `${process.env.VITE_API_URL}/swagger/doc.json`,
+  output: path.resolve(process.cwd(), './src/api-swagger'),
   httpClientType: 'axios',
   generateClient: true,
   toJS: false,
@@ -53,7 +55,8 @@ generateApi({
         .replace('users', 'user')
         .replace('documents', 'document')
         .replace('contacts', 'contact')
-        .replace('courses', 'course');
+        .replace('courses', 'course')
+        .replace('lessons', 'lesson');
     },
   },
 });

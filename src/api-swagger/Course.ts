@@ -26,7 +26,7 @@ import {
 } from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
 
-export class Courses<SecurityDataType = unknown> {
+export class Course<SecurityDataType = unknown> {
   http: HttpClient<SecurityDataType>;
 
   constructor(http: HttpClient<SecurityDataType>) {
@@ -36,7 +36,7 @@ export class Courses<SecurityDataType = unknown> {
   /**
    * @description Retrieve a list of all courses with optional filtering and pagination
    *
-   * @tags courses
+   * @tags Course
    * @name CourseList
    * @summary Get all courses
    * @request GET:/courses/
@@ -55,7 +55,7 @@ export class Courses<SecurityDataType = unknown> {
   /**
    * @description Create a new course with the provided details
    *
-   * @tags courses
+   * @tags Course
    * @name CourseCreate
    * @summary Create a new course
    * @request POST:/courses/
@@ -75,7 +75,7 @@ export class Courses<SecurityDataType = unknown> {
   /**
    * @description Retrieve a single course using its ID
    *
-   * @tags courses
+   * @tags Course
    * @name CourseDetail
    * @summary Get a course by ID
    * @request GET:/courses/{id}
@@ -94,7 +94,7 @@ export class Courses<SecurityDataType = unknown> {
   /**
    * @description Update course details by ID
    *
-   * @tags courses
+   * @tags Course
    * @name CourseUpdate
    * @summary Update an existing course
    * @request PUT:/courses/{id}
@@ -115,7 +115,7 @@ export class Courses<SecurityDataType = unknown> {
   /**
    * @description Delete a course by ID
    *
-   * @tags courses
+   * @tags Course
    * @name CourseDelete
    * @summary Delete a course
    * @request DELETE:/courses/{id}

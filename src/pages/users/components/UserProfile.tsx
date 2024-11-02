@@ -1,4 +1,3 @@
-import { useUpdateUser } from '@apis/hooks/user.hook';
 import { genderOptions } from '@common/constant';
 import { FlexEnd, FormWrapper } from '@common/styled';
 import CDatePicker from '@components/cDatePicker';
@@ -9,6 +8,7 @@ import { Button, Stack } from '@mui/material';
 import { userProfileSchema } from '@pages/authentication/type';
 import useAuthStore from '@store/authStore';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useUpdateUser } from '../../../hooks/user.hook';
 
 const UserProfile = () => {
   const { user, login } = useAuthStore();

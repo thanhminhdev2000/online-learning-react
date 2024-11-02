@@ -1,4 +1,3 @@
-import { useCreateDocument, useUpdateDocument } from '@apis/hooks/document.hook';
 import { FlexEnd, SpaceBetween } from '@common/styled';
 import { CModalProps, IOptions } from '@common/type';
 import CInput from '@components/cInput';
@@ -15,6 +14,7 @@ import { createdDocumentSchema, updatedDocumentSchema } from '@pages/document/ty
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useCreateDocument, useUpdateDocument } from '../../../hooks/document.hook';
 import useClassStore from '../../../store/classStore';
 
 const DocumentModal = ({ refetch, open, onClose }: CModalProps) => {

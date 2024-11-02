@@ -1,5 +1,4 @@
-import { ClassDto, SubjectDto } from '@apis/generated/data-contracts';
-import { useGetClasses } from '@apis/hooks/document.hook';
+import { ClassDto, SubjectDto } from '@api-swagger/data-contracts';
 import { BACKGROUND_COLOR_HOVER, COUNT_COLOR, MAIN_COLOR, SIDEBAR_WIDTH } from '@common/constant';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
@@ -15,6 +14,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+import { useGetClasses } from '../../hooks/document.hook';
 import useSubjectStore from '../../store/classStore';
 
 import React, { useState } from 'react';

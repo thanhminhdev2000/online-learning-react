@@ -1,4 +1,3 @@
-import { useContact } from '@apis/hooks/contact.hook';
 import { BoxContainer, ItemCenter } from '@common/styled';
 import CInput from '@components/cInput';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,6 +5,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { contactSchema } from '@pages/contact/type';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useContact } from '../../hooks/contact.hook';
 
 const ContactPage = () => {
   const formInstance = useForm({

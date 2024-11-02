@@ -1,7 +1,7 @@
-import { UserDetailDto } from '@apis/generated/data-contracts';
-import { authenticationApi } from '@apis/hooks/authentication.hook';
+import { UserDetailDto } from '@api-swagger/data-contracts';
 import { userInit } from '@store/constant';
 import { create } from 'zustand';
+import { authenticationApi } from '../hooks/authentication.hook';
 
 interface AuthState {
   user: UserDetailDto;

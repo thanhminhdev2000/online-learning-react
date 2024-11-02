@@ -1,15 +1,18 @@
-import { HttpClient } from '@apis/generated/http-client';
+import { HttpClient } from '@api-swagger/http-client';
 import useAuthStore from '@store/authStore';
 import { cleanObject } from '@utils/index';
 import axios from 'axios';
 
+// @ts-expect-error No eslint
+const API_URL = import.meta.env.VITE_API_URL + import.meta.env.VITE_API_PREFIX;
+
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_URL,
   withCredentials: true,
 });
 
 const httpClient = new HttpClient({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_URL,
   withCredentials: true,
 });
 

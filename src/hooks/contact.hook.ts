@@ -1,5 +1,5 @@
-import { Contact } from '@apis/generated/Contact';
-import { ContactCreateDataDto, ContactCreateErrorDto, ContactDto } from '@apis/generated/data-contracts';
+import { Contact } from '@api-swagger/Contact';
+import { ContactCreateDataDto, ContactCreateErrorDto, ContactDto } from '@api-swagger/data-contracts';
 import httpClient from '@config/httpClient';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { toast } from 'react-toastify';

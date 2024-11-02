@@ -18,7 +18,7 @@ export default defineConfig({
       '@utils': path.resolve(__dirname, './src/utils'),
       '@config': path.resolve(__dirname, './src/config'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
-      '@apis': path.resolve(__dirname, './src/apis'),
+      '@api-swagger': path.resolve(__dirname, './src/api-swagger'),
       '@common': path.resolve(__dirname, './src/common'),
       '@store': path.resolve(__dirname, './src/store'),
     },

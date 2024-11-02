@@ -1,4 +1,4 @@
-import { ClassDto, CourseDto, DocumentDto } from '@apis/generated/data-contracts';
+import { ClassDto, CourseDto, DocumentDto, LessonDto } from 'api-swagger/data-contracts';
 import { create } from 'zustand';
 
 interface ClassState {
@@ -7,11 +7,13 @@ interface ClassState {
   classes: ClassDto[];
   selectedDocument: DocumentDto;
   selectedCourse: CourseDto;
+  selectedLesson: LessonDto;
   setClassId: (classId: number) => void;
   setSubjectId: (subjectId: number) => void;
   setClasses: (classes: ClassDto[]) => void;
   setSelectedDocument: (selectedDocument: DocumentDto) => void;
   setSelectedCourse: (selectedCourse: CourseDto) => void;
+  setSelectedLesson: (selectedLesson: LessonDto) => void;
 }
 
 const useClassStore = create<ClassState>((set) => ({
@@ -20,6 +22,7 @@ const useClassStore = create<ClassState>((set) => ({
   classes: [],
   selectedDocument: {} as DocumentDto,
   selectedCourse: {} as CourseDto,
+  selectedLesson: {} as LessonDto,
   setClassId: (classId: number) => {
     set({ classId });
   },
@@ -34,6 +37,9 @@ const useClassStore = create<ClassState>((set) => ({
   },
   setSelectedCourse: (selectedCourse: CourseDto) => {
     set({ selectedCourse });
+  },
+  setSelectedLesson: (selectedLesson: LessonDto) => {
+    set({ selectedLesson });
   },
 }));
 

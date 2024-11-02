@@ -13,7 +13,7 @@
       "@utils/*": ["utils/*"],
       "@config/*": ["config/*"],
       "@hooks/*": ["hooks/*"],
-      "@apis/*": ["apis/*"],
+      "@api-swagger/*": ["api-swagger/*"],
       "@common/*": ["common/*"],
       "@store/*": ["store/*"]
     }

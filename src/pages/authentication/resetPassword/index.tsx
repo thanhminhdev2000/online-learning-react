@@ -1,4 +1,3 @@
-import { useResetPassword } from '@apis/hooks/authentication.hook';
 import { AuthContainer, ItemCenter, TypographyLink } from '@common/styled';
 import CInput from '@components/cInput';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,6 +7,7 @@ import { resetPasswordSchema } from '@pages/authentication/type';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useResetPassword } from '../../../hooks/authentication.hook';
 
 const ResetPasswordPage = () => {
   const { token = '' } = useParams();

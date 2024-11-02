@@ -1,4 +1,4 @@
-import { Courses } from '@apis/generated/Courses';
+import { Course } from '@api-swagger/Course';
 import {
   CourseCreateDataDto,
   CourseCreateErrorDto,
@@ -11,14 +11,14 @@ import {
   CourseUpdateDataDto,
   CourseUpdateErrorDto,
   CourseUpdatePayloadDto,
-} from '@apis/generated/data-contracts';
+} from '@api-swagger/data-contracts';
 import httpClient from '@config/httpClient';
 import { UseMutationResult, UseQueryResult, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
-const courseApi = new Courses(httpClient);
+const courseApi = new Course(httpClient);
 
-const queryKeys = {
+export const queryKeys = {
   getCourses: 'getCourses',
   getCourse: 'getCourse',
 };

@@ -12,8 +12,8 @@ import {
   DocumentUpdateDataDto,
   DocumentUpdateErrorDto,
   DocumentUpdatePayloadDto,
-} from '@apis/generated/data-contracts';
-import { Document } from '@apis/generated/Document';
+} from '@api-swagger/data-contracts';
+import { Document } from '@api-swagger/Document';
 import httpClient from '@config/httpClient';
 import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query';
 import { toast } from 'react-toastify';

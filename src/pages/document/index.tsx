@@ -1,5 +1,4 @@
-import { DocumentDto, DocumentListParamsDto, UserRoleDto } from '@apis/generated/data-contracts';
-import { useDeleteDocument, useGetDocuments, useUpdateDocument } from '@apis/hooks/document.hook';
+import { DocumentDto, DocumentListParamsDto, UserRoleDto } from '@api-swagger/data-contracts';
 import { MAIN_COLOR } from '@common/constant';
 import {
   AlignCenter,
@@ -14,6 +13,7 @@ import CConfirmModal from '@components/cConfirmModal';
 import CInput from '@components/cInput';
 import ClassMenu from '@components/layout/ClassMenu';
 import { SearchOutlined } from '@mui/icons-material';
+import { useDeleteDocument, useGetDocuments, useUpdateDocument } from '../../hooks/document.hook';
 
 import NoDataAvailable from '@components/NoData';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -23,13 +23,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Box, Button, CardContent, Divider, Stack, Typography } from '@mui/material';
 import DocumentModal from '@pages/document/components/DocumentModal';
 import useAuthStore from '@store/authStore';
+import useClassStore from '@store/classStore';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useSubjectStore from '../../store/classStore';
 
 const DocumentPage = () => {
   const { user } = useAuthStore();
-  const { subjectId, setSelectedDocument } = useSubjectStore();
+  const { subjectId, setSelectedDocument } = useClassStore();
   const [search, setSearch] = useState<DocumentListParamsDto>({});
   const [openCreateDocumentModal, setOpenCreateDocumentModal] = useState(false);
   const [openDeleteDocumentModal, setOpenDeleteDocumentModal] = useState(false);

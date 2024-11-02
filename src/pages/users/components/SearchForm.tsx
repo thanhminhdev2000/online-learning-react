@@ -1,4 +1,4 @@
-import { UserListParamsDto } from '@apis/generated/data-contracts';
+import { UserListParamsDto } from '@api-swagger/data-contracts';
 import { roleOptions } from '@common/constant';
 import CDatePicker from '@components/cDatePicker';
 import CInput from '@components/cInput';

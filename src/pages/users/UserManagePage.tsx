@@ -1,5 +1,4 @@
-import { UserDetailDto, UserGenderDto, UserListParamsDto, UserRoleDto } from '@apis/generated/data-contracts';
-import { useDeleteUser, useGetUsers } from '@apis/hooks/user.hook';
+import { UserDetailDto, UserGenderDto, UserListParamsDto, UserRoleDto } from '@api-swagger/data-contracts';
 import { DATE_FORMAT_VN, LIMIT } from '@common/constant';
 import { SpaceBetween } from '@common/styled';
 import CConfirmModal from '@components/cConfirmModal';
@@ -26,6 +25,7 @@ import { userInit } from '@store/constant';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDeleteUser, useGetUsers } from '../../hooks/user.hook';
 
 const UserManagePage = () => {
   const [rowData, setRowData] = useState(userInit);

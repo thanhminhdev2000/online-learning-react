@@ -1,4 +1,4 @@
-import { UserGenderDto, UserRoleDto } from '@apis/generated/data-contracts';
+import { UserGenderDto, UserRoleDto } from '@api-swagger/data-contracts';
 import { IOptions } from '@common/type';
 
 export const genderOptions: IOptions[] = [

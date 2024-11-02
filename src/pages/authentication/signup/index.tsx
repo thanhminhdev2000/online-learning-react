@@ -1,4 +1,3 @@
-import { useCreateUser } from '@apis/hooks/user.hook';
 import { DATE_FORMAT, genderOptions } from '@common/constant';
 import CDatePicker from '@components/cDatePicker';
 import CInput from '@components/cInput';
@@ -6,13 +5,14 @@ import CSelect from '@components/cSelect';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
+import { useCreateUser } from '../../../hooks/user.hook';
 
+import { UserGenderDto } from '@api-swagger/data-contracts';
 import { AuthContainer, ItemCenter, TypographyLink } from '@common/styled';
 import { signUpInit } from '@pages/authentication/constant';
 import { signUpSchema } from '@pages/authentication/type';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { UserGenderDto } from '@apis/generated/data-contracts';
 
 const SignUpPage = () => {
   const navigate = useNavigate();

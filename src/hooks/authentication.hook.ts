@@ -1,4 +1,4 @@
-import { Authentication } from '@apis/generated/Authentication';
+import { Authentication } from '@api-swagger/Authentication';
 import {
   ForgotPasswordDataDto,
   ForgotPasswordErrorDto,
@@ -11,7 +11,7 @@ import {
   ResetPasswordErrorDto,
   ResetPasswordParamsDto,
   ResetPasswordRequestDto,
-} from '@apis/generated/data-contracts';
+} from '@api-swagger/data-contracts';
 import httpClient from '@config/httpClient';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { toast } from 'react-toastify';

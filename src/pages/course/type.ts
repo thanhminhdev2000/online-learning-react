@@ -8,9 +8,19 @@ export const createdCourseSchema = z.object({
   instructor: z.string().min(1, errorMsg('Người hướng dẫn')),
   price: z.string().min(1, errorMsg('Gía')),
   description: z.string().min(1, errorMsg('Mô tả')),
-  file: z.any().refine((file) => file instanceof File && file.size > 0, errorMsg('File')),
+  thumbnail: z.any().refine((thumbnail) => thumbnail instanceof File && thumbnail.size > 0, errorMsg('Thumbnail')),
 });
 
 export const updatedCourseSchema = createdCourseSchema
-  .omit({ file: true })
+  .omit({ thumbnail: true })
   .merge(z.object({ file: z.any().optional() }));
+
+export const createdLessonSchema = z.object({
+  title: z.string().min(1, errorMsg('Tên bài học')),
+  position: z.string().min(1, errorMsg('Vị trí')),
+  video: z.any().refine((video) => video instanceof File && video.size > 0, errorMsg('Video')),
+});
+
+export const updatedLessonSchema = createdLessonSchema
+  .omit({ video: true })
+  .merge(z.object({ video: z.any().optional() }));

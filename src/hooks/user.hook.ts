@@ -18,8 +18,8 @@ import {
   UserListParamsDto,
   UserUpdateDataDto,
   UserUpdateErrorDto,
-} from '@apis/generated/data-contracts';
-import { User } from '@apis/generated/User';
+} from '@api-swagger/data-contracts';
+import { User } from '@api-swagger/User';
 import httpClient from '@config/httpClient';
 import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query';
 import { toast } from 'react-toastify';

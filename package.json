@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "swagger": "rimraf ./src/apis/generated && node generate-api.js"
+    "swagger": "rimraf ./src/api-swagger && node generate-api.js"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -24,6 +24,7 @@
     "axios": "^1.7.7",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
+    "dotenv": "^16.4.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.0",

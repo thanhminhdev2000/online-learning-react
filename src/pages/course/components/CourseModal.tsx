@@ -1,4 +1,3 @@
-import { useCreateCourse, useUpdateCourse } from '@apis/hooks/course.hook';
 import { CFormLabel, FlexEnd, SpaceBetween } from '@common/styled';
 import { CModalProps, IOptions } from '@common/type';
 import CInput from '@components/cInput';
@@ -15,6 +14,7 @@ import { createdCourseSchema, updatedCourseSchema } from '@pages/course/type';
 import useClassStore from '@store/classStore';
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useCreateCourse, useUpdateCourse } from '../../../hooks/course.hook';
 
 const CourseModal = ({ open, onClose }: CModalProps) => {
   const { classId, subjectId, classes, selectedCourse } = useClassStore();
@@ -29,7 +29,7 @@ const CourseModal = ({ open, onClose }: CModalProps) => {
       instructor: selectedCourse.instructor,
       price: selectedCourse.id ? String(selectedCourse.price) : '',
       description: selectedCourse.description,
-      file: undefined,
+      thumbnail: undefined,
     },
   });
 
@@ -67,7 +67,7 @@ const CourseModal = ({ open, onClose }: CModalProps) => {
   const updateCourse = useUpdateCourse();
 
   const handleSubmitForm = handleSubmit((formData) => {
-    if (!formData.file) {
+    if (!formData.thumbnail) {
       return;
     }
 
@@ -76,11 +76,8 @@ const CourseModal = ({ open, onClose }: CModalProps) => {
         {
           id: selectedCourse.id,
           data: {
-            title: formData.title,
+            ...formData,
             price: Number(formData.price),
-            description: formData.description,
-            instructor: formData.instructor,
-            thumbnail: formData.file,
           },
         },
         {
@@ -96,7 +93,7 @@ const CourseModal = ({ open, onClose }: CModalProps) => {
       {
         ...formData,
         price: Number(formData.price),
-        thumbnail: formData.file,
+        thumbnail: formData.thumbnail,
       },
       {
         onSuccess() {
@@ -159,10 +156,10 @@ const CourseModal = ({ open, onClose }: CModalProps) => {
                     hidden
                     accept="image/jpeg,image/png,image/gif"
                     type="file"
-                    {...register('file', {
+                    {...register('thumbnail', {
                       onChange: (e) => {
                         const file = e.target.files?.[0] || null;
-                        setValue('file', file, { shouldValidate: true });
+                        setValue('thumbnail', file, { shouldValidate: true });
                         setFileName(file.name);
                       },
                     })}
@@ -173,7 +170,7 @@ const CourseModal = ({ open, onClose }: CModalProps) => {
                     {fileName}
                   </Typography>
                 )}
-                <ErrorMessage message={errors.file?.message} />
+                <ErrorMessage message={errors.thumbnail?.message} />
               </Stack>
             </Stack>
 
