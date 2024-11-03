@@ -39,7 +39,6 @@ const LessonDetailPage = () => {
     register,
     handleSubmit,
     reset,
-    watch,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(activeCourseForUserSchema),
@@ -72,8 +71,6 @@ const LessonDetailPage = () => {
       },
     });
   };
-
-  console.log('out', watch());
 
   const handleActiveCourseForUser = handleSubmit((formData) => {
     console.log('formData', formData);
