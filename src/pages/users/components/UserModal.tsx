@@ -51,13 +51,13 @@ const UserModal = ({ open, onClose, data }: UserProps) => {
     if (data.id) {
       updateUser(formData, {
         onSuccess() {
-          onClose();
+          onClose?.();
         },
       });
     } else {
       createAdmin(formData, {
         onSuccess() {
-          onClose();
+          onClose?.();
         },
       });
     }
@@ -65,7 +65,7 @@ const UserModal = ({ open, onClose, data }: UserProps) => {
 
   const closeModal = () => {
     reset();
-    onClose();
+    onClose?.();
   };
 
   return (
