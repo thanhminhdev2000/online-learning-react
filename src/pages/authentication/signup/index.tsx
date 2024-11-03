@@ -5,14 +5,14 @@ import CSelect from '@components/cSelect';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
-import { useCreateUser } from '../../../api-hooks/user.hook';
 
-import { UserGenderDto } from '@api-swagger/data-contracts';
 import { AuthContainer, ItemCenter, TypographyLink } from '@common/styled';
 import { signUpInit } from '@pages/authentication/constant';
 import { signUpSchema } from '@pages/authentication/type';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useCreateUser } from '@api-hooks/user.hook';
+import { UserGenderDto } from '@api-swagger/data-contracts';
 
 const SignUpPage = () => {
   const navigate = useNavigate();

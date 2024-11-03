@@ -34,6 +34,7 @@ export interface CourseDto {
   description: string;
   id: number;
   instructor: string;
+  isActive: boolean;
   lessons: LessonDto[];
   price: number;
   subjectId: number;
@@ -238,11 +239,16 @@ export type CourseCreateDataDto = CourseDto;
 
 export type CourseCreateErrorDto = ErrorDto;
 
-export type PurchaseCreatePayloadDto = string;
+export interface ActivateCreatePayloadDto {
+  /** User Email */
+  email: string;
+  /** Course ID */
+  courseId: number;
+}
 
-export type PurchaseCreateDataDto = MessageDto;
+export type ActivateCreateDataDto = MessageDto;
 
-export type PurchaseCreateErrorDto = ErrorDto;
+export type ActivateCreateErrorDto = ErrorDto;
 
 export type CourseDetailDataDto = CourseDto;
 

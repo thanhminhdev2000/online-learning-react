@@ -10,6 +10,9 @@
  */
 
 import {
+  ActivateCreateDataDto,
+  ActivateCreateErrorDto,
+  ActivateCreatePayloadDto,
   CourseCreateDataDto,
   CourseCreateErrorDto,
   CourseCreatePayloadDto,
@@ -23,9 +26,6 @@ import {
   CourseUpdateDataDto,
   CourseUpdateErrorDto,
   CourseUpdatePayloadDto,
-  PurchaseCreateDataDto,
-  PurchaseCreateErrorDto,
-  PurchaseCreatePayloadDto,
 } from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
 
@@ -76,22 +76,22 @@ export class Course<SecurityDataType = unknown> {
       ...params,
     });
   /**
-   * @description Purchase a course by user ID and course ID
+   * @description Admin activates a course for a specific user using email
    *
    * @tags Course
-   * @name PurchaseCreate
-   * @summary Purchase a course
-   * @request POST:/courses/purchase
-   * @response `200` `PurchaseCreateDataDto` OK
+   * @name ActivateCreate
+   * @summary Activate a course for a user
+   * @request POST:/courses/activate
+   * @response `200` `ActivateCreateDataDto` OK
    * @response `400` `ErrorDto` Bad Request
    * @response `404` `ErrorDto` Not Found
    * @response `500` `ErrorDto` Internal Server Error
    */
-  purchaseCreate = (id: number, email: PurchaseCreatePayloadDto, params: RequestParams = {}) =>
-    this.http.request<PurchaseCreateDataDto, PurchaseCreateErrorDto>({
-      path: `/courses/purchase`,
+  activateCreate = (data: ActivateCreatePayloadDto, params: RequestParams = {}) =>
+    this.http.request<ActivateCreateDataDto, ActivateCreateErrorDto>({
+      path: `/courses/activate`,
       method: 'POST',
-      body: email,
+      body: data,
       type: ContentType.Json,
       format: 'json',
       ...params,

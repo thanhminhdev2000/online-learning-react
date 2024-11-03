@@ -9,8 +9,9 @@ export interface IOptions {
 
 export interface CModalProps {
   open: boolean;
+  title?: string;
   onSubmit?: () => void;
-  onClose: () => void;
+  onClose?: () => void;
   children?: ReactNode;
   content?: string;
   refetch?: () => void;

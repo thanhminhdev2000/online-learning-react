@@ -7,12 +7,12 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 
-const CConfirmModal = ({ open, onSubmit, onClose, children, content }: CModalProps) => {
+const CConfirmModal = ({ title = 'Xác nhận', open, onSubmit, onClose, children, content }: CModalProps) => {
   return (
     <Modal open={open} onClose={onClose}>
       <ModalWrapper>
         <Stack justifyContent="space-between" alignItems="center">
-          <Typography variant="h6">Xác nhận</Typography>
+          <Typography variant="h6">{title}</Typography>
           <Close onClick={onClose} sx={{ cursor: 'pointer' }} />
         </Stack>
 
@@ -21,10 +21,12 @@ const CConfirmModal = ({ open, onSubmit, onClose, children, content }: CModalPro
         </Stack>
 
         <FlexEnd marginTop={4} gap={2}>
-          <Button onClick={onClose}>Huỷ bỏ</Button>
-          <Button variant="contained" type="submit" onClick={onSubmit}>
-            Xác nhận
-          </Button>
+          {onClose && <Button onClick={onClose}>Huỷ bỏ</Button>}
+          {onSubmit && (
+            <Button variant="contained" type="submit" onClick={onSubmit}>
+              Xác nhận
+            </Button>
+          )}
         </FlexEnd>
       </ModalWrapper>
     </Modal>

@@ -1,9 +1,13 @@
-import { useGetCourse } from '@api-hooks/course.hook';
+import { useActiveCourseForUser, useGetCourse } from '@api-hooks/course.hook';
 import { useDeleteLesson } from '@api-hooks/lesson.hook';
 import { LessonDto, UserRoleDto } from '@api-swagger/data-contracts';
 import { AlignCenter, ImageStyled, OverflowMultiLine, SpaceBetween } from '@common/styled';
 import CConfirmModal from '@components/cConfirmModal';
+import CInput from '@components/cInput';
 import NoDataAvailable from '@components/NoData';
+import PaymentModal from '@components/PaymentModal';
+import { zodResolver } from '@hookform/resolvers/zod';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
@@ -12,19 +16,37 @@ import SendIcon from '@mui/icons-material/Send';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import { Box, Button, Collapse, Divider, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
 import LessonModal from '@pages/course/components/LessonModal';
+import { activeCourseForUserSchema } from '@pages/course/type';
 import useAuthStore from '@store/authStore';
 import useClassStore from '@store/classStore';
 import { convertSecondsToHours, convertSecondsToMinutes } from '@utils/index';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const LessonDetailPage = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
-  const { user } = useAuthStore();
+  const { user, getUser } = useAuthStore();
   const { setSelectedLesson } = useClassStore();
   const [openLessonModal, setOpenLessonModal] = useState(false);
   const [openDeleteLessonModal, setOpenDeleteLessonModal] = useState(false);
+  const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(activeCourseForUserSchema),
+    values: {
+      email: '',
+    },
+  });
 
   const { data } = useGetCourse(Number(id) || 0);
 
@@ -40,23 +62,49 @@ const LessonDetailPage = () => {
     });
   };
 
-  const { mutate } = useDeleteLesson();
+  const { mutate: deleteLesson } = useDeleteLesson();
+  const { mutate: activeCourseForUser } = useActiveCourseForUser();
 
   const handleDeleteLesson = (courseId: number) => {
-    mutate(courseId, {
+    deleteLesson(courseId, {
       onSuccess() {
         setOpenDeleteLessonModal(false);
       },
     });
   };
 
+  console.log('out', watch());
+
+  const handleActiveCourseForUser = handleSubmit((formData) => {
+    console.log('formData', formData);
+    activeCourseForUser(
+      {
+        email: formData.email,
+        courseId: Number(id),
+      },
+      {
+        onSuccess() {
+          reset();
+        },
+      },
+    );
+  });
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  useEffect(() => {
+    const user = getUser();
+    if (!user.id) {
+      toast.warn('Bạn cần đăng nhập để xem chi tiết');
+      navigate('/login');
+    }
+  }, [user, navigate, getUser]);
 
   return (
     <Stack marginTop={5} gap={10}>
       <Stack flexDirection="column" gap={4} width={{ xs: '100%', md: '70%' }}>
-        <Stack gap={5}>
+        <Stack gap={{ xs: 2, md: 5 }}>
           <Box width={{ xs: '60%', md: '100%' }}>
             <Typography variant={isMobile ? 'h6' : 'h5'} fontWeight="bold">
               {data?.title}
@@ -95,18 +143,27 @@ const LessonDetailPage = () => {
 
             {user.role === UserRoleDto.RoleAdmin ? (
               <AlignCenter gap={2}>
-                <TextField placeholder="User email" fullWidth />
+                <CInput
+                  label="User email"
+                  showLabel={false}
+                  registerProps={register('email')}
+                  errorMsg={errors.email?.message}
+                />
 
-                <SendIcon fontSize="medium" sx={{ cursor: 'pointer' }} />
+                <SendIcon fontSize="medium" sx={{ cursor: 'pointer' }} onClick={handleActiveCourseForUser} />
               </AlignCenter>
             ) : (
-              <AlignCenter gap={2}>
-                <Typography variant={isMobile ? 'h6' : 'h5'} fontWeight="bold">
-                  {data?.price.toLocaleString()} VND
-                </Typography>
+              <>
+                {!data?.isActive && (
+                  <SpaceBetween>
+                    <Typography variant="h6" fontWeight="bold">
+                      {data?.price.toLocaleString()}
+                    </Typography>
 
-                <Button variant="contained">Mua ngay</Button>
-              </AlignCenter>
+                    <AddShoppingCartIcon onClick={() => setOpenPaymentModal(true)} sx={{ cursor: 'pointer' }} />
+                  </SpaceBetween>
+                )}
+              </>
             )}
           </Stack>
         </Stack>
@@ -160,10 +217,14 @@ const LessonDetailPage = () => {
 
               <Collapse in={openStates[index]}>
                 <Box sx={{ padding: 2 }}>
-                  <video controls width="100%">
-                    <source src={item.videoUrl} type="video/mp4" />
-                    Trình duyệt của bạn không hỗ trợ video.
-                  </video>
+                  {data.isActive ? (
+                    <video controls width="100%">
+                      <source src={item.videoUrl} type="video/mp4" />
+                      Trình duyệt của bạn không hỗ trợ video.
+                    </video>
+                  ) : (
+                    <>Bạn cần đăng ký khoá học</>
+                  )}
                 </Box>
               </Collapse>
             </Box>
@@ -200,18 +261,24 @@ const LessonDetailPage = () => {
           <Stack alignItems="end" gap={2}>
             <TextField placeholder="User email" />
 
-            <Button variant="contained" sx={{ width: 120, height: 35 }}>
+            <Button variant="contained" sx={{ width: 120, height: 35 }} onClick={handleActiveCourseForUser}>
               Kích hoạt
             </Button>
           </Stack>
         ) : (
-          <SpaceBetween>
-            <Typography variant="h5" fontWeight="bold">
-              {data?.price.toLocaleString()} VND
-            </Typography>
+          <>
+            {!data?.isActive && (
+              <SpaceBetween>
+                <Typography variant="h6" fontWeight="bold">
+                  {data?.price.toLocaleString()}
+                </Typography>
 
-            <Button variant="contained">Mua ngay</Button>
-          </SpaceBetween>
+                <Button variant="contained" onClick={() => setOpenPaymentModal(true)}>
+                  Mua ngay
+                </Button>
+              </SpaceBetween>
+            )}
+          </>
         )}
       </Stack>
 
@@ -230,6 +297,8 @@ const LessonDetailPage = () => {
         content="Bạn có chắc chắn muốn xoá nó không?"
         onSubmit={() => handleDeleteLesson(selectedId)}
       />
+
+      <PaymentModal open={openPaymentModal} onClose={() => setOpenPaymentModal(false)} />
     </Stack>
   );
 };

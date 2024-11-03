@@ -1,3 +1,4 @@
+import { useCreateLesson, useUpdateLesson } from '@api-hooks/lesson.hook';
 import { CFormLabel, FlexEnd, SpaceBetween } from '@common/styled';
 import { CModalProps } from '@common/type';
 import CInput from '@components/cInput';
@@ -14,7 +15,6 @@ import useClassStore from '@store/classStore';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { useCreateLesson, useUpdateLesson } from '../../../api-hooks/lesson.hook';
 
 interface LessonModalProps extends CModalProps {
   length: number;
@@ -46,8 +46,6 @@ const LessonModal = ({ length, open, onClose }: LessonModalProps) => {
   } = formInstance;
 
   const position = watch('position');
-  const video = watch('video');
-  console.log(video);
 
   const createLesson = useCreateLesson();
   const updateLesson = useUpdateLesson();
@@ -94,7 +92,7 @@ const LessonModal = ({ length, open, onClose }: LessonModalProps) => {
   const closeModal = () => {
     reset();
     setFileName(null);
-    onClose();
+    onClose?.();
   };
 
   useEffect(() => {

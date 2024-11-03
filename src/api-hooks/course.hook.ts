@@ -1,5 +1,8 @@
 import { Course } from '@api-swagger/Course';
 import {
+  ActivateCreateDataDto,
+  ActivateCreateErrorDto,
+  ActivateCreatePayloadDto,
   CourseCreateDataDto,
   CourseCreateErrorDto,
   CourseCreatePayloadDto,
@@ -90,6 +93,22 @@ export const useDeleteCourse = (): UseMutationResult<CourseDeleteDataDto, Course
       queryClient.invalidateQueries({
         queryKey: [queryKeys.getCourses],
       });
+    },
+    onError(data) {
+      toast.error(data.error);
+    },
+  });
+};
+
+export const useActiveCourseForUser = (): UseMutationResult<
+  ActivateCreateDataDto,
+  ActivateCreateErrorDto,
+  ActivateCreatePayloadDto
+> => {
+  return useMutation({
+    mutationFn: (data: ActivateCreatePayloadDto) => courseApi.activateCreate(data),
+    onSuccess(data) {
+      toast.success(data.message);
     },
     onError(data) {
       toast.error(data.error);

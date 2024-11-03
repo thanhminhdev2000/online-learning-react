@@ -111,13 +111,15 @@ export const MaxFourElement = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     gridTemplateColumns: 'repeat(2,1fr)',
   },
-
   [theme.breakpoints.up('md')]: {
+    gridTemplateColumns: 'repeat(3,1fr)',
+  },
+  [theme.breakpoints.up('lg')]: {
     gridTemplateColumns: 'repeat(4,1fr)',
   },
 }));
 
-export const MaxTwoElement = styled(Box)(({ theme }) => ({
+export const MaxThreeElement = styled(Box)(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(1,1fr)',
   gap: theme.spacing(4),
@@ -125,6 +127,9 @@ export const MaxTwoElement = styled(Box)(({ theme }) => ({
 
   [theme.breakpoints.up('sm')]: {
     gridTemplateColumns: 'repeat(2,1fr)',
+  },
+  [theme.breakpoints.up('md')]: {
+    gridTemplateColumns: 'repeat(3,1fr)',
   },
 }));
 

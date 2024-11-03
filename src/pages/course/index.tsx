@@ -5,8 +5,7 @@ import {
   DeleteIconStyled,
   EditIconStyled,
   ImageStyled,
-  ItemCenter,
-  MaxTwoElement,
+  MaxThreeElement,
   OverflowMultiLine,
   SpaceBetween,
 } from '@common/styled';
@@ -80,7 +79,7 @@ const CoursePage = () => {
             </AlignCenter>
           </SpaceBetween>
 
-          <MaxTwoElement>
+          <MaxThreeElement>
             {data?.data?.map((course) => (
               <Box
                 key={course.id}
@@ -90,10 +89,10 @@ const CoursePage = () => {
                   setSelectedId(course.id);
                 }}
               >
-                <Box sx={{ position: 'relative', border: '1px solid #ccc', cursor: 'pointer' }}>
+                <Box sx={{ position: 'relative', border: '1px solid #ccc', cursor: 'pointer', paddingBottom: 5 }}>
                   <ImageStyled src={course.thumbnailUrl} alt="Ảnh bìa" />
 
-                  <Stack flexDirection="column" gap={2} paddingX={3} height={170}>
+                  <Stack flexDirection="column" gap={2} paddingX={3} height={200}>
                     <OverflowMultiLine
                       variant="h6"
                       lines={2}
@@ -105,24 +104,20 @@ const CoursePage = () => {
                     >
                       {course.title}
                     </OverflowMultiLine>
+                    <OverflowMultiLine lines={3}>{course?.description}</OverflowMultiLine>
 
-                    <Typography>Giáo viên: {course.instructor}</Typography>
                     <Stack gap={1}>
-                      Giá: <Typography fontWeight="bold">{course.price.toLocaleString()}</Typography> VND
+                      Giáo viên: <Typography fontWeight="bold">{course.instructor}</Typography>
                     </Stack>
 
-                    <ItemCenter>
-                      <Stack gap={4}>
-                        <Button>Vào học</Button>
-                        <Button>Mua ngay</Button>
-                      </Stack>
-                    </ItemCenter>
+                    <Stack gap={1}>
+                      Giá: <Typography fontWeight="bold">{course.price.toLocaleString()} VND</Typography>
+                    </Stack>
                   </Stack>
 
                   <Box paddingX={2}>
                     {user.role === UserRoleDto.RoleAdmin && (
                       <DeleteIconStyled
-                        sx={{ color: 'white' }}
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedId(course.id);
@@ -132,7 +127,6 @@ const CoursePage = () => {
                     )}
                     {user.role === UserRoleDto.RoleAdmin && (
                       <EditIconStyled
-                        sx={{ color: 'white' }}
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedCourse(course);
@@ -145,7 +139,7 @@ const CoursePage = () => {
                 </Box>
               </Box>
             ))}
-          </MaxTwoElement>
+          </MaxThreeElement>
           <NoDataAvailable length={data?.data?.length || 0} />
         </Box>
 

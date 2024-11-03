@@ -1,3 +1,4 @@
+import { useCreateCourse, useUpdateCourse } from '@api-hooks/course.hook';
 import { CFormLabel, FlexEnd, SpaceBetween } from '@common/styled';
 import { CModalProps, IOptions } from '@common/type';
 import CInput from '@components/cInput';
@@ -14,7 +15,6 @@ import { createdCourseSchema, updatedCourseSchema } from '@pages/course/type';
 import useClassStore from '@store/classStore';
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useCreateCourse, useUpdateCourse } from '../../../api-hooks/course.hook';
 
 const CourseModal = ({ open, onClose }: CModalProps) => {
   const { classId, subjectId, classes, selectedCourse } = useClassStore();
@@ -106,7 +106,7 @@ const CourseModal = ({ open, onClose }: CModalProps) => {
   const closeModal = () => {
     reset();
     setFileName(null);
-    onClose();
+    onClose?.();
   };
 
   return (

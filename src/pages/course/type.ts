@@ -24,3 +24,7 @@ export const createdLessonSchema = z.object({
 export const updatedLessonSchema = createdLessonSchema
   .omit({ video: true })
   .merge(z.object({ video: z.any().optional() }));
+
+export const activeCourseForUserSchema = z.object({
+  email: z.string().min(1, errorMsg('Email')),
+});

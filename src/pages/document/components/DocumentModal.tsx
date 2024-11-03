@@ -113,7 +113,7 @@ const DocumentModal = ({ refetch, open, onClose }: CModalProps) => {
   const closeModal = () => {
     reset();
     setFileName(null);
-    onClose();
+    onClose?.();
   };
 
   useEffect(() => {}, []);
