@@ -71,6 +71,7 @@ export const ItemCenter = styled(Stack)(() => ({
 }));
 
 export const SpaceBetween = styled(Stack)(() => ({
+  alignItems: 'center',
   justifyContent: 'space-between',
 }));
 

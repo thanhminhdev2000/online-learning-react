@@ -1,5 +1,5 @@
 import { LessonDto, UserRoleDto } from '@api-swagger/data-contracts';
-import { AlignCenter, SpaceBetween } from '@common/styled';
+import { AlignCenter, OverflowMultiLine, SpaceBetween } from '@common/styled';
 import CConfirmModal from '@components/cConfirmModal';
 import NoDataAvailable from '@components/NoData';
 import { useGetCourse } from '@hooks/course.hook';
@@ -8,8 +8,9 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import SendIcon from '@mui/icons-material/Send';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
-import { Box, Button, Collapse, Stack, Typography } from '@mui/material';
+import { Box, Button, Collapse, Divider, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
 import LessonModal from '@pages/course/components/LessonModal';
 import { ImageStyled } from '@pages/course/styled';
 import useAuthStore from '@store/authStore';
@@ -50,22 +51,71 @@ const LessonDetailPage = () => {
     });
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Stack marginTop={5} gap={10}>
-      <Stack flexDirection="column" gap={4} width="70%">
-        <Typography variant="h4" fontWeight="bold">
-          {data?.title}
-        </Typography>
+      <Stack flexDirection="column" gap={4} width={{ xs: '100%', md: '70%' }}>
+        <Stack gap={5}>
+          <Box width={{ xs: '60%', md: '100%' }}>
+            <Typography variant={isMobile ? 'h6' : 'h4'} fontWeight="bold">
+              {data?.title}
+            </Typography>
 
-        <Typography>{data?.description}</Typography>
+            <OverflowMultiLine lines={10}>{data?.description}</OverflowMultiLine>
 
-        <Stack gap={2}>
-          Được tạo bởi:
-          <Typography fontWeight="bold">{data?.instructor}</Typography>
+            <Stack gap={2}>
+              Được tạo bởi:
+              <Typography fontWeight="bold">{data?.instructor}</Typography>
+            </Stack>
+          </Box>
+
+          <Stack flexDirection="column" width="40%" display={{ xs: 'block', md: 'none' }}>
+            <ImageStyled src={data?.thumbnailUrl} alt="Ảnh bìa" />
+
+            <Stack
+              flexDirection="column"
+              gap={1}
+              sx={{
+                marginY: 2,
+              }}
+            >
+              <AlignCenter gap={2}>
+                <OndemandVideoIcon /> {convertSecondsToHours(totalCourseDuration)} giờ video theo yêu cầu
+              </AlignCenter>
+
+              <AlignCenter gap={2}>
+                <PhoneAndroidIcon /> Truy cập trên di động và TV
+              </AlignCenter>
+
+              <AlignCenter gap={2}>
+                <WorkspacePremiumIcon /> Chứng chỉ hoàn thành
+              </AlignCenter>
+            </Stack>
+
+            {user.role === UserRoleDto.RoleAdmin ? (
+              <AlignCenter gap={2}>
+                <TextField placeholder="User email" fullWidth />
+
+                <SendIcon fontSize="medium" sx={{ cursor: 'pointer' }} />
+              </AlignCenter>
+            ) : (
+              <AlignCenter gap={2}>
+                <Typography variant={isMobile ? 'h6' : 'h5'} fontWeight="bold">
+                  {data?.price.toLocaleString()} VND
+                </Typography>
+
+                <Button variant="contained">Mua ngay</Button>
+              </AlignCenter>
+            )}
+          </Stack>
         </Stack>
 
+        <Divider sx={{ paddingY: 3 }} />
+
         <SpaceBetween>
-          <Typography variant="h5" fontWeight="bold">
+          <Typography variant={isMobile ? 'h6' : 'h5'} fontWeight="bold">
             Nội dung khoá học
           </Typography>
 
@@ -124,7 +174,7 @@ const LessonDetailPage = () => {
         </Box>
       </Stack>
 
-      <Stack flexDirection="column" width="30%">
+      <Stack flexDirection="column" width="30%" display={{ xs: 'none', md: 'block' }}>
         <ImageStyled src={data?.thumbnailUrl} alt="Ảnh bìa" />
 
         <Stack
@@ -147,15 +197,23 @@ const LessonDetailPage = () => {
           </AlignCenter>
         </Stack>
 
-        <SpaceBetween>
-          <Typography variant="h5" fontWeight="bold">
-            {data?.price.toLocaleString()} VND
-          </Typography>
+        {user.role === UserRoleDto.RoleAdmin ? (
+          <Stack alignItems="end" gap={2}>
+            <TextField placeholder="User email" />
 
-          <Button variant="contained" size="medium">
-            Mua ngay
-          </Button>
-        </SpaceBetween>
+            <Button variant="contained" sx={{ width: 120, height: 35 }}>
+              Kích hoạt
+            </Button>
+          </Stack>
+        ) : (
+          <SpaceBetween>
+            <Typography variant="h5" fontWeight="bold">
+              {data?.price.toLocaleString()} VND
+            </Typography>
+
+            <Button variant="contained">Mua ngay</Button>
+          </SpaceBetween>
+        )}
       </Stack>
 
       <LessonModal

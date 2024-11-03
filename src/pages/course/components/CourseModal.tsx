@@ -67,10 +67,6 @@ const CourseModal = ({ open, onClose }: CModalProps) => {
   const updateCourse = useUpdateCourse();
 
   const handleSubmitForm = handleSubmit((formData) => {
-    if (!formData.thumbnail) {
-      return;
-    }
-
     if (selectedCourse.id) {
       updateCourse.mutate(
         {
@@ -86,6 +82,10 @@ const CourseModal = ({ open, onClose }: CModalProps) => {
           },
         },
       );
+      return;
+    }
+
+    if (!formData.thumbnail) {
       return;
     }
 
@@ -114,7 +114,7 @@ const CourseModal = ({ open, onClose }: CModalProps) => {
       <Modal open={open} onClose={closeModal}>
         <ModalWrapper>
           <form onSubmit={handleSubmitForm}>
-            <SpaceBetween alignItems="center">
+            <SpaceBetween>
               <Typography variant="h6">Đăng tải tài liệu</Typography>
               <Close onClick={closeModal} sx={{ cursor: 'pointer' }} />
             </SpaceBetween>

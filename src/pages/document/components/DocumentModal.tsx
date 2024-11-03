@@ -123,7 +123,7 @@ const DocumentModal = ({ refetch, open, onClose }: CModalProps) => {
       <Modal open={open} onClose={closeModal}>
         <ModalWrapper>
           <form onSubmit={handleSubmitForm}>
-            <SpaceBetween alignItems="center">
+            <SpaceBetween>
               <Typography variant="h6">Đăng tải</Typography>
               <Close onClick={closeModal} sx={{ cursor: 'pointer' }} />
             </SpaceBetween>

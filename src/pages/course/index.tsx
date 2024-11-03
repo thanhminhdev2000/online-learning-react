@@ -1,4 +1,4 @@
-import { UserRoleDto } from '@api-swagger/data-contracts';
+import { CourseDto, UserRoleDto } from '@api-swagger/data-contracts';
 import {
   AlignCenter,
   DeleteIconStyled,
@@ -149,7 +149,13 @@ const CoursePage = () => {
           <NoDataAvailable length={data?.data?.length || 0} />
         </Box>
 
-        <CourseModal open={openCourseModal} onClose={() => setOpenCourseModal(false)} />
+        <CourseModal
+          open={openCourseModal}
+          onClose={() => {
+            setSelectedCourse({} as CourseDto);
+            setOpenCourseModal(false);
+          }}
+        />
 
         <CConfirmModal
           open={openDeleteCourseModal}

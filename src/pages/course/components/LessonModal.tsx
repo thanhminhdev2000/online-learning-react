@@ -120,7 +120,7 @@ const LessonModal = ({ length, open, onClose }: LessonModalProps) => {
       <Modal open={open} onClose={closeModal}>
         <ModalWrapper>
           <form onSubmit={handleSubmitForm}>
-            <SpaceBetween alignItems="center">
+            <SpaceBetween>
               <Typography variant="h6">Đăng tải tài liệu</Typography>
               <Close onClick={closeModal} sx={{ cursor: 'pointer' }} />
             </SpaceBetween>
