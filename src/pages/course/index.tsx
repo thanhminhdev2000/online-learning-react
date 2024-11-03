@@ -1,3 +1,4 @@
+import { useDeleteCourse, useGetCourses } from '@api-hooks/course.hook';
 import { CourseDto, UserRoleDto } from '@api-swagger/data-contracts';
 import {
   AlignCenter,
@@ -13,7 +14,6 @@ import CConfirmModal from '@components/cConfirmModal';
 import CInput from '@components/cInput';
 import ClassMenu from '@components/layout/ClassMenu';
 import NoDataAvailable from '@components/NoData';
-import { useDeleteCourse, useGetCourses } from '@hooks/course.hook';
 import { SearchOutlined } from '@mui/icons-material';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import CourseModal from '@pages/course/components/CourseModal';

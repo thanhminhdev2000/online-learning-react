@@ -7,7 +7,7 @@ import { resetPasswordSchema } from '@pages/authentication/type';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useResetPassword } from '../../../hooks/authentication.hook';
+import { useResetPassword } from '../../../api-hooks/authentication.hook';
 
 const ResetPasswordPage = () => {
   const { token = '' } = useParams();

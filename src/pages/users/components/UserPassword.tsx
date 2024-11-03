@@ -6,7 +6,7 @@ import { updatePasswordInit } from '@pages/authentication/constant';
 import { userPasswordSchema } from '@pages/authentication/type';
 import useAuthStore from '@store/authStore';
 import { useForm } from 'react-hook-form';
-import { useUpdateUserPassword } from '../../../hooks/user.hook';
+import { useUpdateUserPassword } from '../../../api-hooks/user.hook';
 
 const UserPassword = () => {
   const { user } = useAuthStore();

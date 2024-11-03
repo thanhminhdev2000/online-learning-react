@@ -14,7 +14,7 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { signUpSchema } from '@pages/authentication/type';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useCreateAdmin, useUpdateUser } from '../../../hooks/user.hook';
+import { useCreateAdmin, useUpdateUser } from '../../../api-hooks/user.hook';
 
 interface UserProps extends CModalProps {
   data: UserDetailDto;

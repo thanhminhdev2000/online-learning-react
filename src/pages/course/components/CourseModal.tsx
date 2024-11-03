@@ -14,7 +14,7 @@ import { createdCourseSchema, updatedCourseSchema } from '@pages/course/type';
 import useClassStore from '@store/classStore';
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useCreateCourse, useUpdateCourse } from '../../../hooks/course.hook';
+import { useCreateCourse, useUpdateCourse } from '../../../api-hooks/course.hook';
 
 const CourseModal = ({ open, onClose }: CModalProps) => {
   const { classId, subjectId, classes, selectedCourse } = useClassStore();

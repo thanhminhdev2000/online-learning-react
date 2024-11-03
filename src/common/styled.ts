@@ -165,8 +165,16 @@ export const ListItemStyled = styled(ListItem)(() => ({
   cursor: 'pointer',
 }));
 
-export const ImageStyled = styled('img')(() => ({
+export const ImageStyled = styled('img')(({ theme }) => ({
   width: '100%',
-  height: '320px',
+  height: 120,
   objectFit: 'cover',
+
+  [theme.breakpoints.up('sm')]: {
+    height: 160,
+  },
+
+  [theme.breakpoints.up('md')]: {
+    height: 200,
+  },
 }));

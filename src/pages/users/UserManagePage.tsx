@@ -25,7 +25,7 @@ import { userInit } from '@store/constant';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import { useDeleteUser, useGetUsers } from '../../hooks/user.hook';
+import { useDeleteUser, useGetUsers } from '../../api-hooks/user.hook';
 
 const UserManagePage = () => {
   const [rowData, setRowData] = useState(userInit);
@@ -39,10 +39,10 @@ const UserManagePage = () => {
 
   const { data: response, refetch, isFetching } = useGetUsers({ ...search, page, limit });
   const { data, paging } = response || {};
-  const { limit: limitPerPage = 1, totalCount = 0 } = paging || {};
+  const { limit: limitPerPage = 1, total = 0 } = paging || {};
 
-  const dividedPage = Math.floor(totalCount / limitPerPage);
-  const totalPage = totalCount % limitPerPage == 0 ? dividedPage : dividedPage + 1;
+  const dividedPage = Math.floor(total / limitPerPage);
+  const totalPage = total % limitPerPage == 0 ? dividedPage : dividedPage + 1;
 
   const handleSearch = (data: UserListParamsDto) => {
     setSearch(data);
@@ -58,10 +58,10 @@ const UserManagePage = () => {
   };
 
   useEffect(() => {
-    if (totalCount && page > totalPage) {
+    if (total && page > totalPage) {
       setPage(totalPage);
     }
-  }, [totalCount, page, totalPage]);
+  }, [total, page, totalPage]);
 
   return (
     <Container maxWidth="lg">

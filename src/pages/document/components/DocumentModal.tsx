@@ -14,7 +14,7 @@ import { createdDocumentSchema, updatedDocumentSchema } from '@pages/document/ty
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { useCreateDocument, useUpdateDocument } from '../../../hooks/document.hook';
+import { useCreateDocument, useUpdateDocument } from '../../../api-hooks/document.hook';
 import useClassStore from '../../../store/classStore';
 
 const DocumentModal = ({ refetch, open, onClose }: CModalProps) => {

@@ -1,9 +1,9 @@
+import { useGetCourse } from '@api-hooks/course.hook';
+import { useDeleteLesson } from '@api-hooks/lesson.hook';
 import { LessonDto, UserRoleDto } from '@api-swagger/data-contracts';
-import { AlignCenter, OverflowMultiLine, SpaceBetween } from '@common/styled';
+import { AlignCenter, ImageStyled, OverflowMultiLine, SpaceBetween } from '@common/styled';
 import CConfirmModal from '@components/cConfirmModal';
 import NoDataAvailable from '@components/NoData';
-import { useGetCourse } from '@hooks/course.hook';
-import { useDeleteLesson } from '@hooks/lesson.hook';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
@@ -12,7 +12,6 @@ import SendIcon from '@mui/icons-material/Send';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import { Box, Button, Collapse, Divider, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
 import LessonModal from '@pages/course/components/LessonModal';
-import { ImageStyled } from '@pages/course/styled';
 import useAuthStore from '@store/authStore';
 import useClassStore from '@store/classStore';
 import { convertSecondsToHours, convertSecondsToMinutes } from '@utils/index';
@@ -59,7 +58,7 @@ const LessonDetailPage = () => {
       <Stack flexDirection="column" gap={4} width={{ xs: '100%', md: '70%' }}>
         <Stack gap={5}>
           <Box width={{ xs: '60%', md: '100%' }}>
-            <Typography variant={isMobile ? 'h6' : 'h4'} fontWeight="bold">
+            <Typography variant={isMobile ? 'h6' : 'h5'} fontWeight="bold">
               {data?.title}
             </Typography>
 

@@ -142,7 +142,7 @@ export interface UpdateUserResponseDto {
 }
 
 export interface UserDetailDto {
-  avatar?: string;
+  avatar: string;
   dateOfBirth: string;
   email: string;
   fullName: string;
@@ -237,6 +237,12 @@ export interface CourseCreatePayloadDto {
 export type CourseCreateDataDto = CourseDto;
 
 export type CourseCreateErrorDto = ErrorDto;
+
+export type PurchaseCreatePayloadDto = string;
+
+export type PurchaseCreateDataDto = MessageDto;
+
+export type PurchaseCreateErrorDto = ErrorDto;
 
 export type CourseDetailDataDto = CourseDto;
 

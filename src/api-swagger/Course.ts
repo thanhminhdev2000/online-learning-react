@@ -23,6 +23,9 @@ import {
   CourseUpdateDataDto,
   CourseUpdateErrorDto,
   CourseUpdatePayloadDto,
+  PurchaseCreateDataDto,
+  PurchaseCreateErrorDto,
+  PurchaseCreatePayloadDto,
 } from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
 
@@ -69,6 +72,27 @@ export class Course<SecurityDataType = unknown> {
       method: 'POST',
       body: data,
       type: ContentType.FormData,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * @description Purchase a course by user ID and course ID
+   *
+   * @tags Course
+   * @name PurchaseCreate
+   * @summary Purchase a course
+   * @request POST:/courses/purchase
+   * @response `200` `PurchaseCreateDataDto` OK
+   * @response `400` `ErrorDto` Bad Request
+   * @response `404` `ErrorDto` Not Found
+   * @response `500` `ErrorDto` Internal Server Error
+   */
+  purchaseCreate = (id: number, email: PurchaseCreatePayloadDto, params: RequestParams = {}) =>
+    this.http.request<PurchaseCreateDataDto, PurchaseCreateErrorDto>({
+      path: `/courses/purchase`,
+      method: 'POST',
+      body: email,
+      type: ContentType.Json,
       format: 'json',
       ...params,
     });

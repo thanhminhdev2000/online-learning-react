@@ -5,7 +5,7 @@ import CSelect from '@components/cSelect';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
-import { useCreateUser } from '../../../hooks/user.hook';
+import { useCreateUser } from '../../../api-hooks/user.hook';
 
 import { UserGenderDto } from '@api-swagger/data-contracts';
 import { AuthContainer, ItemCenter, TypographyLink } from '@common/styled';

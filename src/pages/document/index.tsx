@@ -13,7 +13,7 @@ import CConfirmModal from '@components/cConfirmModal';
 import CInput from '@components/cInput';
 import ClassMenu from '@components/layout/ClassMenu';
 import { SearchOutlined } from '@mui/icons-material';
-import { useDeleteDocument, useGetDocuments, useUpdateDocument } from '../../hooks/document.hook';
+import { useDeleteDocument, useGetDocuments, useUpdateDocument } from '../../api-hooks/document.hook';
 
 import NoDataAvailable from '@components/NoData';
 import DownloadIcon from '@mui/icons-material/Download';

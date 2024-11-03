@@ -14,7 +14,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import { useGetClasses } from '../../hooks/document.hook';
+import { useGetClasses } from '../../api-hooks/document.hook';
 import useSubjectStore from '../../store/classStore';
 
 import React, { useState } from 'react';

@@ -5,7 +5,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { contactSchema } from '@pages/contact/type';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useContact } from '../../hooks/contact.hook';
+import { useContact } from '../../api-hooks/contact.hook';
 
 const ContactPage = () => {
   const formInstance = useForm({

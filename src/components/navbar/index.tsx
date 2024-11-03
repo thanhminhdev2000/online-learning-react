@@ -7,7 +7,7 @@ import { Avatar, Box, Button, Container, Menu, Stack, Typography } from '@mui/ma
 import useAuthStore from '@store/authStore';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLogout } from '../../hooks/authentication.hook';
+import { useLogout } from '../../api-hooks/authentication.hook';
 import useSubjectStore from '../../store/classStore';
 
 const Navbar = () => {

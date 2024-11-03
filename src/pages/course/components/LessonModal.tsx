@@ -14,7 +14,7 @@ import useClassStore from '@store/classStore';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { useCreateLesson, useUpdateLesson } from '../../../hooks/lesson.hook';
+import { useCreateLesson, useUpdateLesson } from '../../../api-hooks/lesson.hook';
 
 interface LessonModalProps extends CModalProps {
   length: number;

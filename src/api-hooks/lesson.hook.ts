@@ -1,4 +1,4 @@
-import { queryKeys } from '@hooks/course.hook';
+import { queryKeys } from '@api-hooks/course.hook';
 
 import {
   LessonCreateDataDto,

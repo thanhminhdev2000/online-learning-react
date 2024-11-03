@@ -19,7 +19,7 @@ import { useEffect } from 'react';
 import { UserDetailDto } from '@api-swagger/data-contracts';
 import CourseDetailPage from '@pages/course/components/CourseDetail';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { useGetClasses } from './hooks/document.hook';
+import { useGetClasses } from './api-hooks/document.hook';
 import CoursePage from './pages/course';
 import useClassStore from './store/classStore';
 

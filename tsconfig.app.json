@@ -12,7 +12,7 @@
       "@components/*": ["components/*"],
       "@utils/*": ["utils/*"],
       "@config/*": ["config/*"],
-      "@hooks/*": ["hooks/*"],
+      "@api-hooks/*": ["api-hooks/*"],
       "@api-swagger/*": ["api-swagger/*"],
       "@common/*": ["common/*"],
       "@store/*": ["store/*"]

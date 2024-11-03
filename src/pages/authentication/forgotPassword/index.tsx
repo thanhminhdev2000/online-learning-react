@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useForgotPassword } from '../../../hooks/authentication.hook';
+import { useForgotPassword } from '../../../api-hooks/authentication.hook';
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate();
