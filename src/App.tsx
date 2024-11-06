@@ -3,25 +3,27 @@ import PageNotFound from '@components/layout/PageNotFound';
 import ProtectedRoute from '@components/layout/ProtectedRoute';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider/LocalizationProvider';
-import ForgotPasswordPage from '@pages/authentication/forgotPassword';
-import LoginPage from '@pages/authentication/login';
-import ResetPasswordPage from '@pages/authentication/resetPassword';
-import SignUpPage from '@pages/authentication/signup';
-import ContactPage from '@pages/contact';
-import DocumentPage from '@pages/document';
 import HomePage from '@pages/home';
-import UserDetailPage from '@pages/users/UserDetailPage';
-import UserManagePage from '@pages/users/UserManagePage';
 import useAuthStore from '@store/authStore';
 import { userInit } from '@store/constant';
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 
+import { useGetClasses } from '@api-hooks/document.hook';
 import { UserDetailDto } from '@api-swagger/data-contracts';
-import CourseDetailPage from '@pages/course/components/CourseDetail';
+import Loader from '@components/Loader';
+import useClassStore from '@store/classStore';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { useGetClasses } from './api-hooks/document.hook';
-import CoursePage from './pages/course';
-import useClassStore from './store/classStore';
+
+const LoginPage = lazy(() => import('@pages/authentication/login'));
+const SignUpPage = lazy(() => import('@pages/authentication/signup'));
+const ForgotPasswordPage = lazy(() => import('@pages/authentication/forgotPassword'));
+const ResetPasswordPage = lazy(() => import('@pages/authentication/resetPassword'));
+const DocumentPage = lazy(() => import('@pages/document'));
+const CoursePage = lazy(() => import('@pages/course'));
+const CourseDetailPage = lazy(() => import('@pages/course/components/CourseDetail'));
+const ContactPage = lazy(() => import('@pages/contact'));
+const UserDetailPage = lazy(() => import('@pages/users/UserDetailPage'));
+const UserManagePage = lazy(() => import('@pages/users/UserManagePage'));
 
 const App = () => {
   const { login, checkTokenExpiration } = useAuthStore();
@@ -48,33 +50,35 @@ const App = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route element={<MainLayout />}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route element={<MainLayout />}>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
-            <Route path="/documents" element={<DocumentPage />} />
-            <Route path="/courses" element={<CoursePage />} />
-            <Route path="/courses/:id" element={<CourseDetailPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+              <Route path="/documents" element={<DocumentPage />} />
+              <Route path="/courses" element={<CoursePage />} />
+              <Route path="/courses/:id" element={<CourseDetailPage />} />
+              <Route path="/contact" element={<ContactPage />} />
 
-            <Route path="/users/:id" element={<UserDetailPage />} />
+              <Route path="/users/:id" element={<UserDetailPage />} />
 
-            <Route
-              path="/users"
-              element={
-                <ProtectedRoute>
-                  <UserManagePage />
-                </ProtectedRoute>
-              }
-            />
+              <Route
+                path="/users"
+                element={
+                  <ProtectedRoute>
+                    <UserManagePage />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route path="*" element={<PageNotFound />} />
-          </Route>
-        </Routes>
+              <Route path="*" element={<PageNotFound />} />
+            </Route>
+          </Routes>
+        </Suspense>
       </Router>
     </LocalizationProvider>
   );

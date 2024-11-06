@@ -1,9 +1,9 @@
+import { useDeleteUser, useGetUsers } from '@api-hooks/user.hook';
 import { UserDetailDto, UserGenderDto, UserListParamsDto, UserRoleDto } from '@api-swagger/data-contracts';
 import { DATE_FORMAT_VN, LIMIT } from '@common/constant';
-import { SpaceBetween } from '@common/styled';
+import { ItemCenter, SpaceBetween } from '@common/styled';
 import CConfirmModal from '@components/cConfirmModal';
 import {
-  Box,
   Button,
   MenuItem,
   Pagination,
@@ -25,7 +25,6 @@ import { userInit } from '@store/constant';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import { useDeleteUser, useGetUsers } from '../../api-hooks/user.hook';
 
 const UserManagePage = () => {
   const [rowData, setRowData] = useState(userInit);
@@ -124,9 +123,9 @@ const UserManagePage = () => {
           </Table>
 
           {data?.length == 0 && (
-            <Box height={100} display="flex" justifyContent="center" alignItems="center">
+            <ItemCenter height={100}>
               <Typography>Không có dữ liệu</Typography>
-            </Box>
+            </ItemCenter>
           )}
         </TableContainerStyled>
 
