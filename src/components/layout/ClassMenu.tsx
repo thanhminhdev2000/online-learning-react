@@ -18,11 +18,9 @@ import useClassStore from '@store/classStore';
 
 import { ListItemStyled } from '@common/styled';
 import React, { ReactNode, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const ClassMenu = ({ children }: { children?: ReactNode }) => {
   const { setClassId, setSubjectId, classes } = useClassStore();
-  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [hoveredItem, setHoveredItem] = useState<ClassDto | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -85,9 +83,7 @@ const ClassMenu = ({ children }: { children?: ReactNode }) => {
           <IconButton sx={{ paddingLeft: 0 }} edge="start" onClick={handleDrawerToggle}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" onClick={() => navigate('/')}>
-            DANH MỤC
-          </Typography>
+          <Typography variant="h6">DANH MỤC</Typography>
         </Toolbar>
 
         <Drawer

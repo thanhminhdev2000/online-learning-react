@@ -30,10 +30,10 @@ const Navbar = () => {
   };
 
   const closeAccountMenu = (link?: string) => {
+    setAccountMenu(null);
     if (link) {
       navigate(link);
     }
-    setAccountMenu(null);
   };
 
   return (
@@ -101,8 +101,8 @@ const Navbar = () => {
               </Button>
 
               <Menu anchorEl={accountMenu} open={Boolean(accountMenu)} onClose={() => closeAccountMenu()}>
-                <StyledMenuItem onClick={() => closeAccountMenu('login')}>Đăng nhập</StyledMenuItem>
-                <StyledMenuItem onClick={() => closeAccountMenu('signup')}>Đăng ký</StyledMenuItem>
+                <StyledMenuItem onClick={() => closeAccountMenu('/login')}>Đăng nhập</StyledMenuItem>
+                <StyledMenuItem onClick={() => closeAccountMenu('/signup')}>Đăng ký</StyledMenuItem>
               </Menu>
             </ItemCenter>
           )}
