@@ -1,50 +1,116 @@
-# React + TypeScript + Vite
+# Online Learning React Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Description
 
-Currently, two official plugins are available:
+Online Learning React Application is a frontend interface built using ReactJS for an online learning platform. The project provides users with an interface to access courses, register, view lessons, and interact with the learning content.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- View list of courses
+- Register for courses
+- View lesson details
+- Interact with learning content and exercises
+- Search for courses by category or name
+- Upload learning materials
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Project Structure
 
-- Configure the top-level `parserOptions` property like this:
+The project has the following folder structure:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+online-learning-react/
+├── api-hooks/         # Hooks for API calls
+├── api-swagger/       # Swagger integration for API endpoints
+├── common/            # Utility functions and shared constants
+├── components/        # Reusable UI components
+├── config/            # General configuration of the application (e.g., API endpoint)
+├── pages/             # Main pages of the application
+├── store/             # State management of the application (Zustand)
+├── utils/             # Utility functions for the application
+├── public/            # Static files like index.html, images
+├── src/               # Main source code folder
+│   ├── App.js         # Main application file
+│   └── index.js       # Application entry point
+├── package.json       # Project information and dependencies
+└── README.md          # README file
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Installation
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### System Requirements
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- Node.js installed (at least v14.0.0)
+- npm or yarn
+
+### Installation Steps
+
+1. Clone the project:
+
+   ```bash
+   git clone https://github.com/thanhminhdev2000/online-learning-react.git
+   cd online-learning-react
+   ```
+
+2. Install dependencies:
+
+   Using npm:
+
+   ```bash
+   npm install
+   ```
+
+   Or using yarn:
+
+   ```bash
+   yarn install
+   ```
+
+3. Run the project in development mode:
+
+   Using npm:
+
+   ```bash
+   npm start
+   ```
+
+   Or using yarn:
+
+   ```bash
+   yarn start
+   ```
+
+4. Open your browser and access [http://52.207.226.211/](http://52.207.226.211/) to view the interface.
+
+## Technologies Used
+
+- **ReactJS**: The main framework for building the user interface
+- **React Router**: Handles navigation between pages
+- **Zustand**: State management
+- **Axios**: HTTP client library for backend communication
+
+## Contribution
+
+If you want to contribute to the project, please fork the repo, create a new branch, make changes, and create a pull request.
+
+1. Fork the project
+2. Create a feature branch (to make changes):
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Brief description of changes"
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. Create a pull request
+
+## Contact
+
+- **Author**: Nguyen Thanh Minh
+- **Email**: [thanhminh.nguyendev@gmail.com](mailto:thanhminh.nguyendev@gmail.com)
+- **Deployed at**: [http://52.207.226.211/](http://52.207.226.211/)
+
+Thank you for your interest in our project!
