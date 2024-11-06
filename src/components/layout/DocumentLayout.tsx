@@ -1,3 +1,4 @@
+import { useGetClasses } from '@api-hooks/document.hook';
 import { ClassDto, SubjectDto } from '@api-swagger/data-contracts';
 import { BACKGROUND_COLOR_HOVER, COUNT_COLOR, MAIN_COLOR, SIDEBAR_WIDTH } from '@common/constant';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -14,8 +15,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import { useGetClasses } from '../../api-hooks/document.hook';
-import useSubjectStore from '../../store/classStore';
+import useSubjectStore from '@store/classStore';
 
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';

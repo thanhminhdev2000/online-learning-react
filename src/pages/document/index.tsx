@@ -1,3 +1,4 @@
+import { useDeleteDocument, useGetDocuments, useUpdateDocument } from '@api-hooks/document.hook';
 import { DocumentDto, DocumentListParamsDto, UserRoleDto } from '@api-swagger/data-contracts';
 import { MAIN_COLOR } from '@common/constant';
 import {
@@ -13,9 +14,9 @@ import CConfirmModal from '@components/cConfirmModal';
 import CInput from '@components/cInput';
 import ClassMenu from '@components/layout/ClassMenu';
 import { SearchOutlined } from '@mui/icons-material';
-import { useDeleteDocument, useGetDocuments, useUpdateDocument } from '../../api-hooks/document.hook';
 
 import NoDataAvailable from '@components/NoData';
+import AddIcon from '@mui/icons-material/Add';
 import DownloadIcon from '@mui/icons-material/Download';
 import FolderIcon from '@mui/icons-material/Folder';
 import PersonIcon from '@mui/icons-material/Person';
@@ -31,7 +32,7 @@ const DocumentPage = () => {
   const { user } = useAuthStore();
   const { subjectId, setSelectedDocument } = useClassStore();
   const [search, setSearch] = useState<DocumentListParamsDto>({});
-  const [openCreateDocumentModal, setOpenCreateDocumentModal] = useState(false);
+  const [openCreateDocumentModal, setOpenDocumentModal] = useState(false);
   const [openDeleteDocumentModal, setOpenDeleteDocumentModal] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
 
@@ -84,13 +85,25 @@ const DocumentPage = () => {
 
             <AlignCenter gap={2}>
               {user.role === UserRoleDto.RoleAdmin && (
-                <Button variant="contained" sx={{ width: '140px' }} onClick={() => setOpenCreateDocumentModal(true)}>
-                  Đăng tải tài liệu
-                </Button>
+                <>
+                  <Button
+                    variant="contained"
+                    sx={{ display: { xs: 'none', md: 'block' } }}
+                    onClick={() => setOpenDocumentModal(true)}
+                  >
+                    Đăng tải
+                  </Button>
+
+                  <AddIcon
+                    fontSize="large"
+                    sx={{ cursor: 'pointer', display: { xs: 'block', md: 'none' } }}
+                    onClick={() => setOpenDocumentModal(true)}
+                  />
+                </>
               )}
               <AlignCenter gap={2}>
                 <CInput label="Tìm kiếm theo tiêu đề" registerProps={register('title')} showLabel={false} />
-                <SearchOutlined onClick={onSubmit} sx={{ width: 32, height: 32 }} />
+                <SearchOutlined onClick={onSubmit} sx={{ cursor: 'pointer', width: 32, height: 32 }} />
               </AlignCenter>
             </AlignCenter>
           </SpaceBetween>
@@ -134,7 +147,7 @@ const DocumentPage = () => {
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedDocument(document);
-                          setOpenCreateDocumentModal(true);
+                          setOpenDocumentModal(true);
                           setSelectedId(document.id);
                         }}
                       />
@@ -173,7 +186,7 @@ const DocumentPage = () => {
           <NoDataAvailable length={data?.length || 0} />
         </Box>
 
-        <DocumentModal open={openCreateDocumentModal} onClose={() => setOpenCreateDocumentModal(false)} />
+        <DocumentModal open={openCreateDocumentModal} onClose={() => setOpenDocumentModal(false)} />
 
         <CConfirmModal
           open={openDeleteDocumentModal}

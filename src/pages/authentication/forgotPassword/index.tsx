@@ -1,3 +1,4 @@
+import { useForgotPassword } from '@api-hooks/authentication.hook';
 import { AuthContainer, ItemCenter, TypographyLink } from '@common/styled';
 import CInput from '@components/cInput';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -7,7 +8,6 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useForgotPassword } from '../../../api-hooks/authentication.hook';
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate();

@@ -1,9 +1,9 @@
+import { DATE_FORMAT } from '@common/constant';
+import { CFormLabel, FormWrapper, InputWrapper } from '@common/styled';
 import ErrorMessage from '@components/error';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 import { useFormContext, UseFormRegisterReturn } from 'react-hook-form';
-import { CFormLabel, FormWrapper, InputWrapper } from '../../common/styled';
-import { DATE_FORMAT } from '@common/constant';
 
 interface CDatePickerProps {
   label: string;

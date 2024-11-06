@@ -1,8 +1,8 @@
+import { CFormLabel, FormWrapper, InputWrapper } from '@common/styled';
 import { IOptions } from '@common/type';
 import ErrorMessage from '@components/error';
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { UseFormRegisterReturn, useFormContext } from 'react-hook-form';
-import { CFormLabel, FormWrapper, InputWrapper } from '../../common/styled';
 
 interface CSelectProps {
   label: string;

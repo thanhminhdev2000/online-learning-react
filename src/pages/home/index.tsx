@@ -23,7 +23,7 @@ const HomePage = () => {
           </Typography>
 
           <Box marginTop={4}>
-            <Button variant="contained" onClick={() => navigate('/learn')}>
+            <Button variant="contained" onClick={() => navigate('/courses')}>
               Học ngay
             </Button>
           </Box>

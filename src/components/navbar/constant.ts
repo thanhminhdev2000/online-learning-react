@@ -5,12 +5,12 @@ interface Route {
 
 export const routes: Route[] = [
   {
-    path: '/documents',
-    pathName: 'Tài liệu',
-  },
-  {
     path: '/courses',
     pathName: 'Khóa học',
+  },
+  {
+    path: '/documents',
+    pathName: 'Tài liệu',
   },
   {
     path: '/contact',

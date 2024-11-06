@@ -1,8 +1,8 @@
+import { useLogin } from '@api-hooks/authentication.hook';
+import { AuthContainer, ItemCenter, TypographyLink } from '@common/styled';
 import CInput from '@components/cInput';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { useLogin } from '../../../api-hooks/authentication.hook';
-import { AuthContainer, ItemCenter, TypographyLink } from '../../../common/styled';
 
 import { HEADER_HEIGHT } from '@common/constant';
 import { loginInit } from '@pages/authentication/constant';

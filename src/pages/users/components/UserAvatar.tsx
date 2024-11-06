@@ -1,9 +1,9 @@
+import { useUpdateUserAvatar } from '@api-hooks/user.hook';
 import { FlexEnd } from '@common/styled';
 import { Avatar, Box, Button, Stack, Typography } from '@mui/material';
 import { PaperContainer } from '@pages/authentication/styled';
 import useAuthStore from '@store/authStore';
 import React, { useState } from 'react';
-import { useUpdateUserAvatar } from '../../../api-hooks/user.hook';
 
 const UserAvatar = () => {
   const { user, login } = useAuthStore();

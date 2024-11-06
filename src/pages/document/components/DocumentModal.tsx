@@ -1,3 +1,4 @@
+import { useCreateDocument, useUpdateDocument } from '@api-hooks/document.hook';
 import { FlexEnd, SpaceBetween } from '@common/styled';
 import { CModalProps, IOptions } from '@common/type';
 import CInput from '@components/cInput';
@@ -11,11 +12,10 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { createdDocumentSchema, updatedDocumentSchema } from '@pages/document/type';
+import useClassStore from '@store/classStore';
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { useCreateDocument, useUpdateDocument } from '../../../api-hooks/document.hook';
-import useClassStore from '../../../store/classStore';
 
 const DocumentModal = ({ refetch, open, onClose }: CModalProps) => {
   const AWS_URL = 'https://online-learning-aws.s3.us-east-1.amazonaws.com/pdfs/';

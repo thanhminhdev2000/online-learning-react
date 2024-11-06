@@ -14,7 +14,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import useClassStore from '../../store/classStore';
+import useClassStore from '@store/classStore';
 
 import { ListItemStyled } from '@common/styled';
 import React, { ReactNode, useState } from 'react';

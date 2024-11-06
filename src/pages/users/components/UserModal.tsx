@@ -1,3 +1,4 @@
+import { useCreateAdmin, useUpdateUser } from '@api-hooks/user.hook';
 import { UserDetailDto } from '@api-swagger/data-contracts';
 import { genderOptions } from '@common/constant';
 import { FlexEnd } from '@common/styled';
@@ -14,7 +15,6 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { signUpSchema } from '@pages/authentication/type';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useCreateAdmin, useUpdateUser } from '../../../api-hooks/user.hook';
 
 interface UserProps extends CModalProps {
   data: UserDetailDto;

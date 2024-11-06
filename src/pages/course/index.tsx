@@ -5,6 +5,7 @@ import {
   DeleteIconStyled,
   EditIconStyled,
   ImageStyled,
+  ItemCenter,
   MaxThreeElement,
   OverflowMultiLine,
   SpaceBetween,
@@ -14,6 +15,7 @@ import CInput from '@components/cInput';
 import ClassMenu from '@components/layout/ClassMenu';
 import NoDataAvailable from '@components/NoData';
 import { SearchOutlined } from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import CourseModal from '@pages/course/components/CourseModal';
 import useAuthStore from '@store/authStore';
@@ -66,17 +68,29 @@ const CoursePage = () => {
               </Typography>
             </Box>
 
-            <AlignCenter gap={2}>
+            <ItemCenter gap={2}>
               {user.role === UserRoleDto.RoleAdmin && (
-                <Button variant="contained" sx={{ width: '140px' }} onClick={() => setOpenCourseModal(true)}>
-                  Tạo khoá học
-                </Button>
+                <>
+                  <Button
+                    variant="contained"
+                    sx={{ display: { xs: 'none', md: 'block' } }}
+                    onClick={() => setOpenCourseModal(true)}
+                  >
+                    Đăng tải
+                  </Button>
+
+                  <AddIcon
+                    fontSize="large"
+                    sx={{ cursor: 'pointer', display: { xs: 'block', md: 'none' } }}
+                    onClick={() => setOpenCourseModal(true)}
+                  />
+                </>
               )}
               <AlignCenter gap={2}>
                 <CInput label="Tìm kiếm theo tiêu đề" registerProps={register('search')} showLabel={false} />
-                <SearchOutlined onClick={onSubmit} sx={{ width: 32, height: 32 }} />
+                <SearchOutlined onClick={onSubmit} sx={{ cursor: 'pointer', width: 32, height: 32 }} />
               </AlignCenter>
-            </AlignCenter>
+            </ItemCenter>
           </SpaceBetween>
 
           <MaxThreeElement>

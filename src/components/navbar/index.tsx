@@ -1,3 +1,4 @@
+import { useLogout } from '@api-hooks/authentication.hook';
 import { UserRoleDto } from '@api-swagger/data-contracts';
 import { HEADER_HEIGHT } from '@common/constant';
 import { AlignCenter, ItemCenter, SpaceBetween, TypographyHover } from '@common/styled';
@@ -5,15 +6,14 @@ import { routes } from '@components/navbar/constant';
 import { NavbarWrapper, StyledMenuItem } from '@components/navbar/styled';
 import { Avatar, Box, Button, Container, Menu, Stack, Typography } from '@mui/material';
 import useAuthStore from '@store/authStore';
+import useClassStore from '@store/classStore';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLogout } from '../../api-hooks/authentication.hook';
-import useSubjectStore from '../../store/classStore';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
-  const { setClassId, setSubjectId } = useSubjectStore();
+  const { setClassId, setSubjectId } = useClassStore();
   const [accountMenu, setAccountMenu] = useState<null | HTMLElement>(null);
   const color = 'black';
 
