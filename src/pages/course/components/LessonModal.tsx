@@ -30,7 +30,7 @@ const LessonModal = ({ length, open, onClose }: LessonModalProps) => {
     values: {
       title: selectedLesson.title,
       position: selectedLesson.id ? String(selectedLesson.position) : String(length + 1),
-      video: undefined,
+      video: undefined as unknown as File | undefined,
     },
   });
 
@@ -51,17 +51,13 @@ const LessonModal = ({ length, open, onClose }: LessonModalProps) => {
   const updateLesson = useUpdateLesson();
 
   const handleSubmitForm = handleSubmit((formData) => {
-    if (!formData.video) {
-      return;
-    }
-
     if (selectedLesson.id) {
       updateLesson.mutate(
         {
           id: selectedLesson.id,
           data: {
             title: formData.title,
-            video: formData.video,
+            video: formData?.video ? formData.video : undefined,
             position: Number(formData.position),
           },
         },
@@ -71,6 +67,10 @@ const LessonModal = ({ length, open, onClose }: LessonModalProps) => {
           },
         },
       );
+      return;
+    }
+
+    if (!formData.video) {
       return;
     }
 
@@ -135,14 +135,13 @@ const LessonModal = ({ length, open, onClose }: LessonModalProps) => {
                     hidden
                     accept="video/mp4,video/avi,video/mov"
                     type="file"
-                    {...register('video', {
-                      onChange: (e) => {
-                        const video = e.target.files?.[0] || null;
-                        setValue('video', video, { shouldValidate: true });
-                        setValue('title', video ? video.name.split('.')[0] : '');
-                        setFileName(video.name);
-                      },
-                    })}
+                    onChange={(e) => {
+                      const files = e.target.files;
+                      const video = (files?.length || 0) > 0 ? files?.[0] : undefined;
+                      setValue('video', video, { shouldValidate: true });
+                      setValue('title', video ? video.name.split('.')[0] : '', { shouldValidate: true });
+                      setFileName(video?.name || null);
+                    }}
                   />
                 </Button>
                 {fileName && (

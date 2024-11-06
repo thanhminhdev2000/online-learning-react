@@ -9,7 +9,7 @@ export const cleanObject = (obj: IPlainObject) => {
   const cleanedObj: IPlainObject = {};
 
   Object.keys(obj).forEach((key) => {
-    if (obj[key] !== '' && obj[key] !== '*') {
+    if (obj[key] !== '' && obj[key] !== undefined && obj[key] !== null && obj[key] !== '*') {
       cleanedObj[key] = obj[key];
     }
   });
