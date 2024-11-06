@@ -51,7 +51,14 @@ online-learning-react/
    cd online-learning-react
    ```
 
-2. Install dependencies:
+2. Create .env file in root directory:
+
+   ```bash
+   VITE_API_URL=
+   VITE_API_PREFIX=
+   ```
+
+3. Install dependencies:
 
    Using npm:
 
@@ -65,7 +72,7 @@ online-learning-react/
    yarn install
    ```
 
-3. Run the project in development mode:
+4. Run the project in development mode:
 
    Using npm:
 
@@ -79,7 +86,7 @@ online-learning-react/
    yarn start
    ```
 
-4. Open your browser and access [http://52.207.226.211/](http://52.207.226.211/) to view the interface.
+5. Open your browser and access [http://localhost:3000](http://localhost:3000) to view the interface.
 
 ## Technologies Used
 
@@ -90,22 +97,7 @@ online-learning-react/
 
 ## Contribution
 
-If you want to contribute to the project, please fork the repo, create a new branch, make changes, and create a pull request.
-
-1. Fork the project
-2. Create a feature branch (to make changes):
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Brief description of changes"
-   ```
-4. Push to the branch:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-5. Create a pull request
+If you want to contribute to the project, please create a **Pull Request** or a new **Issue**. All contributions are welcome!
 
 ## Contact
 
