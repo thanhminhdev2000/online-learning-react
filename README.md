@@ -95,6 +95,20 @@ online-learning-react/
 - **Zustand**: State management
 - **Axios**: HTTP client library for backend communication
 
+## Usage
+
+For testing purposes, you can use the following accounts:
+
+**Admin Account**:
+
+- Username: admin1
+- Password: zzzxxx
+
+**User Account**:
+
+- Username: user11
+- Password: zzzxxx
+
 ## Contribution
 
 If you want to contribute to the project, please create a **Pull Request** or a new **Issue**. All contributions are welcome!
