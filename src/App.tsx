@@ -11,19 +11,19 @@ import { lazy, Suspense, useEffect } from 'react';
 import { useGetClasses } from '@api-hooks/document.hook';
 import { UserDetailDto } from '@api-swagger/data-contracts';
 import Loader from '@components/Loader';
+import LoginPage from '@pages/authentication/login';
+import SignUpPage from '@pages/authentication/signup';
+import UserDetailPage from '@pages/users/UserDetailPage';
+import UserManagePage from '@pages/users/UserManagePage';
 import useClassStore from '@store/classStore';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
-const LoginPage = lazy(() => import('@pages/authentication/login'));
-const SignUpPage = lazy(() => import('@pages/authentication/signup'));
 const ForgotPasswordPage = lazy(() => import('@pages/authentication/forgotPassword'));
 const ResetPasswordPage = lazy(() => import('@pages/authentication/resetPassword'));
 const DocumentPage = lazy(() => import('@pages/document'));
 const CoursePage = lazy(() => import('@pages/course'));
 const CourseDetailPage = lazy(() => import('@pages/course/components/CourseDetail'));
 const ContactPage = lazy(() => import('@pages/contact'));
-const UserDetailPage = lazy(() => import('@pages/users/UserDetailPage'));
-const UserManagePage = lazy(() => import('@pages/users/UserManagePage'));
 
 const App = () => {
   const { login, checkTokenExpiration } = useAuthStore();

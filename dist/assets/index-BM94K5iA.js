@@ -1,1 +1,0 @@
-import{j as t,I as r}from"./index-BnQnY9EU.js";const i=({length:e})=>t.jsx(t.Fragment,{children:e===0&&t.jsx(r,{sx:{width:"100%",height:200,backgroundColor:"white"},children:"Không tìm thấy dữ liệu"})});export{i as N};

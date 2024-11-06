@@ -23,4 +23,18 @@ export default defineConfig({
       '@store': path.resolve(__dirname, './src/store'),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-mui': ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled'],
+          'vendor-router': ['react-router-dom'],
+          'vendor-utils': ['axios', 'dayjs', '@tanstack/react-query'],
+          'vendor-react': ['react', 'react-dom'],
+        },
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
+      },
+    },
+  },
 });
