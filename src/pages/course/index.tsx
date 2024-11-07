@@ -13,6 +13,7 @@ import {
 import CConfirmModal from '@components/cConfirmModal';
 import CInput from '@components/cInput';
 import ClassMenu from '@components/layout/ClassMenu';
+import Loader from '@components/Loader';
 import NoDataAvailable from '@components/NoData';
 import { SearchOutlined } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
@@ -39,7 +40,7 @@ const CoursePage = () => {
     },
   });
 
-  const { data } = useGetCourses({
+  const { data, isFetching } = useGetCourses({
     search,
   });
 
@@ -93,68 +94,70 @@ const CoursePage = () => {
             </ItemCenter>
           </SpaceBetween>
 
+          {isFetching ? <Loader isFullScreen={false} /> : <NoDataAvailable length={data?.data?.length || 0} />}
+
           <MaxThreeElement>
-            {data?.data?.map((course) => (
-              <Box
-                key={course.id}
-                onClick={() => {
-                  console.log(course.id);
-                  navigate(`/courses/${course.id}`);
-                  setSelectedId(course.id);
-                }}
-              >
-                <Box sx={{ position: 'relative', border: '1px solid #ccc', cursor: 'pointer', paddingBottom: 5 }}>
-                  <ImageStyled src={course.thumbnailUrl} alt="Ảnh bìa" />
+            {!isFetching &&
+              data?.data?.map((course) => (
+                <Box
+                  key={course.id}
+                  onClick={() => {
+                    console.log(course.id);
+                    navigate(`/courses/${course.id}`);
+                    setSelectedId(course.id);
+                  }}
+                >
+                  <Box sx={{ position: 'relative', border: '1px solid #ccc', cursor: 'pointer', paddingBottom: 5 }}>
+                    <ImageStyled src={course.thumbnailUrl} alt="Ảnh bìa" />
 
-                  <Stack flexDirection="column" gap={2} paddingX={3} height={200}>
-                    <OverflowMultiLine
-                      variant="h6"
-                      lines={2}
-                      sx={{
-                        fontWeight: 'bold',
-                        height: 64,
-                        paddingRight: 5,
-                      }}
-                    >
-                      {course.title}
-                    </OverflowMultiLine>
-                    <OverflowMultiLine lines={3}>{course?.description}</OverflowMultiLine>
+                    <Stack flexDirection="column" gap={2} paddingX={3} height={200}>
+                      <OverflowMultiLine
+                        variant="h6"
+                        lines={2}
+                        sx={{
+                          fontWeight: 'bold',
+                          height: 64,
+                          paddingRight: 5,
+                        }}
+                      >
+                        {course.title}
+                      </OverflowMultiLine>
+                      <OverflowMultiLine lines={3}>{course?.description}</OverflowMultiLine>
 
-                    <Stack gap={1}>
-                      Giáo viên: <Typography fontWeight="bold">{course.instructor}</Typography>
+                      <Stack gap={1}>
+                        Giáo viên: <Typography fontWeight="bold">{course.instructor}</Typography>
+                      </Stack>
+
+                      <Stack gap={1}>
+                        Giá: <Typography fontWeight="bold">{course.price.toLocaleString()} VND</Typography>
+                      </Stack>
                     </Stack>
 
-                    <Stack gap={1}>
-                      Giá: <Typography fontWeight="bold">{course.price.toLocaleString()} VND</Typography>
-                    </Stack>
-                  </Stack>
-
-                  <Box paddingX={2}>
-                    {user.role === UserRoleDto.RoleAdmin && (
-                      <DeleteIconStyled
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedId(course.id);
-                          setOpenDeleteCourseModal(true);
-                        }}
-                      />
-                    )}
-                    {user.role === UserRoleDto.RoleAdmin && (
-                      <EditIconStyled
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedCourse(course);
-                          setOpenCourseModal(true);
-                          setSelectedId(course.id);
-                        }}
-                      />
-                    )}
+                    <Box paddingX={2}>
+                      {user.role === UserRoleDto.RoleAdmin && (
+                        <DeleteIconStyled
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedId(course.id);
+                            setOpenDeleteCourseModal(true);
+                          }}
+                        />
+                      )}
+                      {user.role === UserRoleDto.RoleAdmin && (
+                        <EditIconStyled
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedCourse(course);
+                            setOpenCourseModal(true);
+                            setSelectedId(course.id);
+                          }}
+                        />
+                      )}
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            ))}
+              ))}
           </MaxThreeElement>
-          <NoDataAvailable length={data?.data?.length || 0} />
         </Box>
 
         <CourseModal

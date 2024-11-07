@@ -15,6 +15,7 @@ import CInput from '@components/cInput';
 import ClassMenu from '@components/layout/ClassMenu';
 import { SearchOutlined } from '@mui/icons-material';
 
+import Loader from '@components/Loader';
 import NoDataAvailable from '@components/NoData';
 import AddIcon from '@mui/icons-material/Add';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -42,7 +43,7 @@ const DocumentPage = () => {
     setSearch(data);
   });
 
-  const { data } = useGetDocuments({
+  const { data, isFetching } = useGetDocuments({
     ...search,
     subjectId: subjectId ? subjectId : undefined,
   });
@@ -108,82 +109,84 @@ const DocumentPage = () => {
             </AlignCenter>
           </SpaceBetween>
 
+          {isFetching ? <Loader isFullScreen={false} /> : <NoDataAvailable length={data?.length || 0} />}
+
           <MaxFourElement>
-            {data?.map((document) => (
-              <CardStyled
-                key={document.id}
-                onClick={() => {
-                  setSelectedId(document.id);
-                  handleUpdateViews(document);
-                  openPdfFile(document.fileUrl);
-                }}
-              >
-                <CardContent>
-                  <Box paddingX={2} sx={{ position: 'relative' }}>
-                    <OverflowMultiLine
-                      variant="h6"
-                      lines={2}
-                      sx={{
-                        fontWeight: 'bold',
-                        color: MAIN_COLOR,
-                        height: 64,
-                        paddingRight: 5,
-                      }}
-                    >
-                      {document.title}
-                    </OverflowMultiLine>
-
-                    {user.role === UserRoleDto.RoleAdmin && (
-                      <DeleteIconStyled
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedId(document.id);
-                          setOpenDeleteDocumentModal(true);
+            {!isFetching &&
+              data?.map((document) => (
+                <CardStyled
+                  key={document.id}
+                  onClick={() => {
+                    setSelectedId(document.id);
+                    handleUpdateViews(document);
+                    openPdfFile(document.fileUrl);
+                  }}
+                >
+                  <CardContent>
+                    <Box paddingX={2} sx={{ position: 'relative' }}>
+                      <OverflowMultiLine
+                        variant="h6"
+                        lines={2}
+                        sx={{
+                          fontWeight: 'bold',
+                          color: MAIN_COLOR,
+                          height: 64,
+                          paddingRight: 5,
                         }}
-                      />
-                    )}
-                    {user.role === UserRoleDto.RoleAdmin && (
-                      <EditIconStyled
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedDocument(document);
-                          setOpenDocumentModal(true);
-                          setSelectedId(document.id);
-                        }}
-                      />
-                    )}
+                      >
+                        {document.title}
+                      </OverflowMultiLine>
 
-                    <AlignCenter marginTop={1} gap={1}>
-                      <FolderIcon sx={{ fontSize: 26 }} />
-                      <OverflowMultiLine sx={{ textAlign: 'center' }}>{document.category}</OverflowMultiLine>
-                    </AlignCenter>
-                  </Box>
+                      {user.role === UserRoleDto.RoleAdmin && (
+                        <DeleteIconStyled
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedId(document.id);
+                            setOpenDeleteDocumentModal(true);
+                          }}
+                        />
+                      )}
+                      {user.role === UserRoleDto.RoleAdmin && (
+                        <EditIconStyled
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedDocument(document);
+                            setOpenDocumentModal(true);
+                            setSelectedId(document.id);
+                          }}
+                        />
+                      )}
 
-                  <Divider sx={{ paddingY: 2 }} />
+                      <AlignCenter marginTop={1} gap={1}>
+                        <FolderIcon sx={{ fontSize: 26 }} />
+                        <OverflowMultiLine sx={{ textAlign: 'center' }}>{document.category}</OverflowMultiLine>
+                      </AlignCenter>
+                    </Box>
 
-                  <Box paddingX={2}>
-                    <AlignCenter justifyContent="space-between" marginTop={4}>
-                      <Stack gap={1}>
-                        <VisibilityIcon />
-                        <Typography>{document.views}</Typography>
-                      </Stack>
+                    <Divider sx={{ paddingY: 2 }} />
 
-                      <Stack gap={1}>
-                        <DownloadIcon />
-                        <Typography>{document.downloads}</Typography>
-                      </Stack>
-                    </AlignCenter>
+                    <Box paddingX={2}>
+                      <AlignCenter justifyContent="space-between" marginTop={4}>
+                        <Stack gap={1}>
+                          <VisibilityIcon />
+                          <Typography>{document.views}</Typography>
+                        </Stack>
 
-                    <AlignCenter marginTop={1} gap={1}>
-                      <PersonIcon />
-                      <OverflowMultiLine lines={1}>Tác giả: {document.author}</OverflowMultiLine>
-                    </AlignCenter>
-                  </Box>
-                </CardContent>
-              </CardStyled>
-            ))}
+                        <Stack gap={1}>
+                          <DownloadIcon />
+                          <Typography>{document.downloads}</Typography>
+                        </Stack>
+                      </AlignCenter>
+
+                      <AlignCenter marginTop={1} gap={1}>
+                        <PersonIcon />
+                        <OverflowMultiLine lines={1}>Tác giả: {document.author}</OverflowMultiLine>
+                      </AlignCenter>
+                    </Box>
+                  </CardContent>
+                </CardStyled>
+              ))}
           </MaxFourElement>
-          <NoDataAvailable length={data?.length || 0} />
         </Box>
 
         <DocumentModal open={openCreateDocumentModal} onClose={() => setOpenDocumentModal(false)} />

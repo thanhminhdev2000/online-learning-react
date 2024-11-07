@@ -15,7 +15,11 @@ const Loader = ({ isFullScreen = true, size = 40 }: { isFullScreen?: boolean; si
     );
   }
 
-  return <CircularProgress size={size} />;
+  return (
+    <ItemCenter height={400}>
+      <CircularProgress size={size} />
+    </ItemCenter>
+  );
 };
 
 export default Loader;

@@ -4,6 +4,7 @@ import { LessonDto, UserRoleDto } from '@api-swagger/data-contracts';
 import { AlignCenter, ImageStyled, OverflowMultiLine, SpaceBetween } from '@common/styled';
 import CConfirmModal from '@components/cConfirmModal';
 import CInput from '@components/cInput';
+import Loader from '@components/Loader';
 import NoDataAvailable from '@components/NoData';
 import PaymentModal from '@components/PaymentModal';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -47,7 +48,7 @@ const LessonDetailPage = () => {
     },
   });
 
-  const { data } = useGetCourse(Number(id) || 0);
+  const { data, isFetching } = useGetCourse(Number(id) || 0);
 
   const [openStates, setOpenStates] = useState<boolean[]>(Array(data?.lessons?.length).fill(false));
 
@@ -227,7 +228,7 @@ const LessonDetailPage = () => {
             </Box>
           ))}
 
-          <NoDataAvailable length={data?.lessons?.length || 0} />
+          {isFetching ? <Loader isFullScreen={false} /> : <NoDataAvailable length={data?.lessons?.length || 0} />}
         </Box>
       </Stack>
 
